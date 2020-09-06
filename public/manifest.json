@@ -1,0 +1,8 @@
+{
+  "name": "autodraft",
+  "short_name": "ad",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/"
+}
