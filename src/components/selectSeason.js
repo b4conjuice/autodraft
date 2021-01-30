@@ -1,8 +1,10 @@
+import CURRENT_SEASON from '@/config/season'
+
 const SelectSeason = ({ season, handleChange }) => (
   <select
-    className="form-select w-full text-center"
+    className="w-full text-center form-select"
     onChange={handleChange}
-    value={season || '2019'}
+    value={season || CURRENT_SEASON}
   >
     <option>select season</option>
     {[
@@ -16,6 +18,7 @@ const SelectSeason = ({ season, handleChange }) => (
       '2017',
       '2018',
       '2019',
+      '2020',
     ].map(s => (
       <option key={s} value={s}>
         {s}

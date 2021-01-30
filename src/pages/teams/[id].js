@@ -10,6 +10,7 @@ import BoxScore from '@/components/boxScore'
 import SelectSeason from '@/components/selectSeason'
 import Footer from '@/components/footer'
 import { fetchNBATeams, fetchNBATeam, fetchNBASchedule } from '@/lib/api'
+import CURRENT_SEASON from '@/config/season'
 
 const Depth = ({ team }) => {
   const positions = ['G', 'G-F', 'F-G', 'F', 'F-C', 'C-F', 'C']
@@ -168,7 +169,7 @@ const Team = () => {
           </h2>
         </div>
         <Depth team={players} />
-        {(!season || season === '2019') && (
+        {(!season || season === CURRENT_SEASON) && (
           <BoxScore
             stats={players.map(p => ({
               ...p,

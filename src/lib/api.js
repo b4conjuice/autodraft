@@ -1,5 +1,7 @@
 import useSwr from 'swr'
 
+import CURRENT_SEASON from '@/config/season'
+
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 const refreshInterval = 30000
 
@@ -13,7 +15,7 @@ export const fetchNBATeams = team => {
   }
 }
 
-export const fetchNBATeam = (id, season = 2019) => {
+export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${season}&team_ids[]=${id}&per_page=100`
   const { data: games } = useSwr(id ? url : null, fetcher)
   const gameIds = games?.data.map(game => game.id)
@@ -82,7 +84,7 @@ export const fetchNBASchedule = (options = {}) => {
   // const { team, desc, start, end } = options
   const { team, start, end, season, postseason } = options
   const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${
-    season || 2019
+    season || CURRENT_SEASON
   }${team ? `&team_ids[]=${team}&per_page=${postseason ? '100' : '82'}` : ''}${
     start ? `&start_date=${start}&end_date=${end || start}` : ''
   }${postseason ? `&postseason=1` : ''}`
@@ -174,7 +176,7 @@ export const fetchNBAGame = (id, playerId) => {
   }
 }
 
-export const fetchNBAPlayer = (id, season = 2019) => {
+export const fetchNBAPlayer = (id, season = CURRENT_SEASON) => {
   const { data: player } = useSwr(
     id ? `https://www.balldontlie.io/api/v1/players/${id}` : null,
     fetcher

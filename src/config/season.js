@@ -1,0 +1,3 @@
+const CURRENT_SEASON = 2020
+
+export default CURRENT_SEASON
