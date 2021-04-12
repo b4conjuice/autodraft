@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'jit',
   purge: ['./src/pages/**/*.js', './src/components/**/*.js'],
   theme: {
     extend: {
@@ -11,14 +12,5 @@ module.exports = {
       },
     },
   },
-  variants: {
-    backgroundColor: ['responsive', 'hover', 'focus', 'odd'],
-    opacity: ['responsive', 'hover', 'focus', 'disabled'],
-    pointerEvents: ['responsive', 'disabled'],
-    borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
-  },
-  plugins: [require('@tailwindcss/custom-forms')],
-  future: {
-    removeDeprecatedGapUtilities: true,
-  },
+  plugins: [require('@tailwindcss/forms')],
 }

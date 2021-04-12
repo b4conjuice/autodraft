@@ -218,7 +218,7 @@ const Team = () => {
               {games.map(game => (
                 <li
                   key={game.id}
-                  className="bg-gray-300 rounded odd:bg-gray-400"
+                  className="bg-gray-200 rounded odd:bg-gray-300"
                 >
                   <Link href="/games/[id]" as={`/games/${game.id}`}>
                     <a className="block p-2 space-x-1 text-xl text-gray-900 hover:text-blue-600">

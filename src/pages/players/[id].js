@@ -37,7 +37,7 @@ const GameLog = ({ stats, teams, team, season }) => {
                 home_team_id: homeTeamId,
               }) => (
                 <tr key={id} className="odd:bg-gray-300">
-                  <td className="py-1 overflow-hidden text-center whitespace-no-wrap">
+                  <td className="py-1 overflow-hidden text-center whitespace-nowrap">
                     <Link href="/games/[id]" as={`/games/${id}`}>
                       <a className="space-x-1 text-blue-700 hover:text-blue-600">
                         <span className="hidden md:inline">
