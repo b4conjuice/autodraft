@@ -96,7 +96,7 @@ const List = () => {
               {list?.items.map(item => (
                 <li
                   key={item}
-                  className="p-2 bg-gray-300 rounded odd:bg-gray-400"
+                  className="p-2 bg-gray-200 rounded odd:bg-gray-300"
                 >
                   {item}
                 </li>

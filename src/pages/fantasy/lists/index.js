@@ -38,7 +38,7 @@ const Lists = () => {
         {lists ? (
           <ul className="space-y-2">
             {lists.map(list => (
-              <li key={list.id} className="bg-gray-300 rounded odd:bg-gray-400">
+              <li key={list.id} className="bg-gray-200 rounded odd:bg-gray-300">
                 <div className="space-x-1">
                   <Link
                     href="/fantasy/lists/[id]"

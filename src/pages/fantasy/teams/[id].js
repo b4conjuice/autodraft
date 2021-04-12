@@ -277,7 +277,7 @@ const Team = () => {
             {team?.slots.map((slot, index) => (
               <li
                 key={index + slot}
-                className="flex items-center p-2 space-x-2 bg-gray-300 rounded odd:bg-gray-400"
+                className="flex items-center p-2 space-x-2 bg-gray-200 rounded odd:bg-gray-300"
               >
                 <span className="font-semibold">{slot}</span>
                 {team?.players && team?.players[index] ? (

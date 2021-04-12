@@ -95,7 +95,7 @@ const EditList = ({ values, handleChange }) => {
             .map(player => (
               <li
                 key={player.id}
-                className="flex p-2 bg-gray-300 rounded odd:bg-gray-400"
+                className="flex p-2 bg-gray-200 rounded odd:bg-gray-300"
               >
                 <div className="flex-grow space-x-1">
                   <Link href="/players/[id]" as={`/players/${player.id}`}>
