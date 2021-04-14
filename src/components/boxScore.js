@@ -48,7 +48,7 @@ const BoxScore = ({ stats }) => {
           </thead>
           <tbody>
             {stats.map(({ id, player }) => (
-              <tr key={id} className="odd:bg-gray-300">
+              <tr key={id} className="odd:bg-skin-foreground-alt">
                 <td
                   className={`truncate py-1 text-center ${
                     sort === 'player' ? 'font-semibold' : ''
@@ -68,7 +68,7 @@ const BoxScore = ({ stats }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex flex-grow overflow-y-scroll">
+      <div className="flex flex-grow overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr>
@@ -237,7 +237,7 @@ const BoxScore = ({ stats }) => {
                 stl,
                 blk,
               }) => (
-                <tr key={id} className="odd:bg-gray-300">
+                <tr key={id} className="odd:bg-skin-foreground-alt">
                   <td
                     className={`text-center py-1 ${
                       sort === 'min' ? 'font-semibold' : ''
@@ -311,103 +311,6 @@ const BoxScore = ({ stats }) => {
             )}
           </tbody>
         </table>
-        {/* <table>
-          <thead>
-            <tr>
-              <th>
-                <button
-                  className="w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none"
-                  type="button"
-                  onClick={() => setSort('reb')}
-                  disabled={sort === 'reb'}
-                >
-                  reb
-                </button>
-              </th>
-              <th>
-                <button
-                  className="w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none"
-                  type="button"
-                  onClick={() => setSort('ast')}
-                  disabled={sort === 'ast'}
-                >
-                  ast
-                </button>
-              </th>
-              <th>
-                <button
-                  className="w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none"
-                  type="button"
-                  onClick={() => setSort('turnover')}
-                  disabled={sort === 'turnover'}
-                >
-                  to
-                </button>
-              </th>
-              <th>
-                <button
-                  className="w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none"
-                  type="button"
-                  onClick={() => setSort('stl')}
-                  disabled={sort === 'stl'}
-                >
-                  stl
-                </button>
-              </th>
-              <th>
-                <button
-                  className="w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none"
-                  type="button"
-                  onClick={() => setSort('blk')}
-                  disabled={sort === 'blk'}
-                >
-                  blk
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {stats.map(({ id, reb, ast, turnover, stl, blk }) => (
-              <tr key={id} className="odd:bg-gray-300">
-                <td
-                  className={`text-center py-1 ${
-                    sort === 'reb' ? 'font-semibold' : ''
-                  }`}
-                >
-                  {reb}
-                </td>
-                <td
-                  className={`text-center py-1 ${
-                    sort === 'ast' ? 'font-semibold' : ''
-                  }`}
-                >
-                  {ast}
-                </td>
-                <td
-                  className={`text-center py-1 ${
-                    sort === 'turnover' ? 'font-semibold' : ''
-                  }`}
-                >
-                  {turnover}
-                </td>
-                <td
-                  className={`text-center py-1 ${
-                    sort === 'stl' ? 'font-semibold' : ''
-                  }`}
-                >
-                  {stl}
-                </td>
-                <td
-                  className={`text-center py-1 ${
-                    sort === 'blk' ? 'font-semibold' : ''
-                  }`}
-                >
-                  {blk}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table> */}
       </div>
     </div>
   )

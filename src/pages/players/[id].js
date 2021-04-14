@@ -36,7 +36,7 @@ const GameLog = ({ stats, teams, team, season }) => {
                 visitor_team_id: awayTeamId,
                 home_team_id: homeTeamId,
               }) => (
-                <tr key={id} className="odd:bg-gray-300">
+                <tr key={id} className="odd:bg-skin-foreground-alt">
                   <td className="py-1 overflow-hidden text-center whitespace-nowrap">
                     <Link href="/games/[id]" as={`/games/${id}`}>
                       <a className="space-x-1 text-blue-700 hover:text-blue-600">
@@ -62,7 +62,7 @@ const GameLog = ({ stats, teams, team, season }) => {
             )}
         </tbody>
       </table>
-      <div className="flex flex-grow overflow-y-scroll">
+      <div className="flex flex-grow overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr>
@@ -129,7 +129,7 @@ const GameLog = ({ stats, teams, team, season }) => {
                 stl,
                 blk,
               }) => (
-                <tr key={id} className="odd:bg-gray-300">
+                <tr key={id} className="odd:bg-skin-foreground-alt">
                   <td className="py-1 text-center">{min}</td>
                   <td className="py-1 text-center">{pts}</td>
                   <td className="py-1 text-center">
@@ -193,7 +193,7 @@ const Player = () => {
           season={player.season}
         />
       </Main>
-      <Footer>
+      <Footer className="bg-skin-background">
         <SelectSeason
           season={season}
           handleChange={e => {

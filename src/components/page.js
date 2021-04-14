@@ -21,12 +21,17 @@ const nav = [
     url: '/fantasy',
     text: 'fantasy',
   },
+  {
+    url: '/settings',
+    text: 'settings',
+  },
 ]
 
 const Page = ({ title = DEFAULT_TITLE, children }) => {
   const { pathname } = useRouter()
   return (
-    <div className="flex flex-col min-h-screen text-gray-900 bg-gray-100">
+    <div className="flex flex-col min-h-screen text-skin-base bg-skin-background">
+      {/* <div className="flex flex-col min-h-screen text-skin-base bg-skin-background"> */}
       <Head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -103,7 +108,7 @@ const Page = ({ title = DEFAULT_TITLE, children }) => {
         </title>
       </Head>
       <header>
-        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-center text-gray-900 sm:text-4xl sm:leading-10">
+        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-center text-skin-base sm:text-4xl sm:leading-10">
           {pathname === '/' ? (
             <span>{DEFAULT_TITLE}</span>
           ) : (

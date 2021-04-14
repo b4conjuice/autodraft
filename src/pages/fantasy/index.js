@@ -126,7 +126,7 @@ const Fantasy = () => {
         {games?.length > 0 && (
           <ul className="">
             {topPlayers?.slice(0, 5).map(player => (
-              <li key={player.id} className="px-2 odd:bg-gray-300">
+              <li key={player.id} className="px-2 odd:bg-skin-foreground-alt">
                 <div className="flex space-x-2">
                   <Link href="/players/[id]" as={`/players/${player.id}`}>
                     <a>{player.name}</a>

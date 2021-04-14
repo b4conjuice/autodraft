@@ -277,7 +277,7 @@ const Team = () => {
             {team?.slots.map((slot, index) => (
               <li
                 key={index + slot}
-                className="flex items-center p-2 space-x-2 bg-gray-200 rounded odd:bg-gray-300"
+                className="flex items-center p-2 space-x-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt"
               >
                 <span className="font-semibold">{slot}</span>
                 {team?.players && team?.players[index] ? (
@@ -372,16 +372,6 @@ const Team = () => {
                 )}
               </li>
             ))}
-            {/* <ul className="space-y-2">
-              {team?.players.map(player => (
-                <li
-                  key={player}
-                  className="p-2 bg-gray-300 rounded odd:bg-gray-400"
-                >
-                  {player}
-                </li>
-              ))}
-            </ul> */}
             <Confirm
               className="flex justify-center p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none"
               type="button"

@@ -30,7 +30,7 @@ const Players = () => {
               .map(player => (
                 <li
                   key={player.id}
-                  className="p-2 bg-gray-200 rounded odd:bg-gray-300"
+                  className="p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt"
                 >
                   <div className="space-x-1">
                     <Link href="/players/[id]" as={`/players/${player.id}`}>

@@ -23,10 +23,10 @@ const Teams = () => {
               .map(team => (
                 <li
                   key={team.id}
-                  className="bg-gray-200 rounded odd:bg-gray-300"
+                  className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
                 >
                   <Link href="/teams/[id]" as={`/teams/${team.id}`}>
-                    <a className="block p-2 space-x-1 text-xl text-center text-gray-900 hover:text-blue-600">
+                    <a className="block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600">
                       <span className="hidden md:inline">{team.full_name}</span>
                       <span className="inline md:hidden">
                         <span className="text-sm">{team.abbreviation}</span>{' '}
@@ -43,10 +43,10 @@ const Teams = () => {
               .map(team => (
                 <li
                   key={team.id}
-                  className="bg-gray-200 rounded odd:bg-gray-300"
+                  className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
                 >
                   <Link href="/teams/[id]" as={`/teams/${team.id}`}>
-                    <a className="block p-2 space-x-1 text-xl text-center text-gray-900 hover:text-blue-600">
+                    <a className="block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600">
                       <span className="hidden md:inline">{team.full_name}</span>
                       <span className="inline md:hidden">
                         <span className="text-sm">{team.abbreviation}</span>{' '}

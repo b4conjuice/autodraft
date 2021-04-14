@@ -29,25 +29,25 @@ const Depth = ({ team }) => {
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
-                <tr key={position} className="odd:bg-gray-300">
+                <tr key={position} className="odd:bg-skin-foreground-alt">
                   <td className="py-1 text-center">{position}</td>
                 </tr>
               ) : null
             )}
             {team.some(player => player.position === '') && (
-              <tr className="odd:bg-gray-300">
+              <tr className="odd:bg-skin-foreground-alt">
                 <td className="py-1 text-center">N/A</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      <div className="flex flex-grow overflow-y-scroll">
+      <div className="flex flex-grow overflow-x-auto">
         <table className="w-full">
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
-                <tr key={position} className="px-1 odd:bg-gray-300">
+                <tr key={position} className="px-1 odd:bg-skin-foreground-alt">
                   {team
                     .filter(player => player.position === position)
                     .map(player => (
@@ -64,7 +64,7 @@ const Depth = ({ team }) => {
               ) : null
             )}
             {team.some(player => player.position === '') && (
-              <tr className="px-4 odd:bg-gray-300">
+              <tr className="px-4 odd:bg-skin-foreground-alt">
                 {team
                   .filter(player => player.position === '')
                   .map(player => (
@@ -80,17 +80,6 @@ const Depth = ({ team }) => {
               </tr>
             )}
           </tbody>
-          {/* <tbody>
-            {positions.map(position =>
-              getPlayersByPosition(position) ? (
-                <tr key={position} className="px-4 odd:bg-gray-300">
-                  <td className="px-4 py-1 text-center">
-                    {getPlayersByPosition(position)}
-                  </td>
-                </tr>
-              ) : null
-            )}
-          </tbody> */}
         </table>
       </div>
     </div>
@@ -218,10 +207,10 @@ const Team = () => {
               {games.map(game => (
                 <li
                   key={game.id}
-                  className="bg-gray-200 rounded odd:bg-gray-300"
+                  className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
                 >
                   <Link href="/games/[id]" as={`/games/${game.id}`}>
-                    <a className="block p-2 space-x-1 text-xl text-gray-900 hover:text-blue-600">
+                    <a className="block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600">
                       {game.home_team.id === team.id
                         ? `vs ${game.visitor_team.abbreviation}`
                         : `@ ${game.home_team.abbreviation}`}{' '}
@@ -246,7 +235,7 @@ const Team = () => {
           </>
         )}
       </Main>
-      <Footer className="flex">
+      <Footer className="flex bg-skin-background">
         <div className="w-2/3">
           <SelectTeam teams={teams} team={id} />
         </div>

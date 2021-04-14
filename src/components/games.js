@@ -3,9 +3,12 @@ import Link from 'next/link'
 const Games = ({ games, team }) => (
   <ul className="space-y-2">
     {games.map(game => (
-      <li key={game.id} className="bg-gray-200 rounded odd:bg-gray-300">
+      <li
+        key={game.id}
+        className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+      >
         <Link href="/games/[id]" as={`/games/${game.id}`}>
-          <a className="block p-2 space-x-1 text-xl text-gray-900 hover:text-blue-600">
+          <a className="block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600">
             <span>{game.visitor_team.abbreviation}</span>
             <span>@</span>
             <span>{game.home_team.abbreviation}</span>

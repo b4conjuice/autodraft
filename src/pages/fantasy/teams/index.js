@@ -38,7 +38,10 @@ const Teams = () => {
         {teams ? (
           <ul className="space-y-2">
             {teams.map(team => (
-              <li key={team.id} className="bg-gray-200 rounded odd:bg-gray-300">
+              <li
+                key={team.id}
+                className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+              >
                 <div className="space-x-1">
                   <Link
                     href="/fantasy/teams/[id]"
