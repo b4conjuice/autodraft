@@ -110,10 +110,14 @@ const Page = ({ title = DEFAULT_TITLE, children }) => {
       <header>
         <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-center text-skin-base sm:text-4xl sm:leading-10">
           {pathname === '/' ? (
-            <span>{DEFAULT_TITLE}</span>
+            <span>
+              {DEFAULT_TITLE} <span className="md:hidden">mobile</span>
+            </span>
           ) : (
             <Link href="/">
-              <a>{DEFAULT_TITLE}</a>
+              <a>
+                {DEFAULT_TITLE} <span className="md:hidden">mobile</span>
+              </a>
             </Link>
           )}
         </h1>

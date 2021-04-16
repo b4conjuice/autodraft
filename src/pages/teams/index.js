@@ -15,8 +15,8 @@ const Teams = () => {
     )
   return (
     <Page title="teams">
-      <Main className="space-y-2">
-        <div className="flex px-2 space-x-2">
+      <Main className="px-2 md:px-0">
+        <div className="flex mx-auto space-x-2 md:max-w-screen-md">
           <ul className="w-1/2 space-y-2">
             {teams
               .filter(team => team.conference === 'West')

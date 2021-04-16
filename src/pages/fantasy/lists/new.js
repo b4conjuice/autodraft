@@ -27,28 +27,32 @@ const NewList = () => {
   })
   return (
     <Page title="new list">
-      <Main className="flex flex-col px-2 space-y-2">
-        <nav className="px-2 text-md">
-          <ul className="flex justify-center space-x-3">
-            {nav.map(({ url, text }) => (
-              <li
-                key={url}
-                className={
-                  pathname.includes(url) ? 'border-b-2 border-blue-700' : ''
-                }
-              >
-                {pathname === url ? (
-                  <span>{text}</span>
-                ) : (
-                  <Link href={url}>
-                    <a className="text-blue-700 hover:text-blue-600">{text}</a>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <EditList values={values} handleChange={handleChange} />
+      <Main className="px-2 md:px-0">
+        <div className="mx-auto space-y-2 md:max-w-screen-md">
+          <nav className="px-2 text-md">
+            <ul className="flex justify-center space-x-3">
+              {nav.map(({ url, text }) => (
+                <li
+                  key={url}
+                  className={
+                    pathname.includes(url) ? 'border-b-2 border-blue-700' : ''
+                  }
+                >
+                  {pathname === url ? (
+                    <span>{text}</span>
+                  ) : (
+                    <Link href={url}>
+                      <a className="text-blue-700 hover:text-blue-600">
+                        {text}
+                      </a>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <EditList values={values} handleChange={handleChange} />
+        </div>
       </Main>
       <Footer className="flex justify-center">
         <ul className="inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg">

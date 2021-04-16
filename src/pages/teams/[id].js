@@ -145,95 +145,101 @@ const Team = () => {
   const games = gameType === 'regular' ? regularSeasonGames : postSeasonGames
   return (
     <Page title={team.full_name}>
-      <Main className="space-y-2">
-        <div className="flex items-center justify-center space-x-3">
-          <h1 className="text-2xl text-center">
-            <span className="hidden md:block">{team.full_name}</span>
-            <span className="md:hidden">{team.abbreviation}</span>
-          </h1>
-          <h2 className="text-center">
-            {wins.length}-
-            {regularSeasonGames.filter(g => g.status === 'Final').length -
-              wins.length}
-          </h2>
-        </div>
-        <Depth team={players} />
-        {(!season || season === CURRENT_SEASON) && (
-          <BoxScore
-            stats={players.map(p => ({
-              ...p,
-              player: {
-                id: p.id,
-                last_name: p.last_name,
-                position: p.position,
-              },
-            }))}
-          />
-        )}
-        {games.length > 0 && (
-          <>
-            {postSeasonGames.length > 0 && (
-              <label
-                htmlFor="checked"
-                className="inline-flex items-center justify-center w-full space-x-3 cursor-pointer"
-              >
-                <span className={gameType === 'post' ? 'text-gray-500' : ''}>
-                  regular season
-                </span>
-                <span className="relative">
-                  <span className="block w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
-                  <span
-                    className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-blue-700 ${
-                      gameType === 'post' ? 'transform translate-x-full' : ''
-                    }`}
-                  >
-                    <input
-                      id="checked"
-                      type="checkbox"
-                      checked
-                      onChange={() =>
-                        setGameType(gameType === 'regular' ? 'post' : 'regular')
-                      }
-                      className="absolute w-0 h-0 opacity-0"
-                    />
-                  </span>
-                </span>
-                <span className={gameType === 'regular' ? 'text-gray-500' : ''}>
-                  post season
-                </span>
-              </label>
-            )}
-            <ul>
-              {games.map(game => (
-                <li
-                  key={game.id}
-                  className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+      <Main>
+        <div className="mx-auto space-y-2 md:max-w-screen-md">
+          <div className="flex items-center justify-center space-x-3">
+            <h1 className="text-2xl text-center">
+              <span className="hidden md:block">{team.full_name}</span>
+              <span className="md:hidden">{team.abbreviation}</span>
+            </h1>
+            <h2 className="text-center">
+              {wins.length}-
+              {regularSeasonGames.filter(g => g.status === 'Final').length -
+                wins.length}
+            </h2>
+          </div>
+          <Depth team={players} />
+          {(!season || season === CURRENT_SEASON) && (
+            <BoxScore
+              stats={players.map(p => ({
+                ...p,
+                player: {
+                  id: p.id,
+                  last_name: p.last_name,
+                  position: p.position,
+                },
+              }))}
+            />
+          )}
+          {games.length > 0 && (
+            <>
+              {postSeasonGames.length > 0 && (
+                <label
+                  htmlFor="checked"
+                  className="inline-flex items-center justify-center w-full space-x-3 cursor-pointer"
                 >
-                  <Link href="/games/[id]" as={`/games/${game.id}`}>
-                    <a className="block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600">
-                      {game.home_team.id === team.id
-                        ? `vs ${game.visitor_team.abbreviation}`
-                        : `@ ${game.home_team.abbreviation}`}{' '}
-                      {game.status === 'Final' &&
-                        `${game.visitor_team_score}-${game.home_team_score}`}{' '}
-                      {game.status === 'Final' &&
-                        ((game.visitor_team_score > game.home_team_score &&
-                          game.visitor_team.id === team.id) ||
-                        (game.home_team_score > game.visitor_team_score &&
-                          game.home_team.id === team.id)
-                          ? 'W'
-                          : 'L')}{' '}
-                      {format(
-                        new Date(game.date.replace('Z', '')),
-                        'MMM d, yyyy'
-                      )}
-                    </a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
+                  <span className={gameType === 'post' ? 'text-gray-500' : ''}>
+                    regular season
+                  </span>
+                  <span className="relative">
+                    <span className="block w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
+                    <span
+                      className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-blue-700 ${
+                        gameType === 'post' ? 'transform translate-x-full' : ''
+                      }`}
+                    >
+                      <input
+                        id="checked"
+                        type="checkbox"
+                        checked
+                        onChange={() =>
+                          setGameType(
+                            gameType === 'regular' ? 'post' : 'regular'
+                          )
+                        }
+                        className="absolute w-0 h-0 opacity-0"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    className={gameType === 'regular' ? 'text-gray-500' : ''}
+                  >
+                    post season
+                  </span>
+                </label>
+              )}
+              <ul>
+                {games.map(game => (
+                  <li
+                    key={game.id}
+                    className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                  >
+                    <Link href="/games/[id]" as={`/games/${game.id}`}>
+                      <a className="block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600">
+                        {game.home_team.id === team.id
+                          ? `vs ${game.visitor_team.abbreviation}`
+                          : `@ ${game.home_team.abbreviation}`}{' '}
+                        {game.status === 'Final' &&
+                          `${game.visitor_team_score}-${game.home_team_score}`}{' '}
+                        {game.status === 'Final' &&
+                          ((game.visitor_team_score > game.home_team_score &&
+                            game.visitor_team.id === team.id) ||
+                          (game.home_team_score > game.visitor_team_score &&
+                            game.home_team.id === team.id)
+                            ? 'W'
+                            : 'L')}{' '}
+                        {format(
+                          new Date(game.date.replace('Z', '')),
+                          'MMM d, yyyy'
+                        )}
+                      </a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
       </Main>
       <Footer className="flex bg-skin-background">
         <div className="w-2/3">

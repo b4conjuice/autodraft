@@ -32,7 +32,44 @@ const List = () => {
   if (list?.error)
     return (
       <Page title="lists">
-        <Main className="flex flex-col px-2 space-y-2">
+        <Main className="px-2 md:px-0">
+          <div className="mx-auto space-y-2 md:max-w-screen-md">
+            <nav className="px-2 text-md">
+              <ul className="flex justify-center space-x-3">
+                {nav.map(({ url, text }) => (
+                  <li
+                    key={url}
+                    className={
+                      pathname.includes(url) ? 'border-b-2 border-blue-700' : ''
+                    }
+                  >
+                    {pathname === url ? (
+                      <span>{text}</span>
+                    ) : (
+                      <Link href={url}>
+                        <a className="text-blue-700 hover:text-blue-600">
+                          {text}
+                        </a>
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <h1 className="text-2xl text-center">{list.error}</h1>
+            <Link href="/fantasy/lists">
+              <a className="text-center text-blue-700 hover:text-blue-600">
+                back to lists
+              </a>
+            </Link>
+          </div>
+        </Main>
+      </Page>
+    )
+  return (
+    <Page title="lists">
+      <Main className="px-2 md:px-0">
+        <div className="mx-auto space-y-2 md:max-w-screen-md">
           <nav className="px-2 text-md">
             <ul className="flex justify-center space-x-3">
               {nav.map(({ url, text }) => (
@@ -55,82 +92,51 @@ const List = () => {
               ))}
             </ul>
           </nav>
-          <h1 className="text-2xl text-center">{list.error}</h1>
-          <Link href="/fantasy/lists">
-            <a className="text-center text-blue-700 hover:text-blue-600">
-              back to lists
-            </a>
-          </Link>
-        </Main>
-      </Page>
-    )
-  return (
-    <Page title="lists">
-      <Main className="flex flex-col px-2 space-y-2">
-        <nav className="px-2 text-md">
-          <ul className="flex justify-center space-x-3">
-            {nav.map(({ url, text }) => (
-              <li
-                key={url}
-                className={
-                  pathname.includes(url) ? 'border-b-2 border-blue-700' : ''
-                }
+          {edit ? (
+            <EditList values={values} handleChange={handleChange} />
+          ) : list ? (
+            <>
+              <h1 className="text-2xl text-center">{list.title}</h1>
+              <ul className="space-y-2">
+                {list?.items.map(item => (
+                  <li
+                    key={item}
+                    className="p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Confirm
+                className="flex justify-center w-full p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none"
+                type="button"
+                action={async () => {
+                  await deleteList(id)
+                  push('/fantasy/lists')
+                }}
               >
-                {pathname === url ? (
-                  <span>{text}</span>
-                ) : (
-                  <Link href={url}>
-                    <a className="text-blue-700 hover:text-blue-600">{text}</a>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
-        {edit ? (
-          <EditList values={values} handleChange={handleChange} />
-        ) : list ? (
-          <>
-            <h1 className="text-2xl text-center">{list.title}</h1>
-            <ul className="space-y-2">
-              {list?.items.map(item => (
-                <li
-                  key={item}
-                  className="p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-6 h-6"
                 >
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <Confirm
-              className="flex justify-center p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none"
-              type="button"
-              action={async () => {
-                await deleteList(id)
-                push('/fantasy/lists')
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </Confirm>
-          </>
-        ) : list?.items?.length === 0 ? (
-          <p>list has no items</p>
-        ) : (
-          <div className="flex justify-center flex-grow">
-            <Loading />
-          </div>
-        )}
+                  <path
+                    fillRule="evenodd"
+                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Confirm>
+            </>
+          ) : list?.items?.length === 0 ? (
+            <p>list has no items</p>
+          ) : (
+            <div className="flex justify-center flex-grow">
+              <Loading />
+            </div>
+          )}
+        </div>
       </Main>
       <Footer className="flex justify-center">
         <ul className="inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg">

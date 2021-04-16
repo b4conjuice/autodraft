@@ -57,7 +57,7 @@ const EditList = ({ values, handleChange }) => {
         </div>
       ))}
       <button
-        className="flex justify-center p-3 text-gray-100 bg-blue-700 rounded-lg"
+        className="flex justify-center w-full p-3 text-gray-100 bg-blue-700 rounded-lg"
         type="button"
         onClick={() => {
           const newItems = [...items, '']
