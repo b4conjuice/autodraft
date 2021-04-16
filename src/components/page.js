@@ -2,36 +2,14 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-const DEFAULT_TITLE = 'autodraft'
+import { TopNav } from './nav'
 
-const nav = [
-  {
-    url: '/games',
-    text: 'games',
-  },
-  {
-    url: '/teams',
-    text: 'teams',
-  },
-  {
-    url: '/players',
-    text: 'players',
-  },
-  {
-    url: '/fantasy',
-    text: 'fantasy',
-  },
-  {
-    url: '/settings',
-    text: 'settings',
-  },
-]
+const DEFAULT_TITLE = 'autodraft'
 
 const Page = ({ title = DEFAULT_TITLE, children }) => {
   const { pathname } = useRouter()
   return (
     <div className="flex flex-col min-h-screen text-skin-base bg-skin-background">
-      {/* <div className="flex flex-col min-h-screen text-skin-base bg-skin-background"> */}
       <Head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -110,40 +88,15 @@ const Page = ({ title = DEFAULT_TITLE, children }) => {
       <header>
         <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-center text-skin-base sm:text-4xl sm:leading-10">
           {pathname === '/' ? (
-            <span>
-              {DEFAULT_TITLE} <span className="md:hidden">mobile</span>
-            </span>
+            <span>{DEFAULT_TITLE}</span>
           ) : (
             <Link href="/">
-              <a>
-                {DEFAULT_TITLE} <span className="md:hidden">mobile</span>
-              </a>
+              <a>{DEFAULT_TITLE}</a>
             </Link>
           )}
         </h1>
-        <nav className="px-2 py-1 text-lg">
-          <ul className="flex justify-center space-x-3">
-            {nav.map(({ url, text }) => (
-              <li
-                key={url}
-                className={
-                  pathname === url || pathname.includes(`${url}/`)
-                    ? 'border-b-2 border-blue-700'
-                    : ''
-                }
-              >
-                {pathname === url ? (
-                  <span>{text}</span>
-                ) : (
-                  <Link href={url}>
-                    <a className="text-blue-700 hover:text-blue-600">{text}</a>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
       </header>
+      <TopNav pathname={pathname} />
       {children}
     </div>
   )

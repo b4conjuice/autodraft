@@ -3,7 +3,7 @@ import subDays from 'date-fns/subDays'
 import addDays from 'date-fns/addDays'
 
 const DatePicker = ({ date, setDate }) => (
-  <ul className="inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg">
+  <ul className="inline-flex transition bg-blue-700 bg-opacity-50 divide-x divide-gray-100 rounded-lg backdrop-filter backdrop-blur">
     <li className="flex justify-center">
       <button
         className="p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none"
