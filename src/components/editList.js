@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
+import { MinusIcon, PlusIcon } from '@heroicons/react/solid'
 
 import Loading from '@/components/loading'
 import { searchNBAPlayers } from '@/lib/api'
@@ -41,18 +42,7 @@ const EditList = ({ values, handleChange }) => {
             }}
             disabled={item === '' || items.length === 1}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <MinusIcon className="w-6 h-6" />
           </button>
         </div>
       ))}
@@ -64,18 +54,7 @@ const EditList = ({ values, handleChange }) => {
           handleChange({ target: { name: 'items', value: newItems } })
         }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <PlusIcon className="w-6 h-6" />
       </button>
       <input
         placeholder="search players"
@@ -124,18 +103,7 @@ const EditList = ({ values, handleChange }) => {
                     item => item === `${player.first_name} ${player.last_name}`
                   )}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <PlusIcon className="w-6 h-6" />
                 </button>
               </li>
             ))}

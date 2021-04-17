@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import {
+  XCircleIcon,
+  DownloadIcon,
+  TrashIcon,
+  SaveIcon,
+} from '@heroicons/react/solid'
 
 import Page from '@/components/page'
 import Main from '@/components/main'
@@ -177,18 +183,7 @@ const Team = () => {
                   />
                   {search !== '' && (
                     <button type="button" onClick={() => setSearch('')}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        className="w-6 h-6 text-gray-400"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <XCircleIcon className="w-6 h-6" />
                     </button>
                   )}
                 </div>
@@ -338,18 +333,7 @@ const Team = () => {
                             dropPlayer(index)
                           }}
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className="w-6 h-6 text-red-700"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                          <DownloadIcon className="w-6 h-6 text-red-700" />
                         </Confirm>
                       )}
                     </>
@@ -385,18 +369,7 @@ const Team = () => {
                   push('/fantasy/teams')
                 }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <TrashIcon className="w-6 h-6" />
               </Confirm>
             </>
           ) : team?.players?.length === 0 ? (
@@ -422,71 +395,9 @@ const Team = () => {
                 (p, index) => p === team?.players[index]
               )}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-6 h-6"
-              >
-                <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
-              </svg>
+              <SaveIcon className="w-6 h-6" />
             </button>
           </li>
-          {/* <li className="flex justify-center">
-            <button
-              className="p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none"
-              type="button"
-              onClick={() => setEdit(!edit)}
-            >
-              {edit ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                  <path
-                    fillRule="evenodd"
-                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              )}
-            </button>
-          </li>
-          {edit && (
-            <li className="flex justify-center">
-              <button
-                className="p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none"
-                type="submit"
-                onClick={handleSubmit}
-                disabled={!dirty || isSubmitting}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
-                </svg>
-              </button>
-            </li>
-          )} */}
         </ul>
       </Footer>
     </Page>
