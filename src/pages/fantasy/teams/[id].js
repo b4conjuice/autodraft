@@ -46,7 +46,7 @@ const Depth = ({ team }) => {
   const positions = ['PG', 'SG', 'SF', 'PF', 'C']
   const getPlayersByPosition = position => {
     const playersByPosition = team
-      .filter(player => player.position.some(pos => pos === position))
+      .filter(player => player.position?.some(pos => pos === position))
       .map(player => player.last_name)
     return playersByPosition.length > 0
       ? `${playersByPosition.join(' ')} (${playersByPosition.length})`
@@ -75,7 +75,7 @@ const Depth = ({ team }) => {
                 <tr key={position} className="px-1 odd:bg-skin-foreground-alt">
                   {team
                     .filter(player =>
-                      player.position.some(pos => pos === position)
+                      player.position?.some(pos => pos === position)
                     )
                     .map(player => (
                       <td
@@ -259,7 +259,7 @@ const Team = () => {
                     <Loading />
                   </div>
                 ) : (
-                  <ul className="absolute w-full space-y-2 bg-blue-200">
+                  <ul className="absolute w-full space-y-2 bg-skin-foreground">
                     {results
                       .filter(player => player.position)
                       .filter(
@@ -461,7 +461,7 @@ const Team = () => {
                 await updateTeam(team)
                 await revalidate()
               }}
-              disabled={initialTeam?.players.every(
+              disabled={initialTeam?.players?.every(
                 (p, index) => p === team?.players[index]
               )}
             >

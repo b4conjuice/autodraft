@@ -2501,7 +2501,7 @@ const players = [
   },
 ]
 
-const getPosition = name => players.find(p => p.name === name).position
+const getPosition = name => players.find(p => p.name === name)?.position
 
 export default players
 export { getPosition }
