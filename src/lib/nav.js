@@ -7,6 +7,10 @@ const nav = [
     url: '/fantasy/lists',
     text: 'lists',
   },
+  {
+    url: '/fantasy/players',
+    text: 'players',
+  },
 ]
 
 export default nav

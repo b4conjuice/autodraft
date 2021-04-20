@@ -15,6 +15,7 @@ import Confirm from '@/components/confirm'
 import Footer from '@/components/footer'
 import { fetchTeams, updateTeam, deleteTeam, searchNBAPlayers } from '@/lib/api'
 import nav from '@/lib/nav'
+import { getPosition } from '@/lib/espnPlayers'
 
 const positionToSlot = {
   G: ['PG', 'SG', 'G', 'U', 'B'],
@@ -39,6 +40,62 @@ const getPicks = ({ order, teams, rounds }) => {
 }
 
 const EditTeam = () => <p>edit team</p>
+
+const Depth = ({ team }) => {
+  console.log({ team })
+  const positions = ['PG', 'SG', 'SF', 'PF', 'C']
+  const getPlayersByPosition = position => {
+    const playersByPosition = team
+      .filter(player => player.position.some(pos => pos === position))
+      .map(player => player.last_name)
+    return playersByPosition.length > 0
+      ? `${playersByPosition.join(' ')} (${playersByPosition.length})`
+      : ''
+  }
+  return (
+    <div className="flex w-full">
+      <div className="w-12">
+        <table className="w-full border-r-4 border-gray-400 table-fixed">
+          <tbody>
+            {positions.map(position =>
+              getPlayersByPosition(position) ? (
+                <tr key={position} className="odd:bg-skin-foreground-alt">
+                  <td className="py-1 text-center">{position}</td>
+                </tr>
+              ) : null
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex flex-grow overflow-x-auto">
+        <table className="w-full">
+          <tbody>
+            {positions.map(position =>
+              getPlayersByPosition(position) ? (
+                <tr key={position} className="px-1 odd:bg-skin-foreground-alt">
+                  {team
+                    .filter(player =>
+                      player.position.some(pos => pos === position)
+                    )
+                    .map(player => (
+                      <td
+                        key={player.id}
+                        className="max-w-sm px-1 py-1 text-center truncate"
+                      >
+                        <Link href="/players/[id]" as={`/players/${player.id}`}>
+                          <a>{player.last_name || player.first_name}</a>
+                        </Link>
+                      </td>
+                    ))}
+                </tr>
+              ) : null
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
 
 const Team = () => {
   const [search, setSearch] = useState('')
@@ -172,6 +229,16 @@ const Team = () => {
           ) : team ? (
             <>
               <h1 className="text-2xl text-center">{team.name}</h1>
+              <Depth
+                team={team.players.map(p => {
+                  const [, last] = p.split(' ')
+
+                  return {
+                    last_name: last,
+                    position: getPosition(p),
+                  }
+                })}
+              />
               <div className="relative">
                 <div className="flex form-input focus-within:border-blue-700">
                   <input
@@ -282,7 +349,10 @@ const Team = () => {
                   <span className="font-semibold">{slot}</span>
                   {team?.players && team?.players[index] ? (
                     <>
-                      <span className="flex-grow">{team?.players[index]}</span>
+                      <span className="flex-grow">
+                        {team?.players[index]}{' '}
+                        {getPosition(team?.players[index]).join(', ')}
+                      </span>
                       {(selected === '' ||
                         team?.players[index] ===
                           `${selectedPlayer?.first_name} ${selectedPlayer?.last_name}`) && (
