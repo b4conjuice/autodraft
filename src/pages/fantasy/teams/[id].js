@@ -351,7 +351,7 @@ const Team = () => {
                     <>
                       <span className="flex-grow">
                         {team?.players[index]}{' '}
-                        {getPosition(team?.players[index]).join(', ')}
+                        {getPosition(team?.players[index])?.join(', ') ?? ''}
                       </span>
                       {(selected === '' ||
                         team?.players[index] ===
