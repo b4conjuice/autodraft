@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { TopNav } from './nav'
+import { MenuButton } from './nav'
 
 const DEFAULT_TITLE = 'autodraft'
 
@@ -85,8 +85,9 @@ const Page = ({ title = DEFAULT_TITLE, children }) => {
           {title === DEFAULT_TITLE ? title : `${title} - ${DEFAULT_TITLE}`}
         </title>
       </Head>
-      <header>
-        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-center text-skin-base sm:text-4xl sm:leading-10">
+      <header className="md:flex md:border-b border-skin-foreground">
+        <MenuButton />
+        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-center text-skin-base sm:text-4xl sm:leading-10 md:text-left">
           {pathname === '/' ? (
             <span>{DEFAULT_TITLE}</span>
           ) : (
@@ -96,7 +97,6 @@ const Page = ({ title = DEFAULT_TITLE, children }) => {
           )}
         </h1>
       </header>
-      <TopNav pathname={pathname} />
       {children}
     </div>
   )

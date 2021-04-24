@@ -1,12 +1,12 @@
 import '../index.css'
 import { SideNav } from '@/components/nav'
-import { ThemeProvider } from '@/lib/useTheme'
+import { AppProvider } from '@/lib/useApp'
 
 const App = ({ Component, pageProps }) => (
-  <ThemeProvider>
+  <AppProvider>
     <Component {...pageProps} />
     <SideNav />
-  </ThemeProvider>
+  </AppProvider>
 )
 
 export default App

@@ -33,6 +33,11 @@ module.exports = {
           'button-muted': withOpacity('--color-button-muted'),
         },
       },
+      borderColor: {
+        skin: {
+          foreground: withOpacity('--color-foreground'),
+        },
+      },
       gradientColorStops: {
         skin: {
           hue: withOpacity('--color-fill'),

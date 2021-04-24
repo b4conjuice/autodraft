@@ -3,6 +3,7 @@ import format from 'date-fns/format'
 
 import Page from '@/components/page'
 import Main from '@/components/main'
+import Layout from '@/components/layout'
 import Loading from '@/components/loading'
 import Games from '@/components/games'
 import DatePicker from '@/components/datePicker'
@@ -17,28 +18,30 @@ const TodaysGames = () => {
   })
   return (
     <Page>
-      <Main className="px-2 md:px-0">
-        <div className="mx-auto space-y-2 md:max-w-screen-md">
-          <div className="flex space-x-0 md:space-x-2">
-            <input
-              type="date"
-              className="w-full form-input"
-              value={date}
-              onChange={e => setDate(e.target.value)}
-            />
-            <div className="hidden md:block">
-              <DatePicker date={date} setDate={setDate} />
+      <Layout>
+        <Main className="px-2 md:px-0">
+          <div className="mx-auto space-y-2 md:max-w-screen-md">
+            <div className="flex space-x-0 md:space-x-2">
+              <input
+                type="date"
+                className="w-full form-input"
+                value={date}
+                onChange={e => setDate(e.target.value)}
+              />
+              <div className="hidden md:block">
+                <DatePicker date={date} setDate={setDate} />
+              </div>
             </div>
+            {games ? (
+              <Games games={games} />
+            ) : (
+              <div className="flex justify-center flex-grow">
+                <Loading />
+              </div>
+            )}
           </div>
-          {games ? (
-            <Games games={games} />
-          ) : (
-            <div className="flex justify-center flex-grow">
-              <Loading />
-            </div>
-          )}
-        </div>
-      </Main>
+        </Main>
+      </Layout>
       <Footer className="flex justify-center md:hidden">
         <DatePicker date={date} setDate={setDate} />
       </Footer>

@@ -2,28 +2,43 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Dialog, Transition } from '@headlessui/react'
-import { MenuAlt4Icon, XIcon } from '@heroicons/react/solid'
+import {
+  MenuAlt4Icon as MenuIcon,
+  XIcon,
+  ClockIcon,
+  UserGroupIcon,
+  UserIcon,
+  LightningBoltIcon,
+  CogIcon,
+} from '@heroicons/react/solid'
+
+import { useMenu } from '@/lib/useMenu'
 
 const nav = [
   {
     url: '/games',
     text: 'games',
+    Icon: ClockIcon,
   },
   {
     url: '/teams',
     text: 'teams',
+    Icon: UserGroupIcon,
   },
   {
     url: '/players',
     text: 'players',
+    Icon: UserIcon,
   },
   {
     url: '/fantasy',
     text: 'fantasy',
+    Icon: LightningBoltIcon,
   },
   {
     url: '/settings',
     text: 'settings',
+    Icon: CogIcon,
   },
 ]
 
@@ -51,6 +66,57 @@ export const TopNav = ({ pathname }) => (
     </ul>
   </nav>
 )
+
+export const MenuButton = () => {
+  const [isOpen, setIsOpen] = useMenu()
+  return (
+    <button
+      className="items-center justify-center hidden w-12 h-12 text-white transition md:flex focus:outline-none focus-visible:ring backdrop-filter backdrop-blur"
+      type="button"
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <span className="sr-only">Open site navigation</span>
+      <MenuIcon className="w-6 h-6" />
+    </button>
+  )
+}
+
+export const Menu = () => {
+  const { events, pathname } = useRouter()
+  const [isOpen, setIsOpen] = useMenu()
+  if (events) {
+    events.on('routeChangeComplete', () => {
+      setIsOpen(true)
+    })
+  }
+  return (
+    <nav className="hidden p-4 border-r md:block border-skin-foreground">
+      <ul className="space-y-4">
+        {nav.map(({ url, text, Icon }) => (
+          <li
+            key={url}
+            className={pathname === url || pathname.includes(`/`) ? '' : ''}
+          >
+            {pathname === url ? (
+              <span className="flex items-center space-x-2">
+                <Icon className="w-6 h-6" />
+                <span className={isOpen ? 'block' : 'hidden'}>{text}</span>
+              </span>
+            ) : (
+              <Link href={url}>
+                <a className="flex items-center space-x-2 text-blue-700 hover:text-blue-600">
+                  <Icon className="w-6 h-6" />
+                  <span className={isOpen ? 'block' : 'hidden'}>{text}</span>
+                </a>
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
 export const SideNav = () => {
   const { events, pathname } = useRouter()
   const [isOpen, setIsOpen] = useState(false)
@@ -131,8 +197,16 @@ export const SideNav = () => {
         onClick={() => setIsOpen(true)}
       >
         <span className="sr-only">Open site navigation</span>
-        <MenuAlt4Icon className="w-6 h-6" />
+        <MenuIcon className="w-6 h-6" />
       </button>
+      {/* <button
+        className="fixed top-0 z-30 flex items-center justify-center w-12 h-12 text-white transition focus:outline-none focus-visible:ring backdrop-filter backdrop-blur"
+        type="button"
+        onClick={() => setIsOpen(true)}
+      >
+        <span className="sr-only">Open site navigation</span>
+        <MenuIcon className="w-6 h-6" />
+      </button> */}
     </>
   )
 }

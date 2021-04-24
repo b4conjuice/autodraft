@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import format from 'date-fns/format'
 
 import Page from '@/components/page'
+import Layout from '@/components/layout'
 import Main from '@/components/main'
 import Loading from '@/components/loading'
 import Footer from '@/components/footer'
@@ -173,28 +174,30 @@ const Player = () => {
     )
   return (
     <Page title={`${player.first_name} ${player.last_name}`}>
-      <Main>
-        <div className="mx-auto space-y-2 md:max-w-screen-md">
-          <div className="flex items-center justify-center space-x-3">
-            <h1 className="text-2xl text-center">
-              {player.first_name} {player.last_name} {player.position}
-            </h1>
-            <h2 className="text-center">
-              <Link href="/teams/[id]" as={`/teams/${player.team.id}`}>
-                <a className="text-blue-700 hover:text-blue-600">
-                  {player.team.abbreviation}
-                </a>
-              </Link>
-            </h2>
+      <Layout>
+        <Main>
+          <div className="mx-auto space-y-2 md:max-w-screen-md">
+            <div className="flex items-center justify-center space-x-3">
+              <h1 className="text-2xl text-center">
+                {player.first_name} {player.last_name} {player.position}
+              </h1>
+              <h2 className="text-center">
+                <Link href="/teams/[id]" as={`/teams/${player.team.id}`}>
+                  <a className="text-blue-700 hover:text-blue-600">
+                    {player.team.abbreviation}
+                  </a>
+                </Link>
+              </h2>
+            </div>
+            <GameLog
+              stats={player.stats}
+              team={player.team.id}
+              teams={teams}
+              season={player.season}
+            />
           </div>
-          <GameLog
-            stats={player.stats}
-            team={player.team.id}
-            teams={teams}
-            season={player.season}
-          />
-        </div>
-      </Main>
+        </Main>
+      </Layout>
       <Footer className="bg-skin-background">
         <SelectSeason
           season={season}
