@@ -42,7 +42,6 @@ const getPicks = ({ order, teams, rounds }) => {
 const EditTeam = () => <p>edit team</p>
 
 const Depth = ({ team }) => {
-  console.log({ team })
   const positions = ['PG', 'SG', 'SF', 'PF', 'C']
   const getPlayersByPosition = position => {
     const playersByPosition = team
@@ -195,9 +194,9 @@ const Team = () => {
   const picks = team
     ? getPicks({ teams: team.teams, rounds: team.rounds, order: team.order })
     : []
-  console.log({ team })
-  console.log({ selectedPlayer })
-  console.log({ picks })
+  // console.log({ team })
+  // console.log({ selectedPlayer })
+  // console.log({ picks })
   return (
     <Page title="teams">
       <Main className="px-2 md:px-0">
@@ -229,16 +228,18 @@ const Team = () => {
           ) : team ? (
             <>
               <h1 className="text-2xl text-center">{team.name}</h1>
-              <Depth
-                team={team.players.map(p => {
-                  const [, last] = p.split(' ')
+              {team.players && team.players.length > 0 && (
+                <Depth
+                  team={team.players.map(p => {
+                    const [, last] = p.split(' ')
 
-                  return {
-                    last_name: last,
-                    position: getPosition(p),
-                  }
-                })}
-              />
+                    return {
+                      last_name: last,
+                      position: getPosition(p),
+                    }
+                  })}
+                />
+              )}
               <div className="relative">
                 <div className="flex form-input focus-within:border-blue-700">
                   <input
@@ -301,11 +302,25 @@ const Team = () => {
                               }`}
                               type="button"
                               onClick={() => {
-                                setSelected(
-                                  selected === ''
-                                    ? `${player.first_name} ${player.last_name}`
-                                    : ''
-                                )
+                                const validSlots = team?.slots
+                                  ?.map((slot, index) => {
+                                    if (
+                                      positionToSlot[player.position].some(
+                                        s => s === slot
+                                      ) &&
+                                      team?.players[index] === ''
+                                    )
+                                      return index
+                                  })
+                                  .filter(index => index !== undefined)
+                                if (selected !== '') setSelected('')
+                                else if (validSlots.length > 0) {
+                                  movePlayer(player, validSlots[0])
+                                  setSearch('')
+                                } else
+                                  setSelected(
+                                    `${player.first_name} ${player.last_name}`
+                                  )
                               }}
                             >
                               add
@@ -341,7 +356,7 @@ const Team = () => {
                 )}
               </div>
               <h2>roster</h2>
-              {team?.slots.map((slot, index) => (
+              {team?.slots?.map((slot, index) => (
                 <li
                   key={index + slot}
                   className="flex items-center p-2 space-x-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt"
