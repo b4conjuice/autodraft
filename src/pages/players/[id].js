@@ -40,7 +40,7 @@ const GameLog = ({ stats, teams, team, season }) => {
                 <tr key={id} className='odd:bg-skin-foreground-alt'>
                   <td className='py-1 overflow-hidden text-center whitespace-nowrap'>
                     <Link href='/games/[id]' as={`/games/${id}`}>
-                      <a className='space-x-1 text-blue-700 hover:text-blue-600'>
+                      <a className='space-x-1 text-skin-link-accent hover:text-skin-link-accent-hover'>
                         <span className='hidden md:inline'>
                           {format(new Date(date.replace('Z', '')), 'M/d/yy')}
                         </span>
@@ -183,7 +183,7 @@ const Player = () => {
               </h1>
               <h2 className='text-center'>
                 <Link href='/teams/[id]' as={`/teams/${player.team.id}`}>
-                  <a className='text-blue-700 hover:text-blue-600'>
+                  <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                     {player.team.abbreviation}
                   </a>
                 </Link>

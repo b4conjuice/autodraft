@@ -57,7 +57,9 @@ const Depth = ({ team }) => {
                         className='max-w-sm px-1 py-1 text-center truncate'
                       >
                         <Link href='/players/[id]' as={`/players/${player.id}`}>
-                          <a>{player.last_name || player.first_name}</a>
+                          <a className='hover:text-skin-link-accent-hover'>
+                            {player.last_name || player.first_name}
+                          </a>
                         </Link>
                       </td>
                     ))}
@@ -74,7 +76,9 @@ const Depth = ({ team }) => {
                       className='max-w-sm px-1 py-1 text-center truncate'
                     >
                       <Link href='/players/[id]' as={`/players/${player.id}`}>
-                        <a>{player.last_name || player.first_name}</a>
+                        <a className='hover:text-skin-link-accent-hover'>
+                          {player.last_name || player.first_name}
+                        </a>
                       </Link>
                     </td>
                   ))}
@@ -188,7 +192,7 @@ const Team = () => {
                     <span className='relative'>
                       <span className='block w-10 h-6 bg-gray-400 rounded-full shadow-inner' />
                       <span
-                        className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-blue-700 ${
+                        className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-skin-button-accent ${
                           gameType === 'post'
                             ? 'transform translate-x-full'
                             : ''
@@ -221,7 +225,7 @@ const Team = () => {
                       className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                     >
                       <Link href='/games/[id]' as={`/games/${game.id}`}>
-                        <a className='block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600'>
+                        <a className='block p-2 space-x-1 text-xl text-skin-base hover:text-skin-link-accent-hover'>
                           {game.home_team.id === team.id
                             ? `vs ${game.visitor_team.abbreviation}`
                             : `@ ${game.home_team.abbreviation}`}{' '}

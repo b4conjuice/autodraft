@@ -28,7 +28,7 @@ const Teams = () => {
                     className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
                     <Link href='/teams/[id]' as={`/teams/${team.id}`}>
-                      <a className='block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600'>
+                      <a className='block p-2 space-x-1 text-xl text-center text-skin-base hover:text-skin-link-accent-hover'>
                         <span className='hidden md:inline'>
                           {team.full_name}
                         </span>
@@ -50,7 +50,7 @@ const Teams = () => {
                     className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
                     <Link href='/teams/[id]' as={`/teams/${team.id}`}>
-                      <a className='block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600'>
+                      <a className='block p-2 space-x-1 text-xl text-center text-skin-base hover:text-skin-link-accent-hover'>
                         <span className='hidden md:inline'>
                           {team.full_name}
                         </span>

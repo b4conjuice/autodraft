@@ -29,7 +29,7 @@ const Lists = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className='text-blue-700 hover:text-blue-600'>
+                      <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                         {text}
                       </a>
                     </Link>
@@ -67,7 +67,7 @@ const Lists = () => {
         </div>
       </Main>
       <Footer className='flex justify-center'>
-        <ul className='inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg'>
+        <ul className='inline-flex divide-x divide-gray-100 rounded-lg bg-skin-button-accent'>
           <li className='flex justify-center'>
             <Link href='/fantasy/lists/new'>
               <a className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'>

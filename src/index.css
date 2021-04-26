@@ -9,29 +9,36 @@ select {
   background-color: var(--color-background);
 }
 
+::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+}
+
 @tailwind utilities;
 
 @layer base {
   :root {
     --color-text-base: 26, 32, 44;
     --color-text-muted: '';
-    --color-text-inverted: '';
+    --color-text-inverted: 255, 255, 255;
+    --color-text-accent: 2, 132, 199;
     --color-background: 247, 250, 252;
     --color-foreground: 229, 231, 235;
     --color-foreground-alt: 209, 213, 219;
-    --color-button-accent: '';
-    --color-button-accent-hover: '';
+    --color-link-accent: 2, 132, 199;
+    --color-link-accent-hover: 14, 165, 233;
+    --color-button-accent: 2, 132, 199;
+    --color-button-accent-hover: 14, 165, 233;
     --color-button-muted: '';
   }
   .theme-dark {
     --color-text-base: 247, 250, 252;
     --color-text-muted: '';
-    --color-text-inverted: '';
+    /* --color-text-inverted: ''; */
     --color-background: 26, 32, 44;
     --color-foreground: 45, 55, 72;
     --color-foreground-alt: 74, 85, 104;
-    --color-button-accent: '';
-    --color-button-accent-hover: '';
+    /* --color-button-accent: ''; */
+    /* --color-button-accent-hover: ''; */
     --color-button-muted: '';
   }
   .theme-tailwind {

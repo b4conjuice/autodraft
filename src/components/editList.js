@@ -47,7 +47,7 @@ const EditList = ({ values, handleChange }) => {
         </div>
       ))}
       <button
-        className='flex justify-center w-full p-3 text-gray-100 bg-blue-700 rounded-lg'
+        className='flex justify-center w-full p-3 text-gray-100 rounded-lg bg-skin-button-accent hover:bg-skin-button-accent-hover'
         type='button'
         onClick={() => {
           const newItems = [...items, '']
@@ -88,7 +88,7 @@ const EditList = ({ values, handleChange }) => {
                   <span>{player.position}</span>
                 </div>
                 <button
-                  className='flex justify-center text-gray-100 bg-blue-600 rounded-lg disabled:opacity-25 disabled:pointer-events-none'
+                  className='flex justify-center text-gray-100 rounded-lg disabled:opacity-25 disabled:pointer-events-none bg-skin-button-accent hover:bg-skin-button-accent-hover'
                   type='button'
                   onClick={() => {
                     const newItems = [

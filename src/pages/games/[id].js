@@ -33,13 +33,13 @@ const Game = () => {
                     href='/teams/[id]'
                     as={`/teams/${game.visitor_team.id}`}
                   >
-                    <a className='text-blue-700 hover:text-blue-600'>
+                    <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                       {game.visitor_team.abbreviation}
                     </a>
                   </Link>
                   <span>@</span>
                   <Link href='/teams/[id]' as={`/teams/${game.home_team.id}`}>
-                    <a className='text-blue-700 hover:text-blue-600'>
+                    <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                       {game.home_team.abbreviation}
                     </a>
                   </Link>

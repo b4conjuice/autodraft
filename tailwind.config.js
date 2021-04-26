@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 const withOpacity = variableName => ({ opacityValue }) =>
   opacityValue !== undefined
     ? `rgba(var(${variableName}), ${opacityValue})`
@@ -8,6 +10,9 @@ module.exports = {
   purge: ['./src/pages/**/*.js', './src/components/**/*.js'],
   theme: {
     extend: {
+      colors: {
+        blue: colors.lightBlue,
+      },
       animation: {
         'spin-slow': 'spin 2s linear infinite',
       },
@@ -20,6 +25,9 @@ module.exports = {
           base: withOpacity('--color-text-base'),
           muted: withOpacity('--color-text-muted'),
           inverted: withOpacity('--color-text-inverted'),
+          accent: withOpacity('--color-text-accent'),
+          'link-accent': withOpacity('--color-link-accent'),
+          'link-accent-hover': withOpacity('--color-link-accent-hover'),
         },
       },
       backgroundColor: {
@@ -36,6 +44,7 @@ module.exports = {
       borderColor: {
         skin: {
           foreground: withOpacity('--color-foreground'),
+          'button-accent': withOpacity('--color-button-accent'),
         },
       },
       gradientColorStops: {

@@ -8,7 +8,7 @@ const Games = ({ games, team }) => (
         className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
       >
         <Link href='/games/[id]' as={`/games/${game.id}`}>
-          <a className='block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600'>
+          <a className='block p-2 space-x-1 text-xl text-skin-base hover:text-skin-link-accent-hover'>
             <span>{game.visitor_team.abbreviation}</span>
             <span>@</span>
             <span>{game.home_team.abbreviation}</span>

@@ -25,7 +25,7 @@ const Players = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className='text-blue-700 hover:text-blue-600'>
+                      <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                         {text}
                       </a>
                     </Link>

@@ -142,7 +142,7 @@ const Team = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className='text-blue-700 hover:text-blue-600'>
+                      <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                         {text}
                       </a>
                     </Link>
@@ -153,7 +153,7 @@ const Team = () => {
           </nav>
           <h1 className='text-2xl text-center'>{team.error}</h1>
           <Link href='/fantasy/teams'>
-            <a className='text-center text-blue-700 hover:text-blue-600'>
+            <a className='text-center text-skin-link-accent hover:text-skin-link-accent-hover'>
               back to teams
             </a>
           </Link>
@@ -214,7 +214,7 @@ const Team = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className='text-blue-700 hover:text-blue-600'>
+                      <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                         {text}
                       </a>
                     </Link>
@@ -295,10 +295,10 @@ const Team = () => {
                             <div>added</div>
                           ) : (
                             <button
-                              className={`text-xs px-2 border-2 border-blue-700 rounded ${
+                              className={`text-xs px-2 border-2 border-skin-button-accent rounded ${
                                 selected === ''
-                                  ? 'text-gray-100 bg-blue-700'
-                                  : 'text-blue-700 bg-gray-100'
+                                  ? 'text-gray-100 bg-skin-button-accent'
+                                  : 'text-skin-accent bg-gray-100'
                               }`}
                               type='button'
                               onClick={() => {
@@ -372,10 +372,10 @@ const Team = () => {
                         team?.players[index] ===
                           `${selectedPlayer?.first_name} ${selectedPlayer?.last_name}`) && (
                         <button
-                          className={`text-xs px-2 border-2 border-blue-700 rounded ${
+                          className={`text-xs px-2 border-2 border-skin-button-accent rounded ${
                             selected === ''
-                              ? 'text-gray-100 bg-blue-700'
-                              : 'text-blue-700 bg-gray-100'
+                              ? 'text-gray-100 bg-skin-button-accent'
+                              : 'text-skin-accent bg-gray-100'
                           }`}
                           type='button'
                           onClick={() => {
@@ -394,7 +394,7 @@ const Team = () => {
                           s => s === slot
                         ) && (
                           <button
-                            className='px-2 text-xs text-gray-100 bg-blue-700 border-2 border-blue-700 rounded'
+                            className='px-2 text-xs text-gray-100 border-2 rounded bg-skin-button-accent border-skin-button-accent'
                             type='button'
                             onClick={() => {
                               movePlayer(selectedPlayer, index)
@@ -432,7 +432,7 @@ const Team = () => {
                           s => s === slot
                         ) && (
                           <button
-                            className='px-2 text-xs text-gray-100 bg-blue-700 border-2 border-blue-700 rounded'
+                            className='px-2 text-xs text-gray-100 border-2 rounded bg-skin-button-accent border-skin-button-accent'
                             type='button'
                             onClick={() => {
                               movePlayer(selectedPlayer, index)
@@ -467,7 +467,7 @@ const Team = () => {
         </div>
       </Main>
       <Footer className='flex justify-center'>
-        <ul className='inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg'>
+        <ul className='inline-flex divide-x divide-gray-100 rounded-lg bg-skin-button-accent'>
           <li className='flex justify-center'>
             <button
               className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'

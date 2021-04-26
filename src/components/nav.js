@@ -58,7 +58,9 @@ export const TopNav = ({ pathname }) => (
             <span>{text}</span>
           ) : (
             <Link href={url}>
-              <a className='text-blue-700 hover:text-blue-600'>{text}</a>
+              <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
+                {text}
+              </a>
             </Link>
           )}
         </li>
@@ -104,7 +106,7 @@ export const Menu = () => {
               </span>
             ) : (
               <Link href={url}>
-                <a className='flex items-center space-x-2 text-blue-700 hover:text-blue-600'>
+                <a className='flex items-center space-x-2 text-skin-link-accent hover:text-skin-link-accent-hover'>
                   <Icon className='w-6 h-6' />
                   <span className={isOpen ? 'block' : 'hidden'}>{text}</span>
                 </a>
@@ -154,7 +156,7 @@ export const SideNav = () => {
           >
             <button
               ref={closeButtonRef}
-              className='fixed z-30 flex items-center justify-center w-12 h-12 text-white transition bg-blue-700 bg-opacity-50 border border-white rounded-full border-opacity-20 bottom-2 right-2 md:hidden focus:outline-none focus-visible:ring backdrop-filter backdrop-blur'
+              className='fixed z-30 flex items-center justify-center w-12 h-12 text-white transition bg-opacity-50 border border-white rounded-full bg-skin-button-accent border-opacity-20 bottom-2 right-2 md:hidden focus:outline-none focus-visible:ring backdrop-filter backdrop-blur'
               type='button'
               onClick={() => setIsOpen(false)}
             >
@@ -177,7 +179,7 @@ export const SideNav = () => {
                         <span>{text}</span>
                       ) : (
                         <Link href={url}>
-                          <a className='text-blue-700 hover:text-blue-600'>
+                          <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                             {text}
                           </a>
                         </Link>
@@ -192,7 +194,7 @@ export const SideNav = () => {
         </Dialog>
       </Transition>
       <button
-        className='fixed z-30 flex items-center justify-center w-12 h-12 text-white transition bg-blue-700 bg-opacity-50 border border-white rounded-full border-opacity-20 bottom-2 right-2 md:hidden focus:outline-none focus-visible:ring backdrop-filter backdrop-blur'
+        className='fixed z-30 flex items-center justify-center w-12 h-12 text-white transition bg-opacity-50 border border-white rounded-full bg-skin-button-accent border-opacity-20 bottom-2 right-2 md:hidden focus:outline-none focus-visible:ring backdrop-filter backdrop-blur'
         type='button'
         onClick={() => setIsOpen(true)}
       >

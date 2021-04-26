@@ -106,7 +106,7 @@ const Fantasy = () => {
                       <span>{text}</span>
                     ) : (
                       <Link href={url}>
-                        <a className='text-blue-700 hover:text-blue-600'>
+                        <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                           {text}
                         </a>
                       </Link>
@@ -137,10 +137,14 @@ const Fantasy = () => {
                     >
                       <div className='flex space-x-2'>
                         <Link href='/players/[id]' as={`/players/${player.id}`}>
-                          <a>{player.name}</a>
+                          <a className='hover:text-skin-link-accent-hover'>
+                            {player.name}
+                          </a>
                         </Link>
                         <Link href='/teams/[id]' as={`/teams/${player.teamId}`}>
-                          <a>{player.abbreviation}</a>
+                          <a className='hover:text-skin-link-accent-hover'>
+                            {player.abbreviation}
+                          </a>
                         </Link>
                       </div>
                       <div className='flex space-x-2'>

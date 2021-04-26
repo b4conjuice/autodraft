@@ -8,10 +8,11 @@ import subDays from 'date-fns/subDays'
 import addDays from 'date-fns/addDays'
 
 const DatePicker = ({ date, setDate }) => (
-  <ul className='inline-flex transition bg-blue-700 bg-opacity-50 divide-x divide-gray-100 rounded-lg backdrop-filter backdrop-blur'>
+  // <ul className='inline-flex transition bg-blue-700 bg-opacity-25 divide-x divide-gray-100 rounded-lg backdrop-filter backdrop-blur'>
+  <ul className='inline-flex transition divide-x divide-gray-100'>
     <li className='flex justify-center'>
       <button
-        className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+        className='p-3 text-gray-100 rounded-l-lg disabled:opacity-25 disabled:pointer-events-none bg-skin-button-accent hover:bg-skin-button-accent-hover'
         type='button'
         onClick={() => {
           const [year, month, day] = date.split('-').map(d => parseInt(d, 10))
@@ -25,7 +26,7 @@ const DatePicker = ({ date, setDate }) => (
     </li>
     <li className='flex justify-center'>
       <button
-        className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+        className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none bg-skin-button-accent hover:bg-skin-button-accent-hover'
         type='button'
         onClick={() => {
           setDate(format(new Date(), 'yyyy-MM-dd'))
@@ -37,7 +38,7 @@ const DatePicker = ({ date, setDate }) => (
     </li>
     <li className='flex justify-center'>
       <button
-        className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+        className='p-3 text-gray-100 rounded-r-lg disabled:opacity-25 disabled:pointer-events-none bg-skin-button-accent hover:bg-skin-button-accent-hover'
         type='button'
         onClick={() => {
           const [year, month, day] = date.split('-').map(d => parseInt(d, 10))

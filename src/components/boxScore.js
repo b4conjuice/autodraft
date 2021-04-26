@@ -36,7 +36,7 @@ const BoxScore = ({ stats }) => {
             <tr>
               <th>
                 <button
-                  className='w-full py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('player')}
                   disabled={sort === 'player'}
@@ -55,7 +55,7 @@ const BoxScore = ({ stats }) => {
                   }`}
                 >
                   <Link href='/players/[id]' as={`/players/${player.id}`}>
-                    <a className=''>
+                    <a className='hover:text-skin-link-accent-hover'>
                       {player.last_name}
                       <span className='hidden md:inline'>
                         , {player.position}
@@ -74,7 +74,7 @@ const BoxScore = ({ stats }) => {
             <tr>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('min')}
                   disabled={sort === 'min'}
@@ -84,7 +84,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('pts')}
                   disabled={sort === 'pts'}
@@ -95,7 +95,7 @@ const BoxScore = ({ stats }) => {
               <th>
                 <span className='hidden md:block'>
                   <button
-                    className='px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                     type='button'
                     onClick={() => setSort('fgm')}
                     disabled={sort === 'fgm'}
@@ -104,7 +104,7 @@ const BoxScore = ({ stats }) => {
                   </button>
                   /
                   <button
-                    className='px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                     type='button'
                     onClick={() => setSort('fga')}
                     disabled={sort === 'fga'}
@@ -116,7 +116,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th className='hidden md:block'>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('fgp')}
                   disabled={sort === 'fgp'}
@@ -127,7 +127,7 @@ const BoxScore = ({ stats }) => {
               <th>
                 <span className='hidden md:block'>
                   <button
-                    className='px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                     type='button'
                     onClick={() => setSort('ftm')}
                     disabled={sort === 'ftm'}
@@ -136,7 +136,7 @@ const BoxScore = ({ stats }) => {
                   </button>
                   /
                   <button
-                    className='px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                     type='button'
                     onClick={() => setSort('fta')}
                     disabled={sort === 'fta'}
@@ -148,7 +148,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th className='hidden md:block'>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('ftp')}
                   disabled={sort === 'ftp'}
@@ -158,7 +158,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('fg3m')}
                   disabled={sort === 'fg3m'}
@@ -168,7 +168,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('reb')}
                   disabled={sort === 'reb'}
@@ -178,7 +178,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('ast')}
                   disabled={sort === 'ast'}
@@ -188,7 +188,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('turnover')}
                   disabled={sort === 'turnover'}
@@ -198,7 +198,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('stl')}
                   disabled={sort === 'stl'}
@@ -208,7 +208,7 @@ const BoxScore = ({ stats }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 text-gray-100 bg-blue-700 rounded disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
                   type='button'
                   onClick={() => setSort('blk')}
                   disabled={sort === 'blk'}
