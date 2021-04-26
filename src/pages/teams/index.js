@@ -15,25 +15,25 @@ const Teams = () => {
       </Page>
     )
   return (
-    <Page title="teams">
+    <Page title='teams'>
       <Layout>
-        <Main className="px-2 md:px-0 md:pt-4">
-          <div className="flex mx-auto space-x-2 md:max-w-screen-md">
-            <ul className="w-1/2 space-y-2">
+        <Main className='px-2 md:px-0 md:pt-4'>
+          <div className='flex mx-auto space-x-2 md:max-w-screen-md'>
+            <ul className='w-1/2 space-y-2'>
               {teams
                 .filter(team => team.conference === 'West')
                 .map(team => (
                   <li
                     key={team.id}
-                    className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                    className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
-                    <Link href="/teams/[id]" as={`/teams/${team.id}`}>
-                      <a className="block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600">
-                        <span className="hidden md:inline">
+                    <Link href='/teams/[id]' as={`/teams/${team.id}`}>
+                      <a className='block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600'>
+                        <span className='hidden md:inline'>
                           {team.full_name}
                         </span>
-                        <span className="inline md:hidden">
-                          <span className="text-sm">{team.abbreviation}</span>{' '}
+                        <span className='inline md:hidden'>
+                          <span className='text-sm'>{team.abbreviation}</span>{' '}
                           {team.name}
                         </span>
                       </a>
@@ -41,21 +41,21 @@ const Teams = () => {
                   </li>
                 ))}
             </ul>
-            <ul className="w-1/2 space-y-2">
+            <ul className='w-1/2 space-y-2'>
               {teams
                 .filter(team => team.conference === 'East')
                 .map(team => (
                   <li
                     key={team.id}
-                    className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                    className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
-                    <Link href="/teams/[id]" as={`/teams/${team.id}`}>
-                      <a className="block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600">
-                        <span className="hidden md:inline">
+                    <Link href='/teams/[id]' as={`/teams/${team.id}`}>
+                      <a className='block p-2 space-x-1 text-xl text-center text-skin-base hover:text-blue-600'>
+                        <span className='hidden md:inline'>
                           {team.full_name}
                         </span>
-                        <span className="inline md:hidden">
-                          <span className="text-sm">{team.abbreviation}</span>{' '}
+                        <span className='inline md:hidden'>
+                          <span className='text-sm'>{team.abbreviation}</span>{' '}
                           {team.name}
                         </span>
                       </a>

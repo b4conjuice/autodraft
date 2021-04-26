@@ -24,39 +24,39 @@ const Depth = ({ team }) => {
       : ''
   }
   return (
-    <div className="flex w-full">
-      <div className="w-24">
-        <table className="w-full border-r-4 border-gray-400 table-fixed">
+    <div className='flex w-full'>
+      <div className='w-24'>
+        <table className='w-full border-r-4 border-gray-400 table-fixed'>
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
-                <tr key={position} className="odd:bg-skin-foreground-alt">
-                  <td className="py-1 text-center">{position}</td>
+                <tr key={position} className='odd:bg-skin-foreground-alt'>
+                  <td className='py-1 text-center'>{position}</td>
                 </tr>
               ) : null
             )}
             {team.some(player => player.position === '') && (
-              <tr className="odd:bg-skin-foreground-alt">
-                <td className="py-1 text-center">N/A</td>
+              <tr className='odd:bg-skin-foreground-alt'>
+                <td className='py-1 text-center'>N/A</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      <div className="flex flex-grow overflow-x-auto">
-        <table className="w-full">
+      <div className='flex flex-grow overflow-x-auto'>
+        <table className='w-full'>
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
-                <tr key={position} className="px-1 odd:bg-skin-foreground-alt">
+                <tr key={position} className='px-1 odd:bg-skin-foreground-alt'>
                   {team
                     .filter(player => player.position === position)
                     .map(player => (
                       <td
                         key={player.id}
-                        className="max-w-sm px-1 py-1 text-center truncate"
+                        className='max-w-sm px-1 py-1 text-center truncate'
                       >
-                        <Link href="/players/[id]" as={`/players/${player.id}`}>
+                        <Link href='/players/[id]' as={`/players/${player.id}`}>
                           <a>{player.last_name || player.first_name}</a>
                         </Link>
                       </td>
@@ -65,15 +65,15 @@ const Depth = ({ team }) => {
               ) : null
             )}
             {team.some(player => player.position === '') && (
-              <tr className="px-4 odd:bg-skin-foreground-alt">
+              <tr className='px-4 odd:bg-skin-foreground-alt'>
                 {team
                   .filter(player => player.position === '')
                   .map(player => (
                     <td
                       key={player.id}
-                      className="max-w-sm px-1 py-1 text-center truncate"
+                      className='max-w-sm px-1 py-1 text-center truncate'
                     >
-                      <Link href="/players/[id]" as={`/players/${player.id}`}>
+                      <Link href='/players/[id]' as={`/players/${player.id}`}>
                         <a>{player.last_name || player.first_name}</a>
                       </Link>
                     </td>
@@ -98,7 +98,7 @@ const SelectTeam = ({ teams, team }) => {
   }
   return (
     <select
-      className="w-full text-center form-select"
+      className='w-full text-center form-select'
       onChange={handleChange}
       value={team}
     >
@@ -148,13 +148,13 @@ const Team = () => {
     <Page title={team.full_name}>
       <Layout>
         <Main>
-          <div className="mx-auto space-y-2 md:max-w-screen-md">
-            <div className="flex items-center justify-center space-x-3">
-              <h1 className="text-2xl text-center">
-                <span className="hidden md:block">{team.full_name}</span>
-                <span className="md:hidden">{team.abbreviation}</span>
+          <div className='mx-auto space-y-2 md:max-w-screen-md'>
+            <div className='flex items-center justify-center space-x-3'>
+              <h1 className='text-2xl text-center'>
+                <span className='hidden md:block'>{team.full_name}</span>
+                <span className='md:hidden'>{team.abbreviation}</span>
               </h1>
-              <h2 className="text-center">
+              <h2 className='text-center'>
                 {wins.length}-
                 {regularSeasonGames.filter(g => g.status === 'Final').length -
                   wins.length}
@@ -177,16 +177,16 @@ const Team = () => {
               <>
                 {postSeasonGames.length > 0 && (
                   <label
-                    htmlFor="checked"
-                    className="inline-flex items-center justify-center w-full space-x-3 cursor-pointer"
+                    htmlFor='checked'
+                    className='inline-flex items-center justify-center w-full space-x-3 cursor-pointer'
                   >
                     <span
                       className={gameType === 'post' ? 'text-gray-500' : ''}
                     >
                       regular season
                     </span>
-                    <span className="relative">
-                      <span className="block w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
+                    <span className='relative'>
+                      <span className='block w-10 h-6 bg-gray-400 rounded-full shadow-inner' />
                       <span
                         className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-blue-700 ${
                           gameType === 'post'
@@ -195,15 +195,15 @@ const Team = () => {
                         }`}
                       >
                         <input
-                          id="checked"
-                          type="checkbox"
+                          id='checked'
+                          type='checkbox'
                           checked
                           onChange={() =>
                             setGameType(
                               gameType === 'regular' ? 'post' : 'regular'
                             )
                           }
-                          className="absolute w-0 h-0 opacity-0"
+                          className='absolute w-0 h-0 opacity-0'
                         />
                       </span>
                     </span>
@@ -218,10 +218,10 @@ const Team = () => {
                   {games.map(game => (
                     <li
                       key={game.id}
-                      className="rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                      className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                     >
-                      <Link href="/games/[id]" as={`/games/${game.id}`}>
-                        <a className="block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600">
+                      <Link href='/games/[id]' as={`/games/${game.id}`}>
+                        <a className='block p-2 space-x-1 text-xl text-skin-base hover:text-blue-600'>
                           {game.home_team.id === team.id
                             ? `vs ${game.visitor_team.abbreviation}`
                             : `@ ${game.home_team.abbreviation}`}{' '}
@@ -248,11 +248,11 @@ const Team = () => {
           </div>
         </Main>
       </Layout>
-      <Footer className="flex bg-skin-background">
-        <div className="w-2/3">
+      <Footer className='flex bg-skin-background'>
+        <div className='w-2/3'>
           <SelectTeam teams={teams} team={id} />
         </div>
-        <div className="w-1/3">
+        <div className='w-1/3'>
           <SelectSeason
             season={season}
             handleChange={e => {

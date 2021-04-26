@@ -89,12 +89,12 @@ const Fantasy = () => {
     : []
   console.log({ games, results, topPlayers })
   return (
-    <Page title="fantasy">
+    <Page title='fantasy'>
       <Layout>
-        <Main className="px-2 md:px-0">
-          <div className="mx-auto space-y-2 md:max-w-screen-md">
-            <nav className="px-2 text-md">
-              <ul className="flex justify-center space-x-3">
+        <Main className='px-2 md:px-0'>
+          <div className='mx-auto space-y-2 md:max-w-screen-md'>
+            <nav className='px-2 text-md'>
+              <ul className='flex justify-center space-x-3'>
                 {nav.map(({ url, text }) => (
                   <li
                     key={url}
@@ -106,7 +106,7 @@ const Fantasy = () => {
                       <span>{text}</span>
                     ) : (
                       <Link href={url}>
-                        <a className="text-blue-700 hover:text-blue-600">
+                        <a className='text-blue-700 hover:text-blue-600'>
                           {text}
                         </a>
                       </Link>
@@ -115,35 +115,35 @@ const Fantasy = () => {
                 ))}
               </ul>
             </nav>
-            <div className="flex space-x-0 md:space-x-2">
+            <div className='flex space-x-0 md:space-x-2'>
               <input
-                type="date"
-                className="w-full form-input"
+                type='date'
+                className='w-full form-input'
                 value={date}
                 onChange={e => setDate(e.target.value)}
               />
-              <div className="hidden md:block">
+              <div className='hidden md:block'>
                 <DatePicker date={date} setDate={setDate} />
               </div>
             </div>
             {games?.length > 0 ? (
               <>
-                <h2 className="font-semibold">top players</h2>
-                <ul className="">
+                <h2 className='font-semibold'>top players</h2>
+                <ul className=''>
                   {topPlayers?.slice(0, 5).map(player => (
                     <li
                       key={player.id}
-                      className="px-2 odd:bg-skin-foreground-alt"
+                      className='px-2 odd:bg-skin-foreground-alt'
                     >
-                      <div className="flex space-x-2">
-                        <Link href="/players/[id]" as={`/players/${player.id}`}>
+                      <div className='flex space-x-2'>
+                        <Link href='/players/[id]' as={`/players/${player.id}`}>
                           <a>{player.name}</a>
                         </Link>
-                        <Link href="/teams/[id]" as={`/teams/${player.teamId}`}>
+                        <Link href='/teams/[id]' as={`/teams/${player.teamId}`}>
                           <a>{player.abbreviation}</a>
                         </Link>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className='flex space-x-2'>
                         <span>{player.stats.pts} pts</span>
                         <span>{player.stats.reb} reb</span>
                         <span>{player.stats.ast} ast</span>
@@ -154,19 +154,19 @@ const Fantasy = () => {
                     </li>
                   ))}
                 </ul>
-                <h2 className="font-semibold">leaders</h2>
+                <h2 className='font-semibold'>leaders</h2>
                 <Leaders stats={games} />
-                <div className="flex form-input focus-within:border-blue-700">
+                <div className='flex form-input focus-within:border-blue-700'>
                   <input
-                    placeholder="search players"
-                    className="w-full focus:outline-none"
-                    type="text"
+                    placeholder='search players'
+                    className='w-full focus:outline-none'
+                    type='text'
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                   />
                   {search !== '' && (
-                    <button type="button" onClick={() => setSearch('')}>
-                      <XCircleIcon className="w-6 h-6" />
+                    <button type='button' onClick={() => setSearch('')}>
+                      <XCircleIcon className='w-6 h-6' />
                     </button>
                   )}
                 </div>
@@ -177,14 +177,14 @@ const Fantasy = () => {
             ) : games?.length === 0 ? (
               <div>no games</div>
             ) : (
-              <div className="flex justify-center flex-grow">
+              <div className='flex justify-center flex-grow'>
                 <Loading />
               </div>
             )}
           </div>
         </Main>
       </Layout>
-      <Footer className="flex justify-center md:hidden">
+      <Footer className='flex justify-center md:hidden'>
         <DatePicker date={date} setDate={setDate} />
       </Footer>
     </Page>

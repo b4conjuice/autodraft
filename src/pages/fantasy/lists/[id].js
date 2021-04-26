@@ -37,11 +37,11 @@ const List = () => {
   })
   if (list?.error)
     return (
-      <Page title="lists">
-        <Main className="px-2 md:px-0">
-          <div className="mx-auto space-y-2 md:max-w-screen-md">
-            <nav className="px-2 text-md">
-              <ul className="flex justify-center space-x-3">
+      <Page title='lists'>
+        <Main className='px-2 md:px-0'>
+          <div className='mx-auto space-y-2 md:max-w-screen-md'>
+            <nav className='px-2 text-md'>
+              <ul className='flex justify-center space-x-3'>
                 {nav.map(({ url, text }) => (
                   <li
                     key={url}
@@ -53,7 +53,7 @@ const List = () => {
                       <span>{text}</span>
                     ) : (
                       <Link href={url}>
-                        <a className="text-blue-700 hover:text-blue-600">
+                        <a className='text-blue-700 hover:text-blue-600'>
                           {text}
                         </a>
                       </Link>
@@ -62,9 +62,9 @@ const List = () => {
                 ))}
               </ul>
             </nav>
-            <h1 className="text-2xl text-center">{list.error}</h1>
-            <Link href="/fantasy/lists">
-              <a className="text-center text-blue-700 hover:text-blue-600">
+            <h1 className='text-2xl text-center'>{list.error}</h1>
+            <Link href='/fantasy/lists'>
+              <a className='text-center text-blue-700 hover:text-blue-600'>
                 back to lists
               </a>
             </Link>
@@ -73,11 +73,11 @@ const List = () => {
       </Page>
     )
   return (
-    <Page title="lists">
-      <Main className="px-2 md:px-0">
-        <div className="mx-auto space-y-2 md:max-w-screen-md">
-          <nav className="px-2 text-md">
-            <ul className="flex justify-center space-x-3">
+    <Page title='lists'>
+      <Main className='px-2 md:px-0'>
+        <div className='mx-auto space-y-2 md:max-w-screen-md'>
+          <nav className='px-2 text-md'>
+            <ul className='flex justify-center space-x-3'>
               {nav.map(({ url, text }) => (
                 <li
                   key={url}
@@ -89,7 +89,7 @@ const List = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className="text-blue-700 hover:text-blue-600">
+                      <a className='text-blue-700 hover:text-blue-600'>
                         {text}
                       </a>
                     </Link>
@@ -102,61 +102,61 @@ const List = () => {
             <EditList values={values} handleChange={handleChange} />
           ) : list ? (
             <>
-              <h1 className="text-2xl text-center">{list.title}</h1>
-              <ul className="space-y-2">
+              <h1 className='text-2xl text-center'>{list.title}</h1>
+              <ul className='space-y-2'>
                 {list?.items.map(item => (
                   <li
                     key={item}
-                    className="p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                    className='p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
                     {item}
                   </li>
                 ))}
               </ul>
               <Confirm
-                className="flex justify-center w-full p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none"
-                type="button"
+                className='flex justify-center w-full p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none'
+                type='button'
                 action={async () => {
                   await deleteList(id)
                   push('/fantasy/lists')
                 }}
               >
-                <TrashIcon className="w-6 h-6" />
+                <TrashIcon className='w-6 h-6' />
               </Confirm>
             </>
           ) : list?.items?.length === 0 ? (
             <p>list has no items</p>
           ) : (
-            <div className="flex justify-center flex-grow">
+            <div className='flex justify-center flex-grow'>
               <Loading />
             </div>
           )}
         </div>
       </Main>
-      <Footer className="flex justify-center">
-        <ul className="inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg">
-          <li className="flex justify-center">
+      <Footer className='flex justify-center'>
+        <ul className='inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg'>
+          <li className='flex justify-center'>
             <button
-              className="p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none"
-              type="button"
+              className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+              type='button'
               onClick={() => setEdit(!edit)}
             >
               {edit ? (
-                <XIcon className="w-6 h-6" />
+                <XIcon className='w-6 h-6' />
               ) : (
-                <PencilAltIcon className="w-6 h-6" />
+                <PencilAltIcon className='w-6 h-6' />
               )}
             </button>
           </li>
           {edit && (
-            <li className="flex justify-center">
+            <li className='flex justify-center'>
               <button
-                className="p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none"
-                type="submit"
+                className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+                type='submit'
                 onClick={handleSubmit}
                 disabled={!dirty || isSubmitting}
               >
-                <SaveIcon className="w-6 h-6" />
+                <SaveIcon className='w-6 h-6' />
               </button>
             </li>
           )}

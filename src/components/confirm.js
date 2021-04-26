@@ -6,28 +6,28 @@ const Confirm = ({ action, className, children }) => {
   return (
     <>
       {confirmAction ? (
-        <div className="flex space-x-2">
+        <div className='flex space-x-2'>
           <button
-            className="flex justify-center flex-grow rounded-lg text-skin-base"
-            type="button"
+            className='flex justify-center flex-grow rounded-lg text-skin-base'
+            type='button'
             onClick={async () => {
               setConfirmAction(false)
               await action()
             }}
           >
-            <CheckIcon className="w-6 h-6" />
+            <CheckIcon className='w-6 h-6' />
           </button>
           <button
-            className="flex justify-center flex-grow rounded-lg text-skin-base"
-            type="button"
+            className='flex justify-center flex-grow rounded-lg text-skin-base'
+            type='button'
             onClick={() => setConfirmAction(false)}
           >
-            <XIcon className="w-6 h-6" />
+            <XIcon className='w-6 h-6' />
           </button>
         </div>
       ) : (
         <button
-          type="button"
+          type='button'
           className={className}
           onClick={() => setConfirmAction(true)}
         >

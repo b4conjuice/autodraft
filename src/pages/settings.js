@@ -19,12 +19,12 @@ const Settings = () => {
   return (
     <Page>
       <Layout>
-        <Main className="px-2 md:px-0">
-          <div className="mx-auto space-y-2 md:max-w-screen-md">
-            <label htmlFor="theme">
+        <Main className='px-2 md:px-0'>
+          <div className='mx-auto space-y-2 md:max-w-screen-md'>
+            <label htmlFor='theme'>
               <span>theme</span>
               <select
-                className="w-full"
+                className='w-full'
                 onChange={e => setTheme(e.target.value)}
                 value={theme}
               >

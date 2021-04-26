@@ -52,26 +52,26 @@ const Depth = ({ team }) => {
       : ''
   }
   return (
-    <div className="flex w-full">
-      <div className="w-12">
-        <table className="w-full border-r-4 border-gray-400 table-fixed">
+    <div className='flex w-full'>
+      <div className='w-12'>
+        <table className='w-full border-r-4 border-gray-400 table-fixed'>
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
-                <tr key={position} className="odd:bg-skin-foreground-alt">
-                  <td className="py-1 text-center">{position}</td>
+                <tr key={position} className='odd:bg-skin-foreground-alt'>
+                  <td className='py-1 text-center'>{position}</td>
                 </tr>
               ) : null
             )}
           </tbody>
         </table>
       </div>
-      <div className="flex flex-grow overflow-x-auto">
-        <table className="w-full">
+      <div className='flex flex-grow overflow-x-auto'>
+        <table className='w-full'>
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
-                <tr key={position} className="px-1 odd:bg-skin-foreground-alt">
+                <tr key={position} className='px-1 odd:bg-skin-foreground-alt'>
                   {team
                     .filter(player =>
                       player.position?.some(pos => pos === position)
@@ -79,9 +79,9 @@ const Depth = ({ team }) => {
                     .map(player => (
                       <td
                         key={player.id}
-                        className="max-w-sm px-1 py-1 text-center truncate"
+                        className='max-w-sm px-1 py-1 text-center truncate'
                       >
-                        <Link href="/players/[id]" as={`/players/${player.id}`}>
+                        <Link href='/players/[id]' as={`/players/${player.id}`}>
                           <a>{player.last_name || player.first_name}</a>
                         </Link>
                       </td>
@@ -127,10 +127,10 @@ const Team = () => {
   }, [initialTeam])
   if (team?.error)
     return (
-      <Page title="teams">
-        <Main className="flex flex-col px-2 space-y-2">
-          <nav className="px-2 text-md">
-            <ul className="flex justify-center space-x-3">
+      <Page title='teams'>
+        <Main className='flex flex-col px-2 space-y-2'>
+          <nav className='px-2 text-md'>
+            <ul className='flex justify-center space-x-3'>
               {nav.map(({ url, text }) => (
                 <li
                   key={url}
@@ -142,7 +142,7 @@ const Team = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className="text-blue-700 hover:text-blue-600">
+                      <a className='text-blue-700 hover:text-blue-600'>
                         {text}
                       </a>
                     </Link>
@@ -151,9 +151,9 @@ const Team = () => {
               ))}
             </ul>
           </nav>
-          <h1 className="text-2xl text-center">{team.error}</h1>
-          <Link href="/fantasy/teams">
-            <a className="text-center text-blue-700 hover:text-blue-600">
+          <h1 className='text-2xl text-center'>{team.error}</h1>
+          <Link href='/fantasy/teams'>
+            <a className='text-center text-blue-700 hover:text-blue-600'>
               back to teams
             </a>
           </Link>
@@ -198,11 +198,11 @@ const Team = () => {
   // console.log({ selectedPlayer })
   // console.log({ picks })
   return (
-    <Page title="teams">
-      <Main className="px-2 md:px-0">
-        <div className="mx-auto space-y-2 md:max-w-screen-md">
-          <nav className="px-2 text-md">
-            <ul className="flex justify-center space-x-3">
+    <Page title='teams'>
+      <Main className='px-2 md:px-0'>
+        <div className='mx-auto space-y-2 md:max-w-screen-md'>
+          <nav className='px-2 text-md'>
+            <ul className='flex justify-center space-x-3'>
               {nav.map(({ url, text }) => (
                 <li
                   key={url}
@@ -214,7 +214,7 @@ const Team = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className="text-blue-700 hover:text-blue-600">
+                      <a className='text-blue-700 hover:text-blue-600'>
                         {text}
                       </a>
                     </Link>
@@ -227,7 +227,7 @@ const Team = () => {
             <EditTeam />
           ) : team ? (
             <>
-              <h1 className="text-2xl text-center">{team.name}</h1>
+              <h1 className='text-2xl text-center'>{team.name}</h1>
               {team.players && team.players.length > 0 && (
                 <Depth
                   team={team.players.map(p => {
@@ -240,27 +240,27 @@ const Team = () => {
                   })}
                 />
               )}
-              <div className="relative">
-                <div className="flex form-input focus-within:border-blue-700">
+              <div className='relative'>
+                <div className='flex form-input focus-within:border-blue-700'>
                   <input
-                    placeholder="add player"
-                    className="w-full focus:outline-none"
-                    type="text"
+                    placeholder='add player'
+                    className='w-full focus:outline-none'
+                    type='text'
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                   />
                   {search !== '' && (
-                    <button type="button" onClick={() => setSearch('')}>
-                      <XCircleIcon className="w-6 h-6" />
+                    <button type='button' onClick={() => setSearch('')}>
+                      <XCircleIcon className='w-6 h-6' />
                     </button>
                   )}
                 </div>
                 {!search ? null : !results ? (
-                  <div className="flex justify-center flex-grow">
+                  <div className='flex justify-center flex-grow'>
                     <Loading />
                   </div>
                 ) : (
-                  <ul className="absolute w-full space-y-2 bg-skin-foreground">
+                  <ul className='absolute w-full space-y-2 bg-skin-foreground'>
                     {results
                       .filter(player => player.position)
                       .filter(
@@ -270,10 +270,10 @@ const Team = () => {
                             `${player.first_name} ${player.last_name}`
                       )
                       .map(player => (
-                        <li key={player.id} className="flex p-2">
-                          <div className="flex-grow space-x-1">
+                        <li key={player.id} className='flex p-2'>
+                          <div className='flex-grow space-x-1'>
                             <Link
-                              href="/players/[id]"
+                              href='/players/[id]'
                               as={`/players/${player.id}`}
                             >
                               <a>
@@ -281,7 +281,7 @@ const Team = () => {
                               </a>
                             </Link>
                             <Link
-                              href="/teams/[id]"
+                              href='/teams/[id]'
                               as={`/teams/${player.team.id}`}
                             >
                               <a>{player.team.abbreviation}</a>
@@ -300,7 +300,7 @@ const Team = () => {
                                   ? 'text-gray-100 bg-blue-700'
                                   : 'text-blue-700 bg-gray-100'
                               }`}
-                              type="button"
+                              type='button'
                               onClick={() => {
                                 const validSlots = team?.slots
                                   ?.map((slot, index) => {
@@ -359,12 +359,12 @@ const Team = () => {
               {team?.slots?.map((slot, index) => (
                 <li
                   key={index + slot}
-                  className="flex items-center p-2 space-x-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt"
+                  className='flex items-center p-2 space-x-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                 >
-                  <span className="font-semibold">{slot}</span>
+                  <span className='font-semibold'>{slot}</span>
                   {team?.players && team?.players[index] ? (
                     <>
-                      <span className="flex-grow">
+                      <span className='flex-grow'>
                         {team?.players[index]}{' '}
                         {getPosition(team?.players[index])?.join(', ') ?? ''}
                       </span>
@@ -377,7 +377,7 @@ const Team = () => {
                               ? 'text-gray-100 bg-blue-700'
                               : 'text-blue-700 bg-gray-100'
                           }`}
-                          type="button"
+                          type='button'
                           onClick={() => {
                             setSelected(
                               selected === '' ? team?.players[index] : ''
@@ -394,8 +394,8 @@ const Team = () => {
                           s => s === slot
                         ) && (
                           <button
-                            className="px-2 text-xs text-gray-100 bg-blue-700 border-2 border-blue-700 rounded"
-                            type="button"
+                            className='px-2 text-xs text-gray-100 bg-blue-700 border-2 border-blue-700 rounded'
+                            type='button'
                             onClick={() => {
                               movePlayer(selectedPlayer, index)
                               setSearch('')
@@ -413,18 +413,18 @@ const Team = () => {
 
                       {selected === '' && (
                         <Confirm
-                          type="button"
+                          type='button'
                           action={() => {
                             dropPlayer(index)
                           }}
                         >
-                          <DownloadIcon className="w-6 h-6 text-red-700" />
+                          <DownloadIcon className='w-6 h-6 text-red-700' />
                         </Confirm>
                       )}
                     </>
                   ) : (
                     <>
-                      <span className="flex-grow">empty</span>
+                      <span className='flex-grow'>empty</span>
                       {selectedPlayer &&
                         team?.players[index] !==
                           `${selectedPlayer?.first_name} ${selectedPlayer?.last_name}` &&
@@ -432,8 +432,8 @@ const Team = () => {
                           s => s === slot
                         ) && (
                           <button
-                            className="px-2 text-xs text-gray-100 bg-blue-700 border-2 border-blue-700 rounded"
-                            type="button"
+                            className='px-2 text-xs text-gray-100 bg-blue-700 border-2 border-blue-700 rounded'
+                            type='button'
                             onClick={() => {
                               movePlayer(selectedPlayer, index)
                               setSearch('')
@@ -447,31 +447,31 @@ const Team = () => {
                 </li>
               ))}
               <Confirm
-                className="flex justify-center w-full p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none"
-                type="button"
+                className='flex justify-center w-full p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none'
+                type='button'
                 action={async () => {
                   await deleteTeam(id)
                   push('/fantasy/teams')
                 }}
               >
-                <TrashIcon className="w-6 h-6" />
+                <TrashIcon className='w-6 h-6' />
               </Confirm>
             </>
           ) : team?.players?.length === 0 ? (
             <p>team has no players</p>
           ) : (
-            <div className="flex justify-center flex-grow">
+            <div className='flex justify-center flex-grow'>
               <Loading />
             </div>
           )}
         </div>
       </Main>
-      <Footer className="flex justify-center">
-        <ul className="inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg">
-          <li className="flex justify-center">
+      <Footer className='flex justify-center'>
+        <ul className='inline-flex bg-blue-700 divide-x divide-gray-100 rounded-lg'>
+          <li className='flex justify-center'>
             <button
-              className="p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none"
-              type="submit"
+              className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+              type='submit'
               onClick={async () => {
                 await updateTeam(team)
                 await revalidate()
@@ -480,7 +480,7 @@ const Team = () => {
                 (p, index) => p === team?.players[index]
               )}
             >
-              <SaveIcon className="w-6 h-6" />
+              <SaveIcon className='w-6 h-6' />
             </button>
           </li>
         </ul>

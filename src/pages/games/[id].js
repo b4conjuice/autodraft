@@ -25,21 +25,21 @@ const Game = () => {
     >
       <Layout>
         <Main>
-          <div className="mx-auto space-y-2 md:max-w-screen-md">
-            <div className="text-center">
-              <h1 className="space-x-2 text-2xl">
-                <span className="space-x-1">
+          <div className='mx-auto space-y-2 md:max-w-screen-md'>
+            <div className='text-center'>
+              <h1 className='space-x-2 text-2xl'>
+                <span className='space-x-1'>
                   <Link
-                    href="/teams/[id]"
+                    href='/teams/[id]'
                     as={`/teams/${game.visitor_team.id}`}
                   >
-                    <a className="text-blue-700 hover:text-blue-600">
+                    <a className='text-blue-700 hover:text-blue-600'>
                       {game.visitor_team.abbreviation}
                     </a>
                   </Link>
                   <span>@</span>
-                  <Link href="/teams/[id]" as={`/teams/${game.home_team.id}`}>
-                    <a className="text-blue-700 hover:text-blue-600">
+                  <Link href='/teams/[id]' as={`/teams/${game.home_team.id}`}>
+                    <a className='text-blue-700 hover:text-blue-600'>
                       {game.home_team.abbreviation}
                     </a>
                   </Link>
@@ -58,19 +58,19 @@ const Game = () => {
             ) : game.stats.length > 0 ? (
               <>
                 <div>
-                  <h3 className="text-center">Leaders</h3>
-                  <div className="flex divide-x-4 divide-gray-400 divide">
+                  <h3 className='text-center'>Leaders</h3>
+                  <div className='flex divide-x-4 divide-gray-400 divide'>
                     <Leaders
                       stats={game.stats.filter(
                         s => s.team.id === game.visitor_team.id
                       )}
-                      className="w-1/2"
+                      className='w-1/2'
                     />
                     <Leaders
                       stats={game.stats.filter(
                         s => s.team.id === game.home_team.id
                       )}
-                      className="w-1/2"
+                      className='w-1/2'
                     />
                   </div>
                 </div>

@@ -17,9 +17,9 @@ const Leaders = ({ stats, className }) => {
       {categories.map(category => {
         const { name, stat } = leaders[category]
         return (
-          <li key={category} className="flex px-2 odd:bg-skin-foreground-alt">
-            <span className="flex-grow">{name}</span>
-            <span className="font-semibold">
+          <li key={category} className='flex px-2 odd:bg-skin-foreground-alt'>
+            <span className='flex-grow'>{name}</span>
+            <span className='font-semibold'>
               {stat} {category === 'fg3m' ? '3pm' : category}
             </span>
           </li>

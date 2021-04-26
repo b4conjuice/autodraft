@@ -9,11 +9,11 @@ import players from '@/lib/espnPlayers'
 const Players = () => {
   const { pathname } = useRouter()
   return (
-    <Page title="teams">
-      <Main className="px-2 md:px-0">
-        <div className="mx-auto space-y-2 md:max-w-screen-md">
-          <nav className="px-2 text-md">
-            <ul className="flex justify-center space-x-3">
+    <Page title='teams'>
+      <Main className='px-2 md:px-0'>
+        <div className='mx-auto space-y-2 md:max-w-screen-md'>
+          <nav className='px-2 text-md'>
+            <ul className='flex justify-center space-x-3'>
               {nav.map(({ url, text }) => (
                 <li
                   key={url}
@@ -25,7 +25,7 @@ const Players = () => {
                     <span>{text}</span>
                   ) : (
                     <Link href={url}>
-                      <a className="text-blue-700 hover:text-blue-600">
+                      <a className='text-blue-700 hover:text-blue-600'>
                         {text}
                       </a>
                     </Link>

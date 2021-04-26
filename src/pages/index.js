@@ -35,27 +35,27 @@ const TodaysGames = () => {
   return (
     <Page>
       <Layout>
-        <Main className="px-2 space-y-2 md:space-y-0 md:flex md:space-x-4 md:justify-center md:px-0 md:pt-4">
+        <Main className='px-2 space-y-2 md:space-y-0 md:flex md:space-x-4 md:justify-center md:px-0 md:pt-4'>
           <div>
-            {todayStarted ? null : <h2 className="text-xl">last night</h2>}
+            {todayStarted ? null : <h2 className='text-xl'>last night</h2>}
             <Games games={todayStarted ? gamesToday : gamesYesterday} />
           </div>
           <div>
             <h2>
               {todayStarted ? (
                 <>
-                  <span className="text-xl">last night</span>{' '}
+                  <span className='text-xl'>last night</span>{' '}
                   {format(subDays(new Date(), 1), 'MMM d, yyyy')}
                 </>
               ) : (
-                <span className="text-xl">later today</span>
+                <span className='text-xl'>later today</span>
               )}
             </h2>
             <Games games={todayStarted ? gamesYesterday : gamesToday} />
           </div>
           <div>
             <h2>
-              <span className="text-xl">tomorrow</span>{' '}
+              <span className='text-xl'>tomorrow</span>{' '}
               {format(addDays(new Date(), 1), 'MMM d, yyyy')}
             </h2>
             <Games games={gamesTomorrow} />
