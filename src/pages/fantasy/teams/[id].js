@@ -25,6 +25,20 @@ const positionToSlot = {
   'F-C': ['PF', 'C', 'F', 'U', 'B'],
   'C-F': ['PF', 'C', 'F', 'U', 'B'],
   C: ['C', 'U', 'B'],
+  PG: ['PG', 'G', 'U', 'B'],
+  SG: ['SG', 'G', 'U', 'B'],
+  SF: ['SF', 'F', 'U', 'B'],
+  PF: ['PF', 'F', 'U', 'B'],
+}
+
+const getSlot = position => {
+  if (typeof position === 'string') return positionToSlot[position]
+  if (Array.isArray(position))
+    return position.reduce(
+      (slots, pos) => [...slots, ...positionToSlot[pos]],
+      []
+    )
+  return []
 }
 
 const getPicks = ({ order, teams, rounds }) => {
@@ -286,7 +300,12 @@ const Team = () => {
                             >
                               <a>{player.team.abbreviation}</a>
                             </Link>
-                            <span>{player.position}</span>
+                            <span>
+                              {player.position} /{' '}
+                              {getPosition(
+                                `${player.first_name} ${player.last_name}`
+                              )?.join(', ') ?? ''}
+                            </span>
                           </div>
                           {team?.players.some(
                             p =>
@@ -305,9 +324,11 @@ const Team = () => {
                                 const validSlots = team?.slots
                                   ?.map((slot, index) => {
                                     if (
-                                      positionToSlot[player.position].some(
-                                        s => s === slot
-                                      ) &&
+                                      getSlot(
+                                        getPosition(
+                                          `${player.first_name} ${player.last_name}`
+                                        )
+                                      )?.some(s => s === slot) &&
                                       team?.players[index] === ''
                                     )
                                       return index
@@ -390,9 +411,11 @@ const Team = () => {
                       {selectedPlayer &&
                         team?.players[index] !==
                           `${selectedPlayer?.first_name} ${selectedPlayer?.last_name}` &&
-                        positionToSlot[selectedPlayer.position].some(
-                          s => s === slot
-                        ) && (
+                        getSlot(
+                          getPosition(
+                            `${selectedPlayer?.first_name} ${selectedPlayer?.last_name}`
+                          )
+                        ).some(s => s === slot) && (
                           <button
                             className='px-2 text-xs text-gray-100 border-2 rounded bg-skin-button-accent border-skin-button-accent'
                             type='button'
