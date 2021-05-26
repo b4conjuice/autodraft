@@ -10,14 +10,16 @@ import Loading from '@/components/loading'
 import BoxScore from '@/components/boxScore'
 import SelectSeason from '@/components/selectSeason'
 import Footer from '@/components/footer'
+import { getPosition } from '@/lib/espnPlayers'
+import getMin from '@/lib/getMin'
 import { fetchNBATeams, fetchNBATeam, fetchNBASchedule } from '@/lib/api'
 import CURRENT_SEASON from '@/config/season'
 
 const Depth = ({ team }) => {
-  const positions = ['G', 'G-F', 'F-G', 'F', 'F-C', 'C-F', 'C']
+  const positions = ['PG', 'SG', 'SF', 'PF', 'C']
   const getPlayersByPosition = position => {
     const playersByPosition = team
-      .filter(player => player.position === position)
+      .filter(player => player.position?.some(pos => pos === position))
       .map(player => player.last_name)
     return playersByPosition.length > 0
       ? `${playersByPosition.join(' ')} (${playersByPosition.length})`
@@ -25,7 +27,7 @@ const Depth = ({ team }) => {
   }
   return (
     <div className='flex w-full'>
-      <div className='w-24'>
+      <div className='w-12'>
         <table className='w-full border-r-4 border-gray-400 table-fixed'>
           <tbody>
             {positions.map(position =>
@@ -34,11 +36,6 @@ const Depth = ({ team }) => {
                   <td className='py-1 text-center'>{position}</td>
                 </tr>
               ) : null
-            )}
-            {team.some(player => player.position === '') && (
-              <tr className='odd:bg-skin-foreground-alt'>
-                <td className='py-1 text-center'>N/A</td>
-              </tr>
             )}
           </tbody>
         </table>
@@ -50,7 +47,9 @@ const Depth = ({ team }) => {
               getPlayersByPosition(position) ? (
                 <tr key={position} className='px-1 odd:bg-skin-foreground-alt'>
                   {team
-                    .filter(player => player.position === position)
+                    .filter(player =>
+                      player.position?.some(pos => pos === position)
+                    )
                     .map(player => (
                       <td
                         key={player.id}
@@ -65,24 +64,6 @@ const Depth = ({ team }) => {
                     ))}
                 </tr>
               ) : null
-            )}
-            {team.some(player => player.position === '') && (
-              <tr className='px-4 odd:bg-skin-foreground-alt'>
-                {team
-                  .filter(player => player.position === '')
-                  .map(player => (
-                    <td
-                      key={player.id}
-                      className='max-w-sm px-1 py-1 text-center truncate'
-                    >
-                      <Link href='/players/[id]' as={`/players/${player.id}`}>
-                        <a className='hover:text-skin-link-accent-hover'>
-                          {player.last_name || player.first_name}
-                        </a>
-                      </Link>
-                    </td>
-                  ))}
-              </tr>
             )}
           </tbody>
         </table>
@@ -164,7 +145,26 @@ const Team = () => {
                   wins.length}
               </h2>
             </div>
-            <Depth team={players} />
+            <Depth
+              team={players
+                .sort((b, a) => {
+                  const bMin = getMin(b.min)
+                  const aMin = getMin(a.min)
+                  if (bMin < aMin) {
+                    return 1
+                  }
+                  if (bMin > aMin) {
+                    return -1
+                  }
+                  return 0
+                })
+                .map(p => {
+                  return {
+                    last_name: p.last_name,
+                    position: getPosition(`${p.first_name} ${p.last_name}`),
+                  }
+                })}
+            />
             {(!season || season === CURRENT_SEASON) && (
               <BoxScore
                 stats={players.map(p => ({

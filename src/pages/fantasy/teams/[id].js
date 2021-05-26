@@ -96,7 +96,9 @@ const Depth = ({ team }) => {
                         className='max-w-sm px-1 py-1 text-center truncate'
                       >
                         <Link href='/players/[id]' as={`/players/${player.id}`}>
-                          <a>{player.last_name || player.first_name}</a>
+                          <a className='hover:text-skin-link-accent-hover'>
+                            {player.last_name || player.first_name}
+                          </a>
                         </Link>
                       </td>
                     ))}
