@@ -9,7 +9,7 @@ import { saveTeam } from '@/lib/api'
 import useForm from '@/lib/useForm'
 import nav from '@/lib/nav'
 
-const EditTeam = ({ values, handleChange }) => {
+const EditTeam = ({ values, handleChange, errors }) => {
   const { name, teams, rounds, order, slots, ir } = values
   return (
     <form className='space-y-2'>
@@ -21,6 +21,7 @@ const EditTeam = ({ values, handleChange }) => {
         value={name}
         onChange={handleChange}
       />
+      {errors.name && <div className='text-red-700'>{errors.name}</div>}
       <div className='flex space-x-2'>
         <div className='w-1/2 space-y-2'>
           <h2>league settings</h2>
@@ -102,35 +103,48 @@ const EditTeam = ({ values, handleChange }) => {
 
 const NewList = () => {
   const { pathname, push } = useRouter()
-  const { values, handleChange, handleSubmit, isSubmitting, dirty } = useForm({
-    initialValues: {
-      name: '',
-      teams: 12,
-      rounds: 13,
-      order: 1,
-      slots: [
-        'PG',
-        'SG',
-        'SF',
-        'PF',
-        'C',
-        'G',
-        'F',
-        'U',
-        'U',
-        'U',
-        'B',
-        'B',
-        'B',
-      ],
-      ir: 1,
-    },
-    onSubmit: async (newTeam, { setSubmitting }) => {
-      const { id } = await saveTeam(newTeam)
-      push(`/fantasy/teams/${id}`)
-      setSubmitting(false)
-    },
-  })
+  const { values, handleChange, handleSubmit, isSubmitting, dirty, errors } =
+    useForm({
+      initialValues: {
+        name: '',
+        teams: 12,
+        rounds: 13,
+        order: 1,
+        slots: [
+          'PG',
+          'SG',
+          'SF',
+          'PF',
+          'C',
+          'G',
+          'F',
+          'U',
+          'U',
+          'U',
+          'B',
+          'B',
+          'B',
+        ],
+        ir: 1,
+      },
+      onSubmit: async (newTeam, { setSubmitting }) => {
+        const slots = [...Array(newTeam.rounds).keys()]
+          .map(x => x)
+          .map(slot => newTeam.slots[slot] || 'B')
+        const { id } = await saveTeam({
+          ...newTeam,
+          slots,
+        })
+        push(`/fantasy/teams/${id}`)
+        setSubmitting(false)
+      },
+      validate: newValues => {
+        const newErrors = {}
+        const { name } = newValues
+        if (name === '') newErrors.name = 'name cannot be empty'
+        return newErrors
+      },
+    })
   return (
     <Page title='new list'>
       <Main className='px-2 md:px-0'>
@@ -157,7 +171,11 @@ const NewList = () => {
               ))}
             </ul>
           </nav>
-          <EditTeam values={values} handleChange={handleChange} />
+          <EditTeam
+            values={values}
+            handleChange={handleChange}
+            errors={errors}
+          />
         </div>
       </Main>
       <Footer className='flex justify-center'>
