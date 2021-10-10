@@ -9,6 +9,7 @@ import {
   UserGroupIcon,
   UserIcon,
   LightningBoltIcon,
+  ChartBarIcon,
   CogIcon,
 } from '@heroicons/react/solid'
 
@@ -34,6 +35,11 @@ const nav = [
     url: '/fantasy',
     text: 'fantasy',
     Icon: LightningBoltIcon,
+  },
+  {
+    url: '/draft',
+    text: 'draft',
+    Icon: ChartBarIcon,
   },
   {
     url: '/settings',
@@ -92,7 +98,7 @@ export const Menu = () => {
     })
   }
   return (
-    <nav className='hidden p-4 border-r md:block border-skin-foreground'>
+    <nav>
       <ul className='space-y-4'>
         {nav.map(({ url, text, Icon }) => (
           <li

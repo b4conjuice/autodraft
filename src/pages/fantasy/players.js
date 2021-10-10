@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Page from '@/components/page'
 import Main from '@/components/main'
 import nav from '@/lib/nav'
-import players from '@/lib/espnPlayers'
+import players from '@/lib/espnRank'
 
 const Players = () => {
   const { pathname } = useRouter()

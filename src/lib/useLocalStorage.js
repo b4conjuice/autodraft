@@ -5,7 +5,7 @@ const useLocalStorage = (key, value) => {
 
   useEffect(() => {
     const update = async () => {
-      const storedItem = localStorage.getItem(key) || value
+      const storedItem = JSON.parse(localStorage.getItem(key)) || value
       setItem(storedItem)
     }
     update()

@@ -1,5 +1,12 @@
 # autodraft
 
+## todo
+
+- draft: hide drafted
+- draft: search player
+- draft: draft player using keyboard
+-
+
 ## get espn player positions
 
 - go to [player rater](https://fantasy.espn.com/basketball/playerrater)
@@ -34,4 +41,29 @@ Array(50) [ {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}
 ```
 
 - right click Array and select "Copy Object" (on firefox)
-- paste into src/lib/espnPlayers.js
+- paste into src/lib/espnRank.js
+
+## hashtag
+
+- go to [projections](https://hashtagbasketball.com/fantasy-basketball-projections)
+
+```javascript
+players = Array.from(
+  document.querySelectorAll('#ContentPlaceHolder1_GridView1 tr')
+)
+  .map(el => {
+    const nameEl = el.querySelector('td:nth-child(3) span')
+    if (!nameEl) return null
+    const name = nameEl.innerText
+    const teamEl = el.querySelector('td:nth-child(5)')
+    const team = teamEl.innerText
+    const positionEl = el.querySelector('td:nth-child(4)')
+    const position = positionEl.innerText
+    return {
+      name,
+      team,
+      position,
+    }
+  })
+  .filter(player => player !== null)
+```

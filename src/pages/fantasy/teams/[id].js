@@ -15,7 +15,7 @@ import Confirm from '@/components/confirm'
 import Footer from '@/components/footer'
 import { fetchTeams, updateTeam, deleteTeam, searchNBAPlayers } from '@/lib/api'
 import nav from '@/lib/nav'
-import { getPosition } from '@/lib/espnPlayers'
+import { getPosition } from '@/lib/espnRank'
 
 const positionToSlot = {
   G: ['PG', 'SG', 'G', 'U', 'B'],

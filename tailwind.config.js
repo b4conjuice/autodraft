@@ -1,9 +1,11 @@
 const colors = require('tailwindcss/colors')
 
-const withOpacity = variableName => ({ opacityValue }) =>
-  opacityValue !== undefined
-    ? `rgba(var(${variableName}), ${opacityValue})`
-    : `rgb(var(${variableName}))`
+const withOpacity =
+  variableName =>
+  ({ opacityValue }) =>
+    opacityValue !== undefined
+      ? `rgba(var(${variableName}), ${opacityValue})`
+      : `rgb(var(${variableName}))`
 
 module.exports = {
   mode: 'jit',
@@ -45,6 +47,11 @@ module.exports = {
         skin: {
           foreground: withOpacity('--color-foreground'),
           'button-accent': withOpacity('--color-button-accent'),
+        },
+      },
+      divideColor: {
+        skin: {
+          foreground: withOpacity('--color-foreground'),
         },
       },
       gradientColorStops: {
