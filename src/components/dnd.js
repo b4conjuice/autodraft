@@ -46,7 +46,7 @@ const DND = ({ items, reorderItems, deleteItem }) => (
                     {...dragHandleProps}
                   >
                     <span className='flex-grow'>
-                      {index + 1}. {item}{' '}
+                      {index + 1} {item}{' '}
                     </span>
                     <button type='button' onClick={() => deleteItem(index)}>
                       <TrashIcon className='w-4 h-4' />
