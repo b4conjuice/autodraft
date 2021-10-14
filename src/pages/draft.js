@@ -1,23 +1,49 @@
 import { useState } from 'react'
 import { Dialog, Listbox } from '@headlessui/react'
 import { CloudDownloadIcon, SaveIcon, TrashIcon } from '@heroicons/react/solid'
+import Fuse from 'fuse.js'
 
 import Page from '@/components/page'
 import Layout from '@/components/layout'
 import Main from '@/components/main'
 import Dnd from '@/components/dnd'
+import Autocomplete from '@/components/autocomplete'
 import useLocalStorage from '@/lib/useLocalStorage'
 import espnRank from '@/lib/espnRank'
 import hashtagRank from '@/lib/hashtagRank'
+import hashtagPuntFTRank from '@/lib/hashtagPuntFTRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
 
-const PlusMinus = ({ index }) => {
-  const index2 = espnRank.findIndex(p => p.name === hashtagRank[index]?.name)
+const ranks = [
+  {
+    title: 'hashtag',
+    items: hashtagRank,
+  },
+  {
+    title: 'hashtag punt ft%',
+    items: hashtagPuntFTRank,
+  },
+]
+
+const PlusMinus = ({ index, rank }) => {
+  const index2 = espnRank.findIndex(p => p.name === rank[index]?.name)
+  const difference = index2 - index
+  const absoluteDifference = Math.abs(difference)
   return (
-    <td className={`p-2 ${index2 > index ? 'bg-blue-700' : 'bg-red-700'}`}>{`${
-      index2 > index ? '+' : ''
-    }${index2 - index} (${index + 1})`}</td>
+    <td
+      className={`p-2 text-center ${
+        index2 > index ? 'bg-green-700' : index2 < index ? 'bg-red-700' : ''
+      } ${
+        absoluteDifference > 24
+          ? 'bg-opacity-100'
+          : absoluteDifference > 12
+          ? 'bg-opacity-75'
+          : absoluteDifference > 6
+          ? 'bg-opacity-50'
+          : 'bg-opacity-25'
+      }`}
+    >{`${index2 > index ? '+' : ''}${difference} (${index2 + 1})`}</td>
   )
 }
 
@@ -128,6 +154,7 @@ const Draft = () => {
   const [drafted, setDrafted] = useLocalStorage('draft', [])
   const [saveDraftDialogIsOpen, setSaveDraftDialogIsOpen] = useState(false)
   const [loadListDialogIsOpen, setLoadListDialogIsOpen] = useState(false)
+  const [hideDrafted, setHideDrafted] = useState(true)
   const draft = name => {
     const newDrafted = [...drafted]
     newDrafted.push(name)
@@ -147,8 +174,67 @@ const Draft = () => {
             setIsOpen={setLoadListDialogIsOpen}
             setDrafted={setDrafted}
           />
-          <div className='flex'>
-            <div className='w-[350px]'>
+          <div className='flex space-x-4'>
+            <Autocomplete
+              openOnFocus
+              placeholder='Draft by search'
+              getSources={() => {
+                return [
+                  {
+                    sourceId: 'links',
+                    getItems({ query }) {
+                      const fuse = new Fuse(espnRank, {
+                        keys: ['name'],
+                      })
+                      return fuse
+                        .search(query)
+                        .map(({ item }) => item)
+                        .filter(player => !drafted.some(p => p === player.name))
+                    },
+                    getItemUrl({ item }) {
+                      return item.name
+                    },
+                    templates: {
+                      item({ item }) {
+                        return item.name
+                      },
+                    },
+                  },
+                ]
+              }}
+              navigator={{
+                navigate({ itemUrl }) {
+                  draft(itemUrl)
+                },
+              }}
+            />
+            <label
+              htmlFor='checked'
+              className='inline-flex items-center justify-center cursor-pointer divide-skin-foregroundspace-x-3'
+            >
+              <span className={!hideDrafted ? 'text-gray-500' : ''}>
+                hide drafted players
+              </span>
+              <span className='relative'>
+                <span className='block w-10 h-6 bg-gray-400 rounded-full shadow-inner' />
+                <span
+                  className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-skin-button-accent ${
+                    !hideDrafted ? 'transform translate-x-full' : ''
+                  }`}
+                >
+                  <input
+                    id='checked'
+                    type='checkbox'
+                    checked
+                    onChange={() => setHideDrafted(!hideDrafted)}
+                    className='absolute w-0 h-0 opacity-0'
+                  />
+                </span>
+              </span>
+            </label>
+          </div>
+          <div className='flex w-full divide-x divide-skin-foreground'>
+            <div className='w-[250px]'>
               <h2 className='flex p-2 space-x-4'>
                 <span>draft</span>
                 <button
@@ -190,56 +276,97 @@ const Draft = () => {
                 }}
               />
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <td className='p-2'>#</td>
-                  <td className='p-2'>espn</td>
-                  <td className='p-2'>hashtag</td>
-                  <td className='p-2'>+/-</td>
-                </tr>
-              </thead>
-              <tbody>
-                {espnRank.map(({ name, position }, index) => (
-                  <tr key={name} className='odd:bg-skin-foreground-alt'>
-                    <td className='p-2'>{index + 1}</td>
-                    <td
-                      className={`p-2 ${
-                        drafted.some(p => p === name) ? 'opacity-25' : ''
-                      }`}
-                    >
-                      <button
-                        type='button'
-                        className='disabled:pointer-events-none'
-                        onClick={() => draft(name)}
-                        disabled={drafted.some(p => p === name)}
-                      >
-                        {name}
-                      </button>
-                    </td>
-                    <td
-                      className={`p-2 ${
-                        drafted.some(p => p === hashtagRank[index]?.name)
-                          ? 'opacity-25'
+            <div className='w-[250px]'>
+              <table className='w-full'>
+                <thead>
+                  <tr>
+                    <td className='p-2'>#</td>
+                    <td className='p-2'>espn</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {espnRank.map(({ name }, index) => (
+                    <tr
+                      key={name}
+                      className={`odd:bg-skin-foreground-alt ${
+                        drafted.some(p => p === name) && hideDrafted
+                          ? 'hidden'
                           : ''
                       }`}
                     >
-                      <button
-                        type='button'
-                        className='disabled:pointer-events-none'
-                        onClick={() => draft(hashtagRank[index].name)}
-                        disabled={drafted.some(
-                          p => p === hashtagRank[index]?.name
-                        )}
+                      <td className='p-2'>{index + 1}</td>
+                      <td
+                        className={`p-2 truncate ${
+                          drafted.some(p => p === name) ? 'opacity-25' : ''
+                        }`}
                       >
-                        {hashtagRank[index]?.name}
-                      </button>
-                    </td>
-                    <PlusMinus index={index} />
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        <button
+                          type='button'
+                          className='disabled:pointer-events-none'
+                          onClick={() => draft(name)}
+                          disabled={drafted.some(p => p === name)}
+                        >
+                          {name}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {ranks.map(rank => (
+              <div className='w-[350px]'>
+                <table className='w-full'>
+                  <thead>
+                    <tr>
+                      <td className='p-2 text-center'>#</td>
+                      <td className='p-2'>{rank.title}</td>
+                      <td className='p-2 text-center'>+/-</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {espnRank.map(({ name }, index) => (
+                      <tr
+                        key={name}
+                        className={`odd:bg-skin-foreground-alt ${
+                          drafted.some(p => p === rank.items[index]?.name) &&
+                          hideDrafted
+                            ? 'hidden'
+                            : ''
+                        }`}
+                      >
+                        <td className='p-2 text-center'>{index + 1}</td>
+                        <td
+                          className={`p-2 ${
+                            drafted.some(p => p === rank.items[index]?.name)
+                              ? 'opacity-25'
+                              : ''
+                          }`}
+                        >
+                          <button
+                            type='button'
+                            className={`disabled:pointer-events-none ${
+                              espnRank.findIndex(
+                                p => p.name === rank.items[index]?.name
+                              ) === -1
+                                ? 'font-bold text-red-700'
+                                : ''
+                            }`}
+                            onClick={() => draft(rank.items[index].name)}
+                            disabled={drafted.some(
+                              p => p === rank.items[index]?.name
+                            )}
+                          >
+                            {rank.items[index]?.name}
+                          </button>
+                        </td>
+                        <PlusMinus index={index} rank={rank.items} />
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
           </div>
         </Main>
       </Layout>
