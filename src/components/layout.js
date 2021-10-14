@@ -1,5 +1,4 @@
 import { Menu } from './nav'
-import TodaysGames from './todaysGames'
 
 const Layout = ({ className, todaysGames = true, children }) => (
   <div
@@ -11,11 +10,6 @@ const Layout = ({ className, todaysGames = true, children }) => (
       <Menu />
     </div>
     {children}
-    {todaysGames && (
-      <div className='hidden p-4 md:block'>
-        <TodaysGames />
-      </div>
-    )}
   </div>
 )
 export default Layout
