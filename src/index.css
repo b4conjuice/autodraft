@@ -4,7 +4,8 @@
 [type='text'],
 [type='number'],
 [type='date'],
-select {
+select,
+textarea {
   color: var(--color-text-base);
   background-color: var(--color-background);
 }
