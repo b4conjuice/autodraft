@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { Dialog, Listbox } from '@headlessui/react'
-import { CloudDownloadIcon, SaveIcon, TrashIcon } from '@heroicons/react/solid'
+import {
+  CloudDownloadIcon,
+  SaveIcon,
+  TrashIcon,
+  ExclamationCircleIcon,
+} from '@heroicons/react/solid'
 import Fuse from 'fuse.js'
 
 import Page from '@/components/page'
@@ -11,6 +16,7 @@ import Autocomplete from '@/components/autocomplete'
 import useLocalStorage from '@/lib/useLocalStorage'
 import espnRank from '@/lib/espnRank'
 import hashtagRank from '@/lib/hashtagRank'
+import hashtagPuntFGRank from '@/lib/hashtagPuntFGRank'
 import hashtagPuntFTRank from '@/lib/hashtagPuntFTRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
@@ -19,6 +25,10 @@ const ranks = [
   {
     title: 'hashtag',
     items: hashtagRank,
+  },
+  {
+    title: 'hashtag punt fg%',
+    items: hashtagPuntFGRank,
   },
   {
     title: 'hashtag punt ft%',
@@ -149,11 +159,76 @@ const LoadListDialog = ({ isOpen, setIsOpen, setDrafted }) => {
     </Dialog>
   )
 }
+const FixItemDialog = ({
+  isOpen,
+  setIsOpen,
+  itemToBeFixed,
+  setItemToBeFixed,
+  drafted,
+  setDrafted,
+}) => {
+  if (!itemToBeFixed) return null
+  const fuse = new Fuse(espnRank, {
+    keys: ['name'],
+  })
+  const players = fuse.search(itemToBeFixed).map(({ item }) => item)
+  // .filter(player => !drafted.some(p => p === player.name))
+  console.log({ players })
+
+  // const { data: lists } = fetchLists()
+  const [selectedPlayer, setSelectedPlayer] = useState(players[0])
+  // if (!lists || lists.length === 0) return null
+  // const selectedList = lists[selectedListIndex]
+  return (
+    <Dialog
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      className='fixed inset-0 z-10 overflow-y-auto'
+    >
+      <div className='flex items-center justify-center min-h-screen'>
+        <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
+
+        <div className='relative max-w-sm p-4 mx-auto space-y-4 bg-white rounded'>
+          <Dialog.Title>Fix Item: {itemToBeFixed}</Dialog.Title>
+          <Listbox value={selectedPlayer} onChange={setSelectedPlayer}>
+            <div>
+              <Listbox.Button className='w-full p-3'>
+                <span>{selectedPlayer.name}</span>
+              </Listbox.Button>
+              <Listbox.Options>
+                {players.map(player => (
+                  <Listbox.Option key={player.name} value={player}>
+                    {player.name}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </div>
+          </Listbox>
+
+          <button
+            type='button'
+            onClick={() => {
+              const idx = drafted.findIndex(p => p === itemToBeFixed)
+              drafted[idx] = selectedPlayer.name
+              setDrafted(drafted)
+              setItemToBeFixed(null)
+              setIsOpen(false)
+            }}
+          >
+            <CloudDownloadIcon className='w-6 h-6' />
+          </button>
+        </div>
+      </div>
+    </Dialog>
+  )
+}
 
 const Draft = () => {
   const [drafted, setDrafted] = useLocalStorage('draft', [])
   const [saveDraftDialogIsOpen, setSaveDraftDialogIsOpen] = useState(false)
   const [loadListDialogIsOpen, setLoadListDialogIsOpen] = useState(false)
+  const [fixItemDialogIsOpen, setFixItemDialogIsOpen] = useState(false)
+  const [itemToBeFixed, setItemToBeFixed] = useState(null)
   const [hideDrafted, setHideDrafted] = useState(true)
   const draft = name => {
     const newDrafted = [...drafted]
@@ -163,7 +238,7 @@ const Draft = () => {
   return (
     <Page>
       <Layout todaysGames={false}>
-        <Main className='px-2 space-y-2 md:mx-auto'>
+        <Main className='px-2 space-y-2 md:mx-auto md:w-9/10'>
           <SaveDraftDialog
             isOpen={saveDraftDialogIsOpen}
             setIsOpen={setSaveDraftDialogIsOpen}
@@ -172,6 +247,14 @@ const Draft = () => {
           <LoadListDialog
             isOpen={loadListDialogIsOpen}
             setIsOpen={setLoadListDialogIsOpen}
+            setDrafted={setDrafted}
+          />
+          <FixItemDialog
+            isOpen={fixItemDialogIsOpen}
+            setIsOpen={setFixItemDialogIsOpen}
+            itemToBeFixed={itemToBeFixed}
+            setItemToBeFixed={setItemToBeFixed}
+            drafted={drafted}
             setDrafted={setDrafted}
           />
           <div className='flex space-x-4'>
@@ -233,7 +316,7 @@ const Draft = () => {
               </span>
             </label>
           </div>
-          <div className='flex w-full divide-x divide-skin-foreground'>
+          <div className='flex overflow-x-scroll divide-x divide-skin-foreground'>
             <div className='w-[250px]'>
               <h2 className='flex p-2 space-x-4'>
                 <span>draft</span>
@@ -273,6 +356,10 @@ const Draft = () => {
                   const newDrafted = [...drafted]
                   newDrafted.splice(index, 1)
                   setDrafted(newDrafted)
+                }}
+                fixItem={index => {
+                  setFixItemDialogIsOpen(true)
+                  setItemToBeFixed(drafted[index])
                 }}
               />
             </div>

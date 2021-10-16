@@ -15,6 +15,10 @@ module.exports = {
       colors: {
         blue: colors.lightBlue,
       },
+      width: {
+        '1/10': '10%',
+        '9/10': '90%',
+      },
       animation: {
         'spin-slow': 'spin 2s linear infinite',
       },
