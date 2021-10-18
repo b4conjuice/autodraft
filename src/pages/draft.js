@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import { Dialog, Listbox } from '@headlessui/react'
-import {
-  CloudDownloadIcon,
-  SaveIcon,
-  TrashIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/solid'
+import { CloudDownloadIcon, SaveIcon, TrashIcon } from '@heroicons/react/solid'
 import Fuse from 'fuse.js'
 
 import Page from '@/components/page'
@@ -172,13 +167,7 @@ const FixItemDialog = ({
     keys: ['name'],
   })
   const players = fuse.search(itemToBeFixed).map(({ item }) => item)
-  // .filter(player => !drafted.some(p => p === player.name))
-  console.log({ players })
-
-  // const { data: lists } = fetchLists()
   const [selectedPlayer, setSelectedPlayer] = useState(players[0])
-  // if (!lists || lists.length === 0) return null
-  // const selectedList = lists[selectedListIndex]
   return (
     <Dialog
       open={isOpen}
