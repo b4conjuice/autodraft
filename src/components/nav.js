@@ -174,7 +174,7 @@ export const SideNav = () => {
             <div className='flex-1 max-w-sm min-w-0 bg-opacity-75 border-r border-white pointer-events-auto bg-skin-background border-opacity-10 backdrop-filter backdrop-blur firefox:bg-opacity-90'>
               <nav className='p-4'>
                 <ul className='space-y-4'>
-                  {nav.map(({ url, text }) => (
+                  {nav.map(({ url, text, Icon }) => (
                     <li
                       key={url}
                       className={
@@ -182,11 +182,15 @@ export const SideNav = () => {
                       }
                     >
                       {pathname === url ? (
-                        <span>{text}</span>
+                        <span className='flex items-center space-x-2'>
+                          <Icon className='w-6 h-6' />
+                          <span>{text}</span>
+                        </span>
                       ) : (
                         <Link href={url}>
-                          <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
-                            {text}
+                          <a className='flex items-center space-x-2 text-skin-link-accent hover:text-skin-link-accent-hover'>
+                            <Icon className='w-6 h-6' />
+                            <span>{text}</span>
                           </a>
                         </Link>
                       )}
