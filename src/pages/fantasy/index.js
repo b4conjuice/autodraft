@@ -77,17 +77,12 @@ const Fantasy = () => {
     start: date,
     end: date,
   })
-  // const today = format(new Date(), 'yyyy-MM-dd')
-  // const { data: gamesToday } = fetchNBASchedule({
-  //   start: today,
-  //   end: today,
-  // })
   const { data: games } = fetchNBAGames(schedule?.map(({ id }) => id))
+
   const topPlayers = games ? getTopPlayers(games) : []
   const filteredGames = games
     ? games.filter(game => results.some(result => result.id === game.player.id))
     : []
-  console.log({ games, results, topPlayers })
   return (
     <Page title='fantasy'>
       <Layout>
@@ -178,8 +173,10 @@ const Fantasy = () => {
                   stats={filteredGames.length > 0 ? filteredGames : games}
                 />{' '}
               </>
+            ) : schedule?.length === 0 ? (
+              <div>no games today</div>
             ) : games?.length === 0 ? (
-              <div>no games</div>
+              <div>no games started</div>
             ) : (
               <div className='flex justify-center flex-grow'>
                 <Loading />

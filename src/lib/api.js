@@ -120,7 +120,7 @@ export const fetchNBASchedule = (options = {}) => {
 
 export const fetchNBAGames = ids => {
   const { data } = useSwr(
-    ids
+    ids && ids.length > 0
       ? `https://www.balldontlie.io/api/v1/stats?per_page=100${ids.reduce(
           (query, game) => `${query}&game_ids[]=${game}`,
           ''
@@ -138,10 +138,7 @@ export const fetchNBAGame = (id, playerId) => {
       fetcher,
       { refreshInterval }
     )
-    const {
-      data: playerStats,
-      revalidate: refreshStats,
-    } = useSwr(
+    const { data: playerStats, revalidate: refreshStats } = useSwr(
       `https://www.balldontlie.io/api/v1/stats?game_ids[]=${id}&per_page=100${
         playerId ? `&player_ids[]=${playerId}` : ''
       }`,

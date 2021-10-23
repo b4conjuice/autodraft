@@ -1,5 +1,5 @@
 const getMin = min => {
-  if (!min) return 0
+  if (!min || min === '0') return 0
   if (!min.includes(':')) {
     console.error(`min ${min} is not the correct time format`)
     return 0
