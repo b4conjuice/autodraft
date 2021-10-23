@@ -17,10 +17,9 @@ import Confirm from '@/components/confirm'
 import Footer from '@/components/footer'
 import { fetchLists, updateList, deleteList } from '@/lib/api'
 import useForm from '@/lib/useForm'
-import nav from '@/lib/nav'
 
 const List = () => {
-  const { pathname, query, push } = useRouter()
+  const { query, push } = useRouter()
   const { id } = query
   const [edit, setEdit] = useState(false)
   const { data: list, revalidate } = fetchLists(id)
@@ -42,30 +41,6 @@ const List = () => {
         <Layout>
           <Main className='px-2 md:px-0'>
             <div className='mx-auto space-y-2 md:max-w-screen-md'>
-              <nav className='px-2 text-md'>
-                <ul className='flex justify-center space-x-3'>
-                  {nav.map(({ url, text }) => (
-                    <li
-                      key={url}
-                      className={
-                        pathname.includes(url)
-                          ? 'border-b-2 border-blue-700'
-                          : ''
-                      }
-                    >
-                      {pathname === url ? (
-                        <span>{text}</span>
-                      ) : (
-                        <Link href={url}>
-                          <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
-                            {text}
-                          </a>
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </nav>
               <h1 className='text-2xl text-center'>{list.error}</h1>
               <Link href='/fantasy/lists'>
                 <a className='text-center text-skin-link-accent hover:text-skin-link-accent-hover'>
@@ -82,28 +57,6 @@ const List = () => {
       <Layout>
         <Main className='px-2 md:px-0'>
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
-            <nav className='px-2 text-md'>
-              <ul className='flex justify-center space-x-3'>
-                {nav.map(({ url, text }) => (
-                  <li
-                    key={url}
-                    className={
-                      pathname.includes(url) ? 'border-b-2 border-blue-700' : ''
-                    }
-                  >
-                    {pathname === url ? (
-                      <span>{text}</span>
-                    ) : (
-                      <Link href={url}>
-                        <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
-                          {text}
-                        </a>
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
             {edit ? (
               <EditList values={values} handleChange={handleChange} />
             ) : list ? (

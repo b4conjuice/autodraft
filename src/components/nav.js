@@ -11,6 +11,7 @@ import {
   LightningBoltIcon,
   ChartBarIcon,
   CogIcon,
+  ViewListIcon,
 } from '@heroicons/react/solid'
 
 import { useMenu } from '@/lib/useMenu'
@@ -35,6 +36,23 @@ const nav = [
     url: '/fantasy',
     text: 'fantasy',
     Icon: LightningBoltIcon,
+    children: [
+      {
+        url: '/fantasy/teams',
+        text: 'teams',
+        Icon: UserGroupIcon,
+      },
+      {
+        url: '/fantasy/lists',
+        text: 'lists',
+        Icon: ViewListIcon,
+      },
+      {
+        url: '/fantasy/players',
+        text: 'players',
+        Icon: UserIcon,
+      },
+    ],
   },
   {
     url: '/draft',
@@ -100,7 +118,7 @@ export const Menu = () => {
   return (
     <nav>
       <ul className='space-y-4'>
-        {nav.map(({ url, text, Icon }) => (
+        {nav.map(({ url, text, Icon, children }) => (
           <li
             key={url}
             className={pathname === url || pathname.includes(`/`) ? '' : ''}
@@ -112,11 +130,46 @@ export const Menu = () => {
               </span>
             ) : (
               <Link href={url}>
-                <a className='flex items-center space-x-2 text-skin-link-accent hover:text-skin-link-accent-hover'>
+                <a
+                  className={`flex items-center space-x-2 hover:text-skin-link-accent-hover ${
+                    pathname.includes(url) ? '' : 'text-skin-link-accent'
+                  }`}
+                >
                   <Icon className='w-6 h-6' />
                   <span className={isOpen ? 'block' : 'hidden'}>{text}</span>
                 </a>
               </Link>
+            )}
+            {children && (
+              <ul className='mt-3 ml-4 space-y-3'>
+                {children.map(child => (
+                  <li>
+                    {pathname === child.url ? (
+                      <span className='flex items-center space-x-2'>
+                        <child.Icon className='w-6 h-6' />
+                        <span className={isOpen ? 'block' : 'hidden'}>
+                          {child.text}
+                        </span>
+                      </span>
+                    ) : (
+                      <Link href={child.url}>
+                        <a
+                          className={`flex items-center space-x-2 hover:text-skin-link-accent-hover ${
+                            pathname.includes(child.url)
+                              ? ''
+                              : 'text-skin-link-accent'
+                          }`}
+                        >
+                          <child.Icon className='w-6 h-6' />
+                          <span className={isOpen ? 'block' : 'hidden'}>
+                            {child.text}
+                          </span>
+                        </a>
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
             )}
           </li>
         ))}
@@ -174,7 +227,7 @@ export const SideNav = () => {
             <div className='flex-1 max-w-sm min-w-0 bg-opacity-75 border-r border-white pointer-events-auto bg-skin-background border-opacity-10 backdrop-filter backdrop-blur firefox:bg-opacity-90'>
               <nav className='p-4'>
                 <ul className='space-y-4'>
-                  {nav.map(({ url, text, Icon }) => (
+                  {nav.map(({ url, text, Icon, children }) => (
                     <li
                       key={url}
                       className={
@@ -188,11 +241,44 @@ export const SideNav = () => {
                         </span>
                       ) : (
                         <Link href={url}>
-                          <a className='flex items-center space-x-2 text-skin-link-accent hover:text-skin-link-accent-hover'>
+                          <a
+                            className={`flex items-center space-x-2 hover:text-skin-link-accent-hover ${
+                              pathname.includes(url)
+                                ? ''
+                                : 'text-skin-link-accent'
+                            }`}
+                          >
                             <Icon className='w-6 h-6' />
                             <span>{text}</span>
                           </a>
                         </Link>
+                      )}
+                      {children && (
+                        <ul className='mt-3 ml-4 space-y-3'>
+                          {children.map(child => (
+                            <li>
+                              {pathname === child.url ? (
+                                <span className='flex items-center space-x-2'>
+                                  <child.Icon className='w-6 h-6' />
+                                  <span>{child.text}</span>
+                                </span>
+                              ) : (
+                                <Link href={child.url}>
+                                  <a
+                                    className={`flex items-center space-x-2 hover:text-skin-link-accent-hover ${
+                                      pathname.includes(child.url)
+                                        ? ''
+                                        : 'text-skin-link-accent'
+                                    }`}
+                                  >
+                                    <child.Icon className='w-6 h-6' />
+                                    <span>{child.text}</span>
+                                  </a>
+                                </Link>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
                       )}
                     </li>
                   ))}

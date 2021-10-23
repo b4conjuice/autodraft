@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import format from 'date-fns/format'
 import { XCircleIcon } from '@heroicons/react/solid'
 
@@ -13,7 +12,6 @@ import BoxScore from '@/components/boxScore'
 import DatePicker from '@/components/datePicker'
 import Footer from '@/components/footer'
 import { searchNBAPlayers, fetchNBASchedule, fetchNBAGames } from '@/lib/api'
-import nav from '@/lib/nav'
 
 const getTopPlayers = games => {
   const players = games.map(game => {
@@ -69,7 +67,6 @@ const getTopPlayers = games => {
 }
 
 const Fantasy = () => {
-  const { pathname } = useRouter()
   const [search, setSearch] = useState('')
   const results = searchNBAPlayers(search)
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
@@ -88,28 +85,6 @@ const Fantasy = () => {
       <Layout>
         <Main className='px-2 md:px-0'>
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
-            <nav className='px-2 text-md'>
-              <ul className='flex justify-center space-x-3'>
-                {nav.map(({ url, text }) => (
-                  <li
-                    key={url}
-                    className={
-                      pathname.includes(url) ? 'border-b-2 border-blue-700' : ''
-                    }
-                  >
-                    {pathname === url ? (
-                      <span>{text}</span>
-                    ) : (
-                      <Link href={url}>
-                        <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
-                          {text}
-                        </a>
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
             <div className='flex space-x-0 md:space-x-2'>
               <input
                 type='date'
