@@ -23,10 +23,7 @@ const Teams = () => {
                     className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
                     <div className='space-x-1'>
-                      <Link
-                        href='/fantasy/teams/[id]'
-                        as={`/fantasy/teams/${team.id}`}
-                      >
+                      <Link href={`/fantasy/teams/${team.id}`}>
                         <a className='block p-2'>{team.name}</a>
                       </Link>
                     </div>

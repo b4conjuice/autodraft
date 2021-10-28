@@ -12,26 +12,12 @@ import {
   ChartBarIcon,
   CogIcon,
   ViewListIcon,
+  FireIcon,
 } from '@heroicons/react/solid'
 
 import { useMenu } from '@/lib/useMenu'
 
 const nav = [
-  {
-    url: '/games',
-    text: 'games',
-    Icon: ClockIcon,
-  },
-  {
-    url: '/teams',
-    text: 'teams',
-    Icon: UserGroupIcon,
-  },
-  {
-    url: '/players',
-    text: 'players',
-    Icon: UserIcon,
-  },
   {
     url: '/fantasy',
     text: 'fantasy',
@@ -43,12 +29,34 @@ const nav = [
         Icon: UserGroupIcon,
       },
       {
+        url: '/fantasy/players',
+        text: 'players',
+        Icon: UserIcon,
+      },
+      {
         url: '/fantasy/lists',
         text: 'lists',
         Icon: ViewListIcon,
       },
+    ],
+  },
+  {
+    url: '/nba',
+    text: 'nba',
+    Icon: FireIcon,
+    children: [
       {
-        url: '/fantasy/players',
+        url: '/nba/games',
+        text: 'games',
+        Icon: ClockIcon,
+      },
+      {
+        url: '/nba/teams',
+        text: 'teams',
+        Icon: UserGroupIcon,
+      },
+      {
+        url: '/nba/players',
         text: 'players',
         Icon: UserIcon,
       },

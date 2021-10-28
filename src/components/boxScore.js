@@ -54,7 +54,7 @@ const BoxScore = ({ stats }) => {
                     sort === 'player' ? 'font-semibold' : ''
                   }`}
                 >
-                  <Link href='/players/[id]' as={`/players/${player.id}`}>
+                  <Link href={`/nba/players/${player.id}`}>
                     <a className='hover:text-skin-link-accent-hover'>
                       {player.last_name}
                       <span className='hidden md:inline'>

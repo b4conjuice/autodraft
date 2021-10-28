@@ -106,12 +106,12 @@ const Fantasy = () => {
                       className='px-2 odd:bg-skin-foreground-alt'
                     >
                       <div className='flex space-x-2'>
-                        <Link href='/players/[id]' as={`/players/${player.id}`}>
+                        <Link href={`/nba/players/${player.id}`}>
                           <a className='hover:text-skin-link-accent-hover'>
                             {player.name}
                           </a>
                         </Link>
-                        <Link href='/teams/[id]' as={`/teams/${player.teamId}`}>
+                        <Link href={`/nba/teams/${player.teamId}`}>
                           <a className='hover:text-skin-link-accent-hover'>
                             {player.abbreviation}
                           </a>

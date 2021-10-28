@@ -39,7 +39,7 @@ const GameLog = ({ stats, teams, team, season }) => {
               }) => (
                 <tr key={id} className='odd:bg-skin-foreground-alt'>
                   <td className='py-1 overflow-hidden text-center whitespace-nowrap'>
-                    <Link href='/games/[id]' as={`/games/${id}`}>
+                    <Link href={`/nba/games/${id}`}>
                       <a className='space-x-1 text-skin-link-accent hover:text-skin-link-accent-hover'>
                         <span className='hidden md:inline'>
                           {format(new Date(date.replace('Z', '')), 'M/d/yy')}
@@ -182,7 +182,7 @@ const Player = () => {
                 {player.first_name} {player.last_name} {player.position}
               </h1>
               <h2 className='text-center'>
-                <Link href='/teams/[id]' as={`/teams/${player.team.id}`}>
+                <Link href={`/nba/teams/${player.team.id}`}>
                   <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                     {player.team.abbreviation}
                   </a>
@@ -203,7 +203,7 @@ const Player = () => {
           season={season}
           handleChange={e => {
             replace({
-              pathname: `/players/${query.id}`,
+              pathname: `/nba/players/${query.id}`,
               query: { season: e.target.value },
             })
           }}

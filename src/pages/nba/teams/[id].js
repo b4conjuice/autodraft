@@ -55,7 +55,7 @@ const Depth = ({ team }) => {
                         key={player.id}
                         className='max-w-sm px-1 py-1 text-center truncate'
                       >
-                        <Link href='/players/[id]' as={`/players/${player.id}`}>
+                        <Link href={`/nba/players/${player.id}`}>
                           <a className='hover:text-skin-link-accent-hover'>
                             {player.last_name || player.first_name}
                           </a>
@@ -76,7 +76,7 @@ const SelectTeam = ({ teams, team }) => {
   const router = useRouter()
   const handleChange = e => {
     router.push(
-      `/teams/${e.target.value}${
+      `/nba/teams/${e.target.value}${
         router.query.season ? `?season=${router.query.season}` : ''
       }`
     )
@@ -224,7 +224,7 @@ const Team = () => {
                       key={game.id}
                       className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                     >
-                      <Link href='/games/[id]' as={`/games/${game.id}`}>
+                      <Link href={`/nba/games/${game.id}`}>
                         <a className='block p-2 space-x-1 text-xl text-skin-base hover:text-skin-link-accent-hover'>
                           {game.home_team.id === team.id
                             ? `vs ${game.visitor_team.abbreviation}`
@@ -261,7 +261,7 @@ const Team = () => {
             season={season}
             handleChange={e => {
               replace({
-                pathname: `/teams/${query.id}`,
+                pathname: `/nba/teams/${query.id}`,
                 query: { season: e.target.value },
               })
             }}

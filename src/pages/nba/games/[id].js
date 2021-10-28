@@ -29,16 +29,13 @@ const Game = () => {
             <div className='text-center'>
               <h1 className='space-x-2 text-2xl'>
                 <span className='space-x-1'>
-                  <Link
-                    href='/teams/[id]'
-                    as={`/teams/${game.visitor_team.id}`}
-                  >
+                  <Link href={`/nba/teams/${game.visitor_team.id}`}>
                     <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                       {game.visitor_team.abbreviation}
                     </a>
                   </Link>
                   <span>@</span>
-                  <Link href='/teams/[id]' as={`/teams/${game.home_team.id}`}>
+                  <Link href={`/nba/teams/${game.home_team.id}`}>
                     <a className='text-skin-link-accent hover:text-skin-link-accent-hover'>
                       {game.home_team.abbreviation}
                     </a>

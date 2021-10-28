@@ -2,6 +2,8 @@ import useSwr from 'swr'
 
 import CURRENT_SEASON from '@/config/season'
 
+const startDate = '2021-10-19' // TODO: Workaround to fix api returning games before start of 2022 season
+
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 const refreshInterval = 30000
 
@@ -16,7 +18,7 @@ export const fetchNBATeams = team => {
 }
 
 export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
-  const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${season}&team_ids[]=${id}&per_page=100`
+  const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${season}&team_ids[]=${id}&start_date=${startDate}&per_page=100`
   const { data: games } = useSwr(id ? url : null, fetcher)
   const gameIds = games?.data.map(game => game.id)
   const { data: gameList } = useSwr(
@@ -86,7 +88,9 @@ export const fetchNBASchedule = (options = {}) => {
   const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${
     season || CURRENT_SEASON
   }${team ? `&team_ids[]=${team}&per_page=${postseason ? '100' : '82'}` : ''}${
-    start ? `&start_date=${start}&end_date=${end || start}` : ''
+    start
+      ? `&start_date=${start}&end_date=${end || start}`
+      : `&start_date=${startDate}&per_page=100`
   }${postseason ? `&postseason=1` : ''}`
   const { data, revalidate } = useSwr(url, fetcher)
   // const games = data?.data.sort((b, a) =>
@@ -96,7 +100,7 @@ export const fetchNBASchedule = (options = {}) => {
   // )
   const games = data?.data.sort(
     team
-      ? (b, a) => new Date(a.date) - new Date(b.date)
+      ? (b, a) => new Date(b.date) - new Date(a.date)
       : (b, a) => {
           if (b.status === 'Final') {
             if (a.status === 'Final') return 0

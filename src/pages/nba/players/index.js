@@ -36,15 +36,12 @@ const Players = () => {
                       className='p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                     >
                       <div className='space-x-1'>
-                        <Link href='/players/[id]' as={`/players/${player.id}`}>
+                        <Link href={`/nba/players/${player.id}`}>
                           <a>
                             {player.first_name} {player.last_name}
                           </a>
                         </Link>
-                        <Link
-                          href='/teams/[id]'
-                          as={`/teams/${player.team.id}`}
-                        >
+                        <Link href={`/nba/teams/${player.team.id}`}>
                           <a>{player.team.abbreviation}</a>
                         </Link>
                         <span>{player.position}</span>

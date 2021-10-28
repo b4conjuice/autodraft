@@ -95,7 +95,7 @@ const Depth = ({ team }) => {
                         key={player.id}
                         className='max-w-sm px-1 py-1 text-center truncate'
                       >
-                        <Link href='/players/[id]' as={`/players/${player.id}`}>
+                        <Link href={`/nba/players/${player.id}`}>
                           <a className='hover:text-skin-link-accent-hover'>
                             {player.last_name || player.first_name}
                           </a>
@@ -247,18 +247,12 @@ const Team = () => {
                         .map(player => (
                           <li key={player.id} className='flex p-2'>
                             <div className='flex-grow space-x-1'>
-                              <Link
-                                href='/players/[id]'
-                                as={`/players/${player.id}`}
-                              >
+                              <Link href={`/nba/players/${player.id}`}>
                                 <a>
                                   {player.first_name} {player.last_name}
                                 </a>
                               </Link>
-                              <Link
-                                href='/teams/[id]'
-                                as={`/teams/${player.team.id}`}
-                              >
+                              <Link href={`/nba/teams/${player.team.id}`}>
                                 <a>{player.team.abbreviation}</a>
                               </Link>
                               <span>

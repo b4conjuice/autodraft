@@ -23,10 +23,7 @@ const Lists = () => {
                     className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
                     <div className='space-x-1'>
-                      <Link
-                        href='/fantasy/lists/[id]'
-                        as={`/fantasy/lists/${list.id}`}
-                      >
+                      <Link href={`/fantasy/lists/${list.id}`}>
                         <a className='block p-2'>{list.title}</a>
                       </Link>
                     </div>

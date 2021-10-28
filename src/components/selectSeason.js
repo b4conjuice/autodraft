@@ -19,6 +19,7 @@ const SelectSeason = ({ season, handleChange }) => (
       '2018',
       '2019',
       '2020',
+      '2021',
     ].map(s => (
       <option key={s} value={s}>
         {s}
