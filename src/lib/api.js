@@ -213,6 +213,26 @@ export const searchNBAPlayers = name => {
   return data?.data || []
 }
 
+export const fetchNBARecord = ({ team, season = CURRENT_SEASON }) => {
+  const { data: regularSeasonGames } = fetchNBASchedule({ team, season })
+  if (!regularSeasonGames) return null
+  const wins = regularSeasonGames
+    .filter(g => g.status === 'Final')
+    .reduce((array, game) => {
+      if (
+        (game.visitor_team_score > game.home_team_score &&
+          game.visitor_team.id === team) ||
+        (game.home_team_score > game.visitor_team_score &&
+          game.home_team.id === team)
+      )
+        array.push('W')
+      return array
+    }, [])
+  return `${wins.length}-${
+    regularSeasonGames.filter(g => g.status === 'Final').length - wins.length
+  }`
+}
+
 export const fetchLists = id =>
   useSwr(`/api/lists${id ? `/${id}` : ''}`, fetcher)
 export const saveList = async list =>
