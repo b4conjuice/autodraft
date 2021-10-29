@@ -151,7 +151,7 @@ export const Menu = () => {
             {children && (
               <ul className='mt-3 ml-4 space-y-3'>
                 {children.map(child => (
-                  <li>
+                  <li key={child.url}>
                     {pathname === child.url ? (
                       <span className='flex items-center space-x-2'>
                         <child.Icon className='w-6 h-6' />
@@ -264,7 +264,7 @@ export const SideNav = () => {
                       {children && (
                         <ul className='mt-3 ml-4 space-y-3'>
                           {children.map(child => (
-                            <li>
+                            <li key={child.url}>
                               {pathname === child.url ? (
                                 <span className='flex items-center space-x-2'>
                                   <child.Icon className='w-6 h-6' />

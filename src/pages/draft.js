@@ -391,7 +391,7 @@ const Draft = () => {
               </table>
             </div>
             {ranks.map(rank => (
-              <div className='w-[350px]'>
+              <div key={rank.title} className='w-[350px]'>
                 <table className='w-full'>
                   <thead>
                     <tr>

@@ -92,7 +92,7 @@ const Depth = ({ team }) => {
                     )
                     .map(player => (
                       <td
-                        key={player.id}
+                        key={player.fullName}
                         className='max-w-sm px-1 py-1 text-center truncate'
                       >
                         <Link href={`/nba/players/${player.id}`}>
@@ -209,6 +209,8 @@ const Team = () => {
                       const [, last] = p.split(' ')
 
                       return {
+                        id: p.id,
+                        fullName: p,
                         last_name: last,
                         position: getPosition(p),
                       }

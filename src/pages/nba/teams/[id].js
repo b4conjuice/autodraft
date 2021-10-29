@@ -160,6 +160,7 @@ const Team = () => {
                 })
                 .map(p => {
                   return {
+                    id: p.id,
                     last_name: p.last_name,
                     position: getPosition(`${p.first_name} ${p.last_name}`),
                   }
