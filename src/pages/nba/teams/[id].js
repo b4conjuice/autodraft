@@ -12,7 +12,12 @@ import SelectSeason from '@/components/selectSeason'
 import Footer from '@/components/footer'
 import { getPosition } from '@/lib/espnRank'
 import getMin from '@/lib/getMin'
-import { fetchNBATeams, fetchNBATeam, fetchNBASchedule } from '@/lib/api'
+import {
+  fetchNBATeams,
+  fetchNBATeam,
+  fetchNBASchedule,
+  fetchNBARecord,
+} from '@/lib/api'
 import CURRENT_SEASON from '@/config/season'
 
 const Depth = ({ team }) => {
@@ -109,25 +114,14 @@ const Team = () => {
     season,
     postseason: true,
   })
-  if (!teams || !players || !regularSeasonGames || !postSeasonGames)
+  const record = fetchNBARecord({ team: id })
+  if (!teams || !players || !regularSeasonGames || !postSeasonGames || !record)
     return (
       <Page>
         <Loading />
       </Page>
     )
   const team = teams.find(t => t.id === parseInt(id, 10))
-  const wins = regularSeasonGames
-    .filter(g => g.status === 'Final')
-    .reduce((array, game) => {
-      if (
-        (game.visitor_team_score > game.home_team_score &&
-          game.visitor_team.id === team.id) ||
-        (game.home_team_score > game.visitor_team_score &&
-          game.home_team.id === team.id)
-      )
-        array.push('W')
-      return array
-    }, [])
   const games = gameType === 'regular' ? regularSeasonGames : postSeasonGames
   return (
     <Page title={team.full_name}>
@@ -139,11 +133,7 @@ const Team = () => {
                 <span className='hidden md:block'>{team.full_name}</span>
                 <span className='md:hidden'>{team.abbreviation}</span>
               </h1>
-              <h2 className='text-center'>
-                {wins.length}-
-                {regularSeasonGames.filter(g => g.status === 'Final').length -
-                  wins.length}
-              </h2>
+              <h2 className='text-center'>{record}</h2>
             </div>
             <Depth
               team={players

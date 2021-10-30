@@ -8,7 +8,32 @@ import Loading from '@/components/loading'
 import Games from '@/components/games'
 import DatePicker from '@/components/datePicker'
 import Footer from '@/components/footer'
-import { fetchNBASchedule } from '@/lib/api'
+import { fetchNBASchedule, fetchNBAStandings } from '@/lib/api'
+
+const Standings = ({ teams }) => (
+  <table className='w-full'>
+    <thead className='border-b-4 border-gray-400'>
+      <tr>
+        <td className='py-1 pl-2'>team</td>
+        <td className='py-1 text-center'>win</td>
+        <td className='py-1 text-center'>loss</td>
+        <td className='py-1 text-center'>%</td>
+      </tr>
+    </thead>
+    <tbody>
+      {teams.map(({ id, full_name: name, wins, losses }) => (
+        <tr key={id} className='odd:bg-skin-foreground-alt'>
+          <td className='py-1 pl-2'>{name}</td>
+          <td className='py-1 text-center'>{wins}</td>
+          <td className='py-1 text-center'>{losses}</td>
+          <td className='py-1 text-center'>
+            {(wins / (wins + losses)).toFixed(3)}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
 
 const TodaysGames = () => {
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
@@ -16,6 +41,21 @@ const TodaysGames = () => {
     start: date,
     end: date,
   })
+  const standings = fetchNBAStandings()
+  if (!games || !standings)
+    return (
+      <Page>
+        <Layout>
+          <Main className='px-2 md:px-0'>
+            <div className='mx-auto space-y-2 md:max-w-screen-md'>
+              <div className='flex space-x-0 md:space-x-2'>
+                <Loading />
+              </div>
+            </div>
+          </Main>
+        </Layout>
+      </Page>
+    )
   return (
     <Page>
       <Layout>
@@ -32,13 +72,12 @@ const TodaysGames = () => {
                 <DatePicker date={date} setDate={setDate} />
               </div>
             </div>
-            {games ? (
-              <Games games={games} />
-            ) : (
-              <div className='flex justify-center flex-grow'>
-                <Loading />
-              </div>
-            )}
+
+            <Games games={games} />
+            <h2>eastern conference</h2>
+            <Standings teams={standings.conference.east} />
+            <h2>western conference</h2>
+            <Standings teams={standings.conference.west} />
           </div>
         </Main>
       </Layout>

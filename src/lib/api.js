@@ -1,4 +1,5 @@
 import useSwr from 'swr'
+import format from 'date-fns/format'
 
 import CURRENT_SEASON from '@/config/season'
 
@@ -82,6 +83,14 @@ export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   return team
 }
 
+const getHour = timeMatch => {
+  if (!timeMatch) return null
+  const [, h, m, ampm] = timeMatch
+  const hour = parseInt(h, 10)
+  const min = parseInt(m, 10)
+  return hour + (ampm === 'PM' ? 12 : 0) + (min === 30 ? 0.5 : 0)
+}
+
 export const fetchNBASchedule = (options = {}) => {
   // const { team, desc, start, end } = options
   const { team, start, end, season, postseason } = options
@@ -89,7 +98,7 @@ export const fetchNBASchedule = (options = {}) => {
     season || CURRENT_SEASON
   }${team ? `&team_ids[]=${team}&per_page=${postseason ? '100' : '82'}` : ''}${
     start
-      ? `&start_date=${start}&end_date=${end || start}`
+      ? `&start_date=${start}&end_date=${end || start}&per_page=100`
       : `&start_date=${startDate}&per_page=100`
   }${postseason ? `&postseason=1` : ''}`
   const { data, revalidate } = useSwr(url, fetcher)
@@ -98,28 +107,36 @@ export const fetchNBASchedule = (options = {}) => {
   //     ? new Date(a.date) - new Date(b.date)
   //     : new Date(b.date) - new Date(a.date)
   // )
-  const games = data?.data.sort(
-    team
-      ? (b, a) => new Date(b.date) - new Date(a.date)
-      : (b, a) => {
-          if (b.status === 'Final') {
-            if (a.status === 'Final') return 0
-            return 1
+  const re = new RegExp('^(0?[1-9]|1[0-2]):([0-5][0-9]) ?([AaPp][Mm])')
+  const games = data?.data
+    .map(game => ({
+      ...game,
+      hour: getHour(game.status.match(re)),
+    }))
+    .sort(
+      team
+        ? (b, a) => new Date(b.date) - new Date(a.date)
+        : (b, a) => {
+            if (b.status === 'Final') {
+              if (a.status === 'Final') return 0
+              return 1
+            }
+            if (a.status === 'Final') {
+              return -1
+            }
+            if (b.status.includes(':')) {
+              if (a.status.includes(':')) {
+                return b.hour - a.hour
+              }
+              return 1
+            }
+            if (a.status.includes(':')) {
+              return -1
+            }
+            return 0
           }
-          if (a.status === 'Final') {
-            return -1
-          }
-          if (b.status.includes(':')) {
-            if (a.status.includes(':')) return 0
-            return 1
-          }
-          if (a.status.includes(':')) {
-            return -1
-          }
-          return 0
-        }
-  )
-  return { data: games, revalidate }
+    )
+  return { data: games, meta: data?.meta, revalidate }
 }
 
 export const fetchNBAGames = ids => {
@@ -221,9 +238,9 @@ export const fetchNBARecord = ({ team, season = CURRENT_SEASON }) => {
     .reduce((array, game) => {
       if (
         (game.visitor_team_score > game.home_team_score &&
-          game.visitor_team.id === team) ||
+          game.visitor_team.id === parseInt(team, 10)) ||
         (game.home_team_score > game.visitor_team_score &&
-          game.home_team.id === team)
+          game.home_team.id === parseInt(team, 10))
       )
         array.push('W')
       return array
@@ -231,6 +248,62 @@ export const fetchNBARecord = ({ team, season = CURRENT_SEASON }) => {
   return `${wins.length}-${
     regularSeasonGames.filter(g => g.status === 'Final').length - wins.length
   }`
+}
+
+export const fetchNBAStandings = () => {
+  const { data: allGames, meta } = fetchNBASchedule({
+    start: '2021-10-19',
+    end: format(new Date(), 'yyyy-MM-dd'),
+  })
+  if (!allGames) return null
+  if (meta.total_pages > 1)
+    console.log('need to account for more than 100 total season games') // TODO
+  const teamsWithRecord = allGames
+    ?.filter(game => game.status === 'Final')
+    .reduce((array, game) => {
+      const winner =
+        game.visitor_team_score > game.home_team_score
+          ? game.visitor_team
+          : game.home_team
+      const loser =
+        winner.id === game.home_team.id ? game.visitor_team : game.home_team
+      if (array[winner.id]) {
+        array[winner.id].wins += 1
+      } else {
+        array[winner.id] = {
+          ...winner,
+          wins: 1,
+          losses: 0,
+        }
+      }
+      if (array[loser.id]) {
+        array[loser.id].losses += 1
+      } else {
+        array[loser.id] = {
+          ...loser,
+          wins: 0,
+          losses: 1,
+        }
+      }
+      return array
+    }, [])
+    .map(team => ({
+      ...team,
+      record: `${team.wins}-${team.losses}`,
+    }))
+  teamsWithRecord.shift()
+  teamsWithRecord.sort((b, a) => {
+    if (a.wins !== b.wins) return new Date(a.wins) - new Date(b.wins)
+    return new Date(b.losses) - new Date(a.losses)
+  }) // remove first element (since no team has id 0)
+  const standings = {
+    all: teamsWithRecord,
+    conference: {
+      east: teamsWithRecord.filter(team => team.conference === 'East'),
+      west: teamsWithRecord.filter(team => team.conference === 'West'),
+    },
+  }
+  return standings
 }
 
 export const fetchLists = id =>
