@@ -15,8 +15,6 @@ import {
   FireIcon,
 } from '@heroicons/react/solid'
 
-import { useMenu } from '@/lib/useMenu'
-
 const nav = [
   {
     url: '/fantasy',
@@ -101,28 +99,8 @@ export const TopNav = ({ pathname }) => (
   </nav>
 )
 
-export const MenuButton = () => {
-  const [isOpen, setIsOpen] = useMenu()
-  return (
-    <button
-      className='items-center justify-center hidden w-12 h-12 text-white transition md:flex focus:outline-none focus-visible:ring backdrop-filter backdrop-blur'
-      type='button'
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <span className='sr-only'>Open site navigation</span>
-      <MenuIcon className='w-6 h-6' />
-    </button>
-  )
-}
-
 export const Menu = () => {
-  const { events, pathname } = useRouter()
-  const [isOpen, setIsOpen] = useMenu()
-  if (events) {
-    events.on('routeChangeComplete', () => {
-      setIsOpen(true)
-    })
-  }
+  const { pathname } = useRouter()
   return (
     <nav>
       <ul className='space-y-4'>
@@ -134,7 +112,7 @@ export const Menu = () => {
             {pathname === url ? (
               <span className='flex items-center space-x-2'>
                 <Icon className='w-6 h-6' />
-                <span className={isOpen ? 'block' : 'hidden'}>{text}</span>
+                <span>{text}</span>
               </span>
             ) : (
               <Link href={url}>
@@ -144,7 +122,7 @@ export const Menu = () => {
                   }`}
                 >
                   <Icon className='w-6 h-6' />
-                  <span className={isOpen ? 'block' : 'hidden'}>{text}</span>
+                  <span>{text}</span>
                 </a>
               </Link>
             )}
@@ -155,9 +133,7 @@ export const Menu = () => {
                     {pathname === child.url ? (
                       <span className='flex items-center space-x-2'>
                         <child.Icon className='w-6 h-6' />
-                        <span className={isOpen ? 'block' : 'hidden'}>
-                          {child.text}
-                        </span>
+                        <span>{child.text}</span>
                       </span>
                     ) : (
                       <Link href={child.url}>
@@ -169,9 +145,7 @@ export const Menu = () => {
                           }`}
                         >
                           <child.Icon className='w-6 h-6' />
-                          <span className={isOpen ? 'block' : 'hidden'}>
-                            {child.text}
-                          </span>
+                          <span>{child.text}</span>
                         </a>
                       </Link>
                     )}

@@ -2,8 +2,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { MenuButton } from './nav'
-
 const DEFAULT_TITLE = 'autodraft'
 
 const Page = ({ title = DEFAULT_TITLE, children }) => {
@@ -85,8 +83,7 @@ const Page = ({ title = DEFAULT_TITLE, children }) => {
           {title === DEFAULT_TITLE ? title : `${title} - ${DEFAULT_TITLE}`}
         </title>
       </Head>
-      <header className='md:flex md:border-b border-skin-foreground'>
-        <MenuButton />
+      <header className='items-center md:flex md:border-b border-skin-foreground md:px-4 md:py-2'>
         <h1 className='text-3xl font-extrabold leading-9 tracking-tight text-center text-skin-base sm:text-4xl sm:leading-10 md:text-left'>
           {pathname === '/' ? (
             <span>{DEFAULT_TITLE}</span>
