@@ -23,7 +23,7 @@ export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   const gameIds = games?.data.map(game => game.id)
   const { data: gameList } = useSwr(
     gameIds
-      ? `https://www.balldontlie.io/api/v1/stats?per_page=100${gameIds.reduce(
+      ? `https://www.balldontlie.io/api/v1/stats?start_date=${startDate}&per_page=100${gameIds.reduce(
           (query, game) => `${query}&game_ids[]=${game}`,
           ''
         )}`
@@ -184,13 +184,13 @@ export const fetchNBAPlayer = (id, season = CURRENT_SEASON) => {
   )
   const { data: seasonStats } = useSwr(
     id
-      ? `https://www.balldontlie.io/api/v1/season_averages?&seasons[]=${season}&player_ids[]=${id}`
+      ? `https://www.balldontlie.io/api/v1/season_averages?&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
       : null,
     fetcher
   )
   const { data: stats } = useSwr(
     id
-      ? `https://www.balldontlie.io/api/v1/stats?&per_page=100&seasons[]=${season}&player_ids[]=${id}`
+      ? `https://www.balldontlie.io/api/v1/stats?&per_page=100&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
       : null,
     fetcher
   )

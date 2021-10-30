@@ -75,11 +75,13 @@ const Game = () => {
                   stats={game.stats.filter(
                     s => s.team.id === game.visitor_team.id
                   )}
+                  includeTotals
                 />
                 <BoxScore
                   stats={game.stats.filter(
                     s => s.team.id === game.home_team.id
                   )}
+                  includeTotals
                 />
               </>
             ) : null}

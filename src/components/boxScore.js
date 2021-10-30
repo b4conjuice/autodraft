@@ -3,7 +3,19 @@ import Link from 'next/link'
 
 import getMin from '@/lib/getMin'
 
-const BoxScore = ({ stats }) => {
+const getTotal = (stats, stat) =>
+  stats.reduce(
+    (total, line) => total + (stat === 'min' ? getMin(line[stat]) : line[stat]),
+    0
+  )
+
+const getMinString = min => {
+  const m = Math.floor(min / 60)
+  const s = min % 60
+  return `${m}:${s < 10 ? '0' : ''}${s}`
+}
+
+const BoxScore = ({ stats, includeTotals = false }) => {
   const [sort, setSort] = useState('min')
   stats.sort((b, a) => {
     if (sort === 'player') {
@@ -33,7 +45,7 @@ const BoxScore = ({ stats }) => {
       <div className='w-40'>
         <table className='w-full border-r-4 border-gray-400 table-fixed'>
           <thead>
-            <tr>
+            <tr className='border-b-4 border-gray-400'>
               <th>
                 <button
                   className='w-full py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
@@ -65,13 +77,18 @@ const BoxScore = ({ stats }) => {
                 </td>
               </tr>
             ))}
+            {includeTotals && (
+              <tr className='border-t-4 border-gray-400'>
+                <td className='py-1 text-center'>TOTAL</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
       <div className='flex flex-grow overflow-x-auto'>
         <table className='w-full'>
           <thead>
-            <tr>
+            <tr className='border-b-4 border-gray-400'>
               <th>
                 <button
                   className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
@@ -308,6 +325,34 @@ const BoxScore = ({ stats }) => {
                   </td>
                 </tr>
               )
+            )}
+            {includeTotals && (
+              <tr className='border-t-4 border-gray-400'>
+                <td className='py-1 text-center'>
+                  {getMinString(getTotal(stats, 'min'))}
+                </td>
+                <td className='py-1 text-center'>{getTotal(stats, 'pts')}</td>
+                <td className='py-1 text-center'>
+                  {getTotal(stats, 'fgm')}/{getTotal(stats, 'fga')}
+                </td>
+                <td className='hidden text-center md:block'>
+                  {(getTotal(stats, 'fgm') / getTotal(stats, 'fga')).toFixed(3)}
+                </td>
+                <td className='py-1 text-center'>
+                  {getTotal(stats, 'ftm')}/{getTotal(stats, 'fta')}
+                </td>
+                <td className='hidden text-center md:block'>
+                  {(getTotal(stats, 'ftm') / getTotal(stats, 'fta')).toFixed(3)}
+                </td>
+                <td className='py-1 text-center'>{getTotal(stats, 'fg3m')}</td>
+                <td className='py-1 text-center'>{getTotal(stats, 'reb')}</td>
+                <td className='py-1 text-center'>{getTotal(stats, 'ast')}</td>
+                <td className='py-1 text-center'>
+                  {getTotal(stats, 'turnover')}
+                </td>
+                <td className='py-1 text-center'>{getTotal(stats, 'stl')}</td>
+                <td className='py-1 text-center'>{getTotal(stats, 'blk')}</td>
+              </tr>
             )}
           </tbody>
         </table>

@@ -169,6 +169,20 @@ const Team = () => {
             {(!season || season === CURRENT_SEASON) && (
               <BoxScore
                 stats={players.map(p => ({
+                  min: '0:00',
+                  pts: 0,
+                  fgm: 0,
+                  fga: 0,
+                  fg_pct: 0,
+                  ftm: 0,
+                  fta: 0,
+                  ft_pct: 0,
+                  fg3m: 0,
+                  reb: 0,
+                  ast: 0,
+                  turnover: 0,
+                  stl: 0,
+                  blk: 0,
                   ...p,
                   player: {
                     id: p.id,
