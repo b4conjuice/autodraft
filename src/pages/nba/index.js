@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import format from 'date-fns/format'
 
 import Page from '@/components/page'
@@ -14,6 +15,7 @@ const Standings = ({ teams }) => (
   <table className='w-full'>
     <thead className='border-b-4 border-gray-400'>
       <tr>
+        <td className='py-1 pl-2'>#</td>
         <td className='py-1 pl-2'>team</td>
         <td className='py-1 text-center'>win</td>
         <td className='py-1 text-center'>loss</td>
@@ -21,9 +23,14 @@ const Standings = ({ teams }) => (
       </tr>
     </thead>
     <tbody>
-      {teams.map(({ id, full_name: name, wins, losses }) => (
+      {teams.map(({ id, full_name: name, wins, losses }, index) => (
         <tr key={id} className='odd:bg-skin-foreground-alt'>
-          <td className='py-1 pl-2'>{name}</td>
+          <td className='py-1 pl-2'>{index + 1}</td>
+          <td className='py-1 pl-2'>
+            <Link href={`/nba/teams/${id}`}>
+              <a className='hover:text-skin-link-accent-hover'>{name}</a>
+            </Link>
+          </td>
           <td className='py-1 text-center'>{wins}</td>
           <td className='py-1 text-center'>{losses}</td>
           <td className='py-1 text-center'>

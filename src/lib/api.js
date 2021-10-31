@@ -250,15 +250,70 @@ export const fetchNBARecord = ({ team, season = CURRENT_SEASON }) => {
   }`
 }
 
-export const fetchNBAStandings = () => {
-  const { data: allGames, meta } = fetchNBASchedule({
-    start: '2021-10-19',
+// TODO refactor this back into fetchNBASchedule
+export const fetchNBARegularSeasonSchedule = (options = {}) => {
+  const { start, end, season, postseason } = options
+  const { data, revalidate } = useSwr(
+    `https://www.balldontlie.io/api/v1/games?seasons[]=${
+      season || CURRENT_SEASON
+    }${
+      start
+        ? `&start_date=${start}&end_date=${end || start}&per_page=100`
+        : `&start_date=${startDate}&per_page=100`
+    }&postseason=${postseason ? 1 : 0}`,
+    async url => {
+      const res = await fetcher(url)
+      const { meta } = res
+      if (meta.total_pages > 1) {
+        const pages = Array(meta.total_pages - meta.next_page + 1)
+          .fill()
+          .map((_, idx) => meta.next_page + idx)
+        const moreGames = (
+          await Promise.all(pages.map(page => fetcher(`${url}&page=${page}`)))
+        )
+          .map(({ data: additionalData }) => additionalData)
+          .flat()
+        res.data = [...res.data, ...moreGames]
+      }
+      return res
+    }
+  )
+  const re = new RegExp('^(0?[1-9]|1[0-2]):([0-5][0-9]) ?([AaPp][Mm])')
+  const games = data?.data
+    .map(game => ({
+      ...game,
+      hour: getHour(game.status.match(re)),
+    }))
+    .sort((b, a) => {
+      if (b.date !== a.date) return new Date(b.date) - new Date(a.date)
+      if (b.status === 'Final') {
+        if (a.status === 'Final') return 0
+        return 1
+      }
+      if (a.status === 'Final') {
+        return -1
+      }
+      if (b.status.includes(':')) {
+        if (a.status.includes(':')) {
+          return b.hour - a.hour
+        }
+        return 1
+      }
+      if (a.status.includes(':')) {
+        return -1
+      }
+      return 0
+    })
+  return { data: games, meta: data?.meta, revalidate }
+}
+
+export const fetchNBAStandings = (start = startDate) => {
+  const { data: games } = fetchNBARegularSeasonSchedule({
+    start,
     end: format(new Date(), 'yyyy-MM-dd'),
   })
-  if (!allGames) return null
-  if (meta.total_pages > 1)
-    console.log('need to account for more than 100 total season games') // TODO
-  const teamsWithRecord = allGames
+  if (!games) return null
+  const teamsWithRecord = games
     ?.filter(game => game.status === 'Final')
     .reduce((array, game) => {
       const winner =
