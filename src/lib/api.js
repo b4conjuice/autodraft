@@ -2,6 +2,9 @@ import useSwr from 'swr'
 import format from 'date-fns/format'
 
 import CURRENT_SEASON from '@/config/season'
+import getRecord from '@/lib/getRecord'
+import getWinPercentage from '@/lib/getWinPercentage'
+import filterGames from '@/lib/filterGames'
 
 const startDate = '2021-10-19' // TODO: Workaround to fix api returning games before start of 2022 season
 
@@ -345,18 +348,137 @@ export const fetchNBAStandings = (start = startDate) => {
     .map(team => ({
       ...team,
       record: `${team.wins}-${team.losses}`,
+      winPercentage: getWinPercentage(team).toFixed(3),
     }))
-  teamsWithRecord.shift()
-  teamsWithRecord.sort((b, a) => {
-    if (a.wins !== b.wins) return new Date(a.wins) - new Date(b.wins)
-    return new Date(b.losses) - new Date(a.losses)
-  }) // remove first element (since no team has id 0)
+  teamsWithRecord.shift() // remove first element (since no team has id 0)
+  const sortByRecord = (b, a) => {
+    if (a.winPercentage !== b.winPercentage)
+      return Number(a.winPercentage) - Number(b.winPercentage)
+    return 0
+  }
+  teamsWithRecord.sort(sortByRecord)
+  const { conferences, divisions } = teamsWithRecord.reduce((prev, curr) => {
+    const { conference, division } = curr
+    const c = conference
+    const d = division
+    if (prev.conferences) {
+      if (prev.conferences[c]) prev.conferences[c].push(curr)
+      else
+        prev.conferences = {
+          ...prev.conferences,
+          [c]: [curr],
+        }
+    } else {
+      prev.conferences = {
+        [c]: [curr],
+      }
+    }
+    if (prev.divisions) {
+      if (prev.divisions[d]) prev.divisions[d].push(curr)
+      else
+        prev.divisions = {
+          ...prev.divisions,
+          [d]: [curr],
+        }
+    } else {
+      prev.divisions = {
+        [d]: [curr],
+      }
+    }
+    return prev
+  }, {})
+  Object.keys(conferences).forEach(conference => {
+    conferences[conference].sort((b, a) => {
+      if (a.winPercentage !== b.winPercentage)
+        return Number(a.winPercentage) - Number(b.winPercentage)
+
+      const h2hGames = games.filter(
+        game =>
+          (game.home_team.id === b.id && game.visitor_team.id === a.id) ||
+          (game.home_team.id === a.id && game.visitor_team.id === b.id)
+      )
+      if (h2hGames.length > 0) {
+        const h2hRecord = h2hGames.reduce(
+          (record, game) => {
+            const winner =
+              game.visitor_team_score > game.home_team_score
+                ? game.visitor_team
+                : game.home_team
+            if (record[winner.id]) record[winner.id] += 1
+            else record[winner.id] = 1
+            return record
+          },
+          {
+            [a.id]: 0,
+            [b.id]: 0,
+          }
+        )
+        if (h2hRecord[a.id] !== h2hRecord[b.id])
+          return h2hRecord[a.id] - h2hRecord[b.id]
+      }
+      const bDivisionLeader =
+        divisions[b.division].findIndex(team => team.id === b.id) === 0
+      const aDivisionLeader =
+        divisions[a.division].findIndex(team => team.id === a.id) === 0
+      if (aDivisionLeader !== bDivisionLeader) {
+        if (aDivisionLeader) return 1
+        return -1
+      }
+
+      const bWinPercentageAgainstDivision = getWinPercentage(
+        getRecord({
+          team: b,
+          games: filterGames({
+            games,
+            team: b,
+            conferenceDivision: 'division',
+          }),
+        })
+      )
+      const aWinPercentageAgainstDivision = getWinPercentage(
+        getRecord({
+          team: a,
+          games: filterGames({
+            games,
+            team: a,
+            conferenceDivision: 'division',
+          }),
+        })
+      )
+      if (bWinPercentageAgainstDivision !== aWinPercentageAgainstDivision) {
+        return aWinPercentageAgainstDivision - bWinPercentageAgainstDivision
+      }
+
+      const bWinPercentageAgainstConference = getWinPercentage(
+        getRecord({
+          team: b,
+          games: filterGames({
+            games,
+            team: b,
+            conferenceDivision: 'conference',
+          }),
+        })
+      )
+      const aWinPercentageAgainstConference = getWinPercentage(
+        getRecord({
+          team: a,
+          games: filterGames({
+            games,
+            team: a,
+            conferenceDivision: 'conference',
+          }),
+        })
+      )
+      if (bWinPercentageAgainstConference !== aWinPercentageAgainstConference) {
+        return aWinPercentageAgainstConference - bWinPercentageAgainstConference
+      }
+      return 0
+    })
+  })
   const standings = {
     all: teamsWithRecord,
-    conference: {
-      east: teamsWithRecord.filter(team => team.conference === 'East'),
-      west: teamsWithRecord.filter(team => team.conference === 'West'),
-    },
+    conferences,
+    divisions,
   }
   return standings
 }

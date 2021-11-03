@@ -23,21 +23,23 @@ const Standings = ({ teams }) => (
       </tr>
     </thead>
     <tbody>
-      {teams.map(({ id, full_name: name, wins, losses }, index) => (
-        <tr key={id} className='odd:bg-skin-foreground-alt'>
-          <td className='py-1 pl-2'>{index + 1}</td>
-          <td className='py-1 pl-2'>
-            <Link href={`/nba/teams/${id}`}>
-              <a className='hover:text-skin-link-accent-hover'>{name}</a>
-            </Link>
-          </td>
-          <td className='py-1 text-center'>{wins}</td>
-          <td className='py-1 text-center'>{losses}</td>
-          <td className='py-1 text-center'>
-            {(wins / (wins + losses)).toFixed(3)}
-          </td>
-        </tr>
-      ))}
+      {teams.map(
+        ({ id, full_name: name, wins, losses, winPercentage }, index) => (
+          <tr key={id} className='odd:bg-skin-foreground-alt'>
+            <td className='py-1 pl-2'>{index + 1}</td>
+            <td className='py-1 pl-2'>
+              <Link href={`/nba/teams/${id}`}>
+                <a className='hover:text-skin-link-accent-hover'>{name}</a>
+              </Link>
+            </td>
+            <td className='py-1 text-center'>{wins}</td>
+            <td className='py-1 text-center'>{losses}</td>
+            <td className='py-1 text-center'>
+              {`${winPercentage}`.replace('0.', '.')}
+            </td>
+          </tr>
+        )
+      )}
     </tbody>
   </table>
 )
@@ -82,9 +84,9 @@ const TodaysGames = () => {
 
             <Games games={games} />
             <h2>eastern conference</h2>
-            <Standings teams={standings.conference.east} />
+            <Standings teams={standings.conferences.East} />
             <h2>western conference</h2>
-            <Standings teams={standings.conference.west} />
+            <Standings teams={standings.conferences.West} />
           </div>
         </Main>
       </Layout>
