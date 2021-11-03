@@ -397,32 +397,44 @@ export const fetchNBAStandings = (start = startDate) => {
           (game.home_team.id === b.id && game.visitor_team.id === a.id) ||
           (game.home_team.id === a.id && game.visitor_team.id === b.id)
       )
-      if (h2hGames.length > 0) {
-        const h2hRecord = h2hGames.reduce(
-          (record, game) => {
-            const winner =
-              game.visitor_team_score > game.home_team_score
-                ? game.visitor_team
-                : game.home_team
-            if (record[winner.id]) record[winner.id] += 1
-            else record[winner.id] = 1
-            return record
-          },
-          {
-            [a.id]: 0,
-            [b.id]: 0,
-          }
-        )
-        if (h2hRecord[a.id] !== h2hRecord[b.id])
-          return h2hRecord[a.id] - h2hRecord[b.id]
-      }
+      const h2hRecord = h2hGames.reduce(
+        (record, game) => {
+          const winner =
+            game.visitor_team_score > game.home_team_score
+              ? game.visitor_team
+              : game.home_team
+          if (record[winner.id]) record[winner.id] += 1
+          else record[winner.id] = 1
+          return record
+        },
+        {
+          [a.id]: 0,
+          [b.id]: 0,
+        }
+      )
+
       const bDivisionLeader =
         divisions[b.division].findIndex(team => team.id === b.id) === 0
       const aDivisionLeader =
         divisions[a.division].findIndex(team => team.id === a.id) === 0
-      if (aDivisionLeader !== bDivisionLeader) {
-        if (aDivisionLeader) return 1
-        return -1
+
+      const teamsWithSameRecord = conferences[b.conference].filter(
+        team => team.winPercentage === b.winPercentage
+      )
+      if (teamsWithSameRecord.length > 2) {
+        if (aDivisionLeader !== bDivisionLeader) {
+          if (aDivisionLeader) return 1
+          return -1
+        }
+        if (h2hRecord[a.id] !== h2hRecord[b.id])
+          return h2hRecord[a.id] - h2hRecord[b.id]
+      } else {
+        if (h2hRecord[a.id] !== h2hRecord[b.id])
+          return h2hRecord[a.id] - h2hRecord[b.id]
+        if (aDivisionLeader !== bDivisionLeader) {
+          if (aDivisionLeader) return 1
+          return -1
+        }
       }
 
       const bWinPercentageAgainstDivision = getWinPercentage(
