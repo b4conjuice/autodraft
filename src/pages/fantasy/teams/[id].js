@@ -6,6 +6,8 @@ import {
   DownloadIcon,
   TrashIcon,
   SaveIcon,
+  XIcon,
+  PencilAltIcon,
 } from '@heroicons/react/solid'
 
 import Page from '@/components/page'
@@ -13,6 +15,8 @@ import Layout from '@/components/layout'
 import Main from '@/components/main'
 import Loading from '@/components/loading'
 import Confirm from '@/components/confirm'
+import EditTeam from '@/components/editTeam'
+import useEditTeam from '@/lib/useEditTeam'
 import Footer from '@/components/footer'
 import { fetchTeams, updateTeam, deleteTeam, searchNBAPlayers } from '@/lib/api'
 import { getPosition } from '@/lib/espnRank'
@@ -52,8 +56,6 @@ const getPicks = ({ order, teams, rounds }) => {
   }
   return picks
 }
-
-const EditTeam = () => <p>edit team</p>
 
 const Depth = ({ team }) => {
   const positions = ['PG', 'SG', 'SF', 'PF', 'C']
@@ -141,6 +143,21 @@ const Team = () => {
     }
     update()
   }, [initialTeam])
+  const { values, handleChange, handleSubmit, isSubmitting, dirty, errors } =
+    useEditTeam({
+      initialValues: team,
+      onSubmit: async (newTeam, { setSubmitting }) => {
+        const slots = [...Array(newTeam.rounds).keys()]
+          .map(x => x)
+          .map(slot => newTeam.slots[slot] || 'B')
+        await updateTeam({
+          ...newTeam,
+          slots,
+        })
+        await revalidate()
+        setSubmitting(false)
+      },
+    })
   if (team?.error)
     return (
       <Page title='teams'>
@@ -199,7 +216,11 @@ const Team = () => {
         <Main className='px-2 md:px-0'>
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
             {edit ? (
-              <EditTeam />
+              <EditTeam
+                values={values}
+                handleChange={handleChange}
+                errors={errors}
+              />
             ) : team ? (
               <>
                 <h1 className='text-2xl text-center'>{team.name}</h1>
@@ -452,17 +473,41 @@ const Team = () => {
           <li className='flex justify-center'>
             <button
               className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
-              type='submit'
-              onClick={async () => {
-                await updateTeam(team)
-                await revalidate()
-              }}
-              disabled={initialTeam?.players?.every(
-                (p, index) => p === team?.players[index]
-              )}
+              type='button'
+              onClick={() => setEdit(!edit)}
             >
-              <SaveIcon className='w-6 h-6' />
+              {edit ? (
+                <XIcon className='w-6 h-6' />
+              ) : (
+                <PencilAltIcon className='w-6 h-6' />
+              )}
             </button>
+          </li>
+          <li className='flex justify-center'>
+            {edit ? (
+              <button
+                className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+                type='submit'
+                onClick={handleSubmit}
+                disabled={!dirty || isSubmitting}
+              >
+                <SaveIcon className='w-6 h-6' />
+              </button>
+            ) : (
+              <button
+                className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+                type='submit'
+                onClick={async () => {
+                  await updateTeam(team)
+                  await revalidate()
+                }}
+                disabled={initialTeam?.players?.every(
+                  (p, index) => p === team?.players[index]
+                )}
+              >
+                <SaveIcon className='w-6 h-6' />
+              </button>
+            )}
           </li>
         </ul>
       </Footer>

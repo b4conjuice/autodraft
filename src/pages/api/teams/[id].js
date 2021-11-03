@@ -7,9 +7,23 @@ export default async (req, res) => {
     query: { id },
   } = req
   if (method === 'POST') {
-    // TODO
-    const { players, irPlayers, transactions } = body
+    // TODO fix ir, irPlayers
+    const {
+      name,
+      teams,
+      rounds,
+      order,
+      slots,
+      players,
+      irPlayers,
+      transactions,
+    } = body
     await db.collection('teams').doc(id).update({
+      name,
+      teams,
+      rounds,
+      order,
+      slots,
       players,
       irPlayers,
       transactions,
