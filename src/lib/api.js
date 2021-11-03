@@ -472,6 +472,47 @@ export const fetchNBAStandings = (start = startDate) => {
       if (bWinPercentageAgainstConference !== aWinPercentageAgainstConference) {
         return aWinPercentageAgainstConference - bWinPercentageAgainstConference
       }
+      const conferencePlayoffOpponentsIds = conferences[b.conference]
+        .filter(team =>
+          conferences[b.conference]
+            .slice(0, 8)
+            .map(({ record }) => record)
+            .some(record => record === team.record)
+        )
+        .map(({ id }) => id)
+      const bWinPercentageAgainstConferencePlayoffs = getWinPercentage(
+        getRecord({
+          team: b,
+          games: filterGames({
+            games,
+            team: b,
+            opponentIds: conferencePlayoffOpponentsIds.filter(
+              id => id !== b.id
+            ),
+          }),
+        })
+      )
+      const aWinPercentageAgainstConferencePlayoffs = getWinPercentage(
+        getRecord({
+          team: a,
+          games: filterGames({
+            games,
+            team: a,
+            opponentIds: conferencePlayoffOpponentsIds.filter(
+              id => id !== a.id
+            ),
+          }),
+        })
+      )
+      if (
+        bWinPercentageAgainstConferencePlayoffs !==
+        aWinPercentageAgainstConferencePlayoffs
+      ) {
+        return (
+          aWinPercentageAgainstConferencePlayoffs -
+          bWinPercentageAgainstConferencePlayoffs
+        )
+      }
       return 0
     })
   })
