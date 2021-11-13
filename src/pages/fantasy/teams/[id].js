@@ -45,17 +45,17 @@ const getSlot = position => {
   return []
 }
 
-const getPicks = ({ order, teams, rounds }) => {
-  const picks = []
-  for (let i = 0; i < rounds; i++) {
-    const round = i + 1
+// const getPicks = ({ order, teams, rounds }) => {
+//   const picks = []
+//   for (let i = 0; i < rounds; i++) {
+//     const round = i + 1
 
-    const pick =
-      round % 2 === 1 ? teams * i + order : teams * i + (teams - order + 1)
-    picks.push(pick)
-  }
-  return picks
-}
+//     const pick =
+//       round % 2 === 1 ? teams * i + order : teams * i + (teams - order + 1)
+//     picks.push(pick)
+//   }
+//   return picks
+// }
 
 const Depth = ({ team }) => {
   const positions = ['PG', 'SG', 'SF', 'PF', 'C']
@@ -173,15 +173,15 @@ const Team = () => {
         </Layout>
       </Page>
     )
-  const addPlayer = (player, index) => {
-    const newPlayers = [...team.players]
-    newPlayers[index] = `${player.first_name} ${player.last_name}`
-    setTeam({
-      ...team,
-      players: newPlayers,
-    })
-    setSelected('')
-  }
+  // const addPlayer = (player, index) => {
+  //   const newPlayers = [...team.players]
+  //   newPlayers[index] = `${player.first_name} ${player.last_name}`
+  //   setTeam({
+  //     ...team,
+  //     players: newPlayers,
+  //   })
+  //   setSelected('')
+  // }
   const movePlayer = (player, index) => {
     const name = `${player.first_name} ${player.last_name}`
     const newPlayers = [...team.players]
@@ -204,9 +204,9 @@ const Team = () => {
     })
     setSelected('')
   }
-  const picks = team
-    ? getPicks({ teams: team.teams, rounds: team.rounds, order: team.order })
-    : []
+  // const picks = team
+  //   ? getPicks({ teams: team.teams, rounds: team.rounds, order: team.order })
+  //   : []
   // console.log({ team })
   // console.log({ selectedPlayer })
   // console.log({ picks })

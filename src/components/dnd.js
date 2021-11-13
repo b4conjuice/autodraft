@@ -32,7 +32,7 @@ const DND = ({ items, reorderItems, fixItem, deleteItem }) => (
     }}
   >
     <Droppable droppableId='droppable'>
-      {(provided, snapshot) => (
+      {provided => (
         <div {...provided.droppableProps} ref={provided.innerRef}>
           {items.map((item, index) => (
             <Draggable
@@ -40,14 +40,14 @@ const DND = ({ items, reorderItems, fixItem, deleteItem }) => (
               draggableId={`draggable-${index}`}
               index={index}
             >
-              {(provided, snapshot) => {
-                const { dragHandleProps } = provided
+              {provided1 => {
+                const { dragHandleProps } = provided1
                 delete dragHandleProps.tabIndex
                 return (
                   <div
                     className='flex items-center p-2 space-x-4 odd:bg-skin-foreground-alt'
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
+                    ref={provided1.innerRef}
+                    {...provided1.draggableProps}
                     {...dragHandleProps}
                   >
                     <span className='flex-grow'>
