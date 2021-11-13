@@ -13,7 +13,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blue: colors.lightBlue,
+        blue: colors.sky,
       },
       width: {
         '1/10': '10%',
