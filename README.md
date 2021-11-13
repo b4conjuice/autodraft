@@ -67,3 +67,73 @@ players = Array.from(
   })
   .filter(player => player !== null)
 ```
+
+## fantasy scoreboard
+
+- go to scoreboard for you league `https://fantasy.espn.com/basketball/league/scoreboard?leagueId=xxx`
+
+```javascript
+scoreboard = {
+  categories: Array.from(
+    document
+      .querySelector('.Scoreboard__Column .Table .Table__THEAD tr')
+      .querySelectorAll('th span')
+  ).map(el => {
+    // const [abbreviation, ...stats] = scores[index]
+    const category = el.innerText
+    return category
+  }),
+  matchups: Array.from(document.querySelectorAll('.Scoreboard__Row')).map(
+    el => {
+      const teams = Array.from(
+        el.querySelectorAll(
+          '.ScoreboardScoreCell__Competitors .ScoreCell__TeamName'
+        )
+      ).map(teamEl => {
+        const team = teamEl.innerText
+        return team
+      })
+      const scores = Array.from(
+        el.querySelectorAll('.Scoreboard__Column .Table .Table__TBODY tr')
+      ).map(rowEl => {
+        return Array.from(rowEl.querySelectorAll('td div')).map(scoreEl => {
+          const score = scoreEl.innerText
+          return score
+        })
+      })
+      return teams.map((team, index) => {
+        const [abbreviation, ...stats] = scores[index]
+        return {
+          name: team,
+          abbreviation,
+          stats: stats.map(stat => Number(stat)),
+        }
+      })
+    }
+  ),
+}
+```
+
+## nba standings tiebreaker
+
+TIEBREAKER BASIS FOR TWO-WAY TIES:
+
+    (-) Tie breaker not needed (better overall winning percentage)
+    (1) Head-to-head won-lost percentage
+    (2) Division leader wins tie from team not leading a division
+    (3) Division won-lost percentage for teams in the same division
+    (4) Conference won-lost percentage
+    (5) W-L Percentage vs. Playoff teams, own conference
+    (6) W-L Percentage vs. Playoff teams, other conference
+    (7) Net Points, all games
+
+TIEBREAKER BASIS FOR MULTI-WAY TIES:
+
+    (-) Tie breaker not needed (better overall winning percentage)
+    (1) Division leader wins tie from team not leading a division
+    (2) Head-to-head won-lost percentage
+    (3) Division won-lost percentage for teams in the same division
+    (4) Conference won-lost percentage
+    (5) W-L Percentage vs. Playoff teams, own conference
+    (6) W-L Percentage vs. Playoff teams, other conference
+    (7) Net Points, all games

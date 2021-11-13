@@ -13,6 +13,7 @@ import {
   CogIcon,
   ViewListIcon,
   FireIcon,
+  TableIcon,
 } from '@heroicons/react/solid'
 
 const nav = [
@@ -35,6 +36,11 @@ const nav = [
         url: '/fantasy/lists',
         text: 'lists',
         Icon: ViewListIcon,
+      },
+      {
+        url: '/fantasy/scoreboard',
+        text: 'scoreboard',
+        Icon: TableIcon,
       },
     ],
   },
