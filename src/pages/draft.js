@@ -73,14 +73,14 @@ const SaveDraftDialog = ({ isOpen, setIsOpen, drafted }) => {
       onClose={() => setIsOpen(false)}
       className='fixed inset-0 z-10 overflow-y-auto'
     >
-      <div className='flex items-center justify-center min-h-screen'>
+      <div className='flex min-h-screen items-center justify-center'>
         <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
 
-        <div className='relative max-w-sm p-4 mx-auto bg-white rounded'>
+        <div className='relative mx-auto max-w-sm rounded bg-white p-4'>
           <Dialog.Title>Save List</Dialog.Title>
           <input
             placeholder='title'
-            className='w-full text-center form-input'
+            className='form-input w-full text-center'
             type='text'
             name='title'
             value={title}
@@ -93,7 +93,7 @@ const SaveDraftDialog = ({ isOpen, setIsOpen, drafted }) => {
             disabled={!dirty || isSubmitting || title === ''}
             className='disabled:pointer-events-none disabled:opacity-25'
           >
-            <SaveIcon className='w-6 h-6' />
+            <SaveIcon className='h-6 w-6' />
           </button>
           <button type='button' onClick={() => setIsOpen(false)}>
             Cancel
@@ -115,10 +115,10 @@ const LoadListDialog = ({ isOpen, setIsOpen, setDrafted }) => {
       onClose={() => setIsOpen(false)}
       className='fixed inset-0 z-10 overflow-y-auto'
     >
-      <div className='flex items-center justify-center min-h-screen'>
+      <div className='flex min-h-screen items-center justify-center'>
         <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
 
-        <div className='relative max-w-sm p-4 mx-auto space-y-4 bg-white rounded'>
+        <div className='relative mx-auto max-w-sm space-y-4 rounded bg-white p-4'>
           <Dialog.Title>Load List</Dialog.Title>
           <Listbox
             value={selectedList}
@@ -147,7 +147,7 @@ const LoadListDialog = ({ isOpen, setIsOpen, setDrafted }) => {
               setDrafted(selectedList.items)
             }}
           >
-            <CloudDownloadIcon className='w-6 h-6' />
+            <CloudDownloadIcon className='h-6 w-6' />
           </button>
         </div>
       </div>
@@ -174,10 +174,10 @@ const FixItemDialog = ({
       onClose={() => setIsOpen(false)}
       className='fixed inset-0 z-10 overflow-y-auto'
     >
-      <div className='flex items-center justify-center min-h-screen'>
+      <div className='flex min-h-screen items-center justify-center'>
         <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
 
-        <div className='relative max-w-sm p-4 mx-auto space-y-4 bg-white rounded'>
+        <div className='relative mx-auto max-w-sm space-y-4 rounded bg-white p-4'>
           <Dialog.Title>Fix Item: {itemToBeFixed}</Dialog.Title>
           <Listbox value={selectedPlayer} onChange={setSelectedPlayer}>
             <div>
@@ -204,7 +204,7 @@ const FixItemDialog = ({
               setIsOpen(false)
             }}
           >
-            <CloudDownloadIcon className='w-6 h-6' />
+            <CloudDownloadIcon className='h-6 w-6' />
           </button>
         </div>
       </div>
@@ -227,7 +227,7 @@ const Draft = () => {
   return (
     <Page>
       <Layout todaysGames={false}>
-        <Main className='px-2 space-y-2 md:mx-auto md:w-9/10'>
+        <Main className='space-y-2 px-2 md:mx-auto md:w-9/10'>
           <SaveDraftDialog
             isOpen={saveDraftDialogIsOpen}
             setIsOpen={setSaveDraftDialogIsOpen}
@@ -282,16 +282,16 @@ const Draft = () => {
             />
             <label
               htmlFor='checked'
-              className='inline-flex items-center justify-center cursor-pointer divide-skin-foregroundspace-x-3'
+              className='divide-skin-foregroundspace-x-3 inline-flex cursor-pointer items-center justify-center'
             >
               <span className={!hideDrafted ? 'text-gray-500' : ''}>
                 hide drafted players
               </span>
               <span className='relative'>
-                <span className='block w-10 h-6 bg-gray-400 rounded-full shadow-inner' />
+                <span className='block h-6 w-10 rounded-full bg-gray-400 shadow-inner' />
                 <span
-                  className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-skin-button-accent ${
-                    !hideDrafted ? 'transform translate-x-full' : ''
+                  className={`focus-within:shadow-outline absolute inset-y-0 left-0 mt-1 ml-1 block h-4 w-4 rounded-full bg-skin-button-accent shadow transition-transform duration-300 ease-in-out ${
+                    !hideDrafted ? 'translate-x-full transform' : ''
                   }`}
                 >
                   <input
@@ -299,15 +299,15 @@ const Draft = () => {
                     type='checkbox'
                     checked
                     onChange={() => setHideDrafted(!hideDrafted)}
-                    className='absolute w-0 h-0 opacity-0'
+                    className='absolute h-0 w-0 opacity-0'
                   />
                 </span>
               </span>
             </label>
           </div>
-          <div className='flex overflow-x-scroll divide-x divide-skin-foreground'>
+          <div className='flex divide-x divide-skin-foreground overflow-x-scroll'>
             <div className='w-[250px]'>
-              <h2 className='flex p-2 space-x-4'>
+              <h2 className='flex space-x-4 p-2'>
                 <span>draft</span>
                 <button
                   type='button'
@@ -317,7 +317,7 @@ const Draft = () => {
                   disabled={drafted.length === 0}
                   className='disabled:pointer-events-none disabled:opacity-25'
                 >
-                  <SaveIcon className='w-6 h-6' />
+                  <SaveIcon className='h-6 w-6' />
                 </button>
                 <button
                   type='button'
@@ -325,7 +325,7 @@ const Draft = () => {
                     setLoadListDialogIsOpen(true)
                   }}
                 >
-                  <CloudDownloadIcon className='w-6 h-6' />
+                  <CloudDownloadIcon className='h-6 w-6' />
                 </button>
                 <button
                   type='button'
@@ -333,7 +333,7 @@ const Draft = () => {
                     setDrafted([])
                   }}
                 >
-                  <TrashIcon className='w-6 h-6' />
+                  <TrashIcon className='h-6 w-6' />
                 </button>
               </h2>
               <Dnd
@@ -372,7 +372,7 @@ const Draft = () => {
                     >
                       <td className='p-2'>{index + 1}</td>
                       <td
-                        className={`p-2 truncate ${
+                        className={`truncate p-2 ${
                           drafted.some(p => p === name) ? 'opacity-25' : ''
                         }`}
                       >

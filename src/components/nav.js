@@ -117,7 +117,7 @@ export const Menu = () => {
           >
             {pathname === url ? (
               <span className='flex items-center space-x-2'>
-                <Icon className='w-6 h-6' />
+                <Icon className='h-6 w-6' />
                 <span>{text}</span>
               </span>
             ) : (
@@ -127,7 +127,7 @@ export const Menu = () => {
                     pathname.includes(url) ? '' : 'text-skin-link-accent'
                   }`}
                 >
-                  <Icon className='w-6 h-6' />
+                  <Icon className='h-6 w-6' />
                   <span>{text}</span>
                 </a>
               </Link>
@@ -138,7 +138,7 @@ export const Menu = () => {
                   <li key={child.url}>
                     {pathname === child.url ? (
                       <span className='flex items-center space-x-2'>
-                        <child.Icon className='w-6 h-6' />
+                        <child.Icon className='h-6 w-6' />
                         <span>{child.text}</span>
                       </span>
                     ) : (
@@ -150,7 +150,7 @@ export const Menu = () => {
                               : 'text-skin-link-accent'
                           }`}
                         >
-                          <child.Icon className='w-6 h-6' />
+                          <child.Icon className='h-6 w-6' />
                           <span>{child.text}</span>
                         </a>
                       </Link>
@@ -189,7 +189,7 @@ export const SideNav = () => {
         <Dialog
           static
           as='div'
-          className='fixed inset-0 z-40 overflow-hidden text-xl md:hidden text-skin-base'
+          className='fixed inset-0 z-40 overflow-hidden text-xl text-skin-base md:hidden'
           initialFocus={closeButtonRef}
           open={isOpen}
           onClose={() => setIsOpen(false)}
@@ -197,22 +197,22 @@ export const SideNav = () => {
           <Dialog.Overlay
             className={`absolute inset-0 ${
               isOpen
-                ? 'bg-skin-background bg-opacity-50 backdrop-filter backdrop-blur'
+                ? 'bg-skin-background bg-opacity-50 backdrop-blur backdrop-filter'
                 : ''
             }`}
           >
             <button
               ref={closeButtonRef}
-              className='fixed z-30 flex items-center justify-center w-12 h-12 text-white transition bg-opacity-50 border border-white rounded-full bg-skin-button-accent border-opacity-20 bottom-2 right-2 md:hidden focus:outline-none focus-visible:ring backdrop-filter backdrop-blur'
+              className='focus:outline-none fixed bottom-2 right-2 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-white border-opacity-20 bg-skin-button-accent bg-opacity-50 text-white backdrop-blur backdrop-filter transition focus-visible:ring md:hidden'
               type='button'
               onClick={() => setIsOpen(false)}
             >
               <span className='sr-only'>Close site navigation</span>
-              <XIcon className='w-6 h-6' />
+              <XIcon className='h-6 w-6' />
             </button>
           </Dialog.Overlay>
-          <div className='absolute inset-0 z-40 flex pointer-events-none'>
-            <div className='flex-1 max-w-sm min-w-0 bg-opacity-75 border-r border-white pointer-events-auto bg-skin-background border-opacity-10 backdrop-filter backdrop-blur firefox:bg-opacity-90'>
+          <div className='pointer-events-none absolute inset-0 z-40 flex'>
+            <div className='firefox:bg-opacity-90 pointer-events-auto min-w-0 max-w-sm flex-1 border-r border-white border-opacity-10 bg-skin-background bg-opacity-75 backdrop-blur backdrop-filter'>
               <nav className='p-4'>
                 <ul className='space-y-4'>
                   {nav.map(({ url, text, Icon, children }) => (
@@ -224,7 +224,7 @@ export const SideNav = () => {
                     >
                       {pathname === url ? (
                         <span className='flex items-center space-x-2'>
-                          <Icon className='w-6 h-6' />
+                          <Icon className='h-6 w-6' />
                           <span>{text}</span>
                         </span>
                       ) : (
@@ -236,7 +236,7 @@ export const SideNav = () => {
                                 : 'text-skin-link-accent'
                             }`}
                           >
-                            <Icon className='w-6 h-6' />
+                            <Icon className='h-6 w-6' />
                             <span>{text}</span>
                           </a>
                         </Link>
@@ -247,7 +247,7 @@ export const SideNav = () => {
                             <li key={child.url}>
                               {pathname === child.url ? (
                                 <span className='flex items-center space-x-2'>
-                                  <child.Icon className='w-6 h-6' />
+                                  <child.Icon className='h-6 w-6' />
                                   <span>{child.text}</span>
                                 </span>
                               ) : (
@@ -259,7 +259,7 @@ export const SideNav = () => {
                                         : 'text-skin-link-accent'
                                     }`}
                                   >
-                                    <child.Icon className='w-6 h-6' />
+                                    <child.Icon className='h-6 w-6' />
                                     <span>{child.text}</span>
                                   </a>
                                 </Link>
@@ -273,17 +273,17 @@ export const SideNav = () => {
                 </ul>
               </nav>
             </div>
-            <div className='w-32 pointer-events-none' aria-hidden='true' />
+            <div className='pointer-events-none w-32' aria-hidden='true' />
           </div>
         </Dialog>
       </Transition>
       <button
-        className='fixed z-30 flex items-center justify-center w-12 h-12 text-white transition bg-opacity-50 border border-white rounded-full bg-skin-button-accent border-opacity-20 bottom-2 right-2 md:hidden focus:outline-none focus-visible:ring backdrop-filter backdrop-blur'
+        className='focus:outline-none fixed bottom-2 right-2 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-white border-opacity-20 bg-skin-button-accent bg-opacity-50 text-white backdrop-blur backdrop-filter transition focus-visible:ring md:hidden'
         type='button'
         onClick={() => setIsOpen(true)}
       >
         <span className='sr-only'>Open site navigation</span>
-        <MenuIcon className='w-6 h-6' />
+        <MenuIcon className='h-6 w-6' />
       </button>
       {/* <button
         className="fixed top-0 z-30 flex items-center justify-center w-12 h-12 text-white transition focus:outline-none focus-visible:ring backdrop-filter backdrop-blur"

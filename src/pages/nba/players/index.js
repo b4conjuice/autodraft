@@ -17,13 +17,13 @@ const Players = () => {
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
             <input
               placeholder='enter player name'
-              className='w-full form-input'
+              className='form-input w-full'
               type='text'
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
             {!search ? null : !results ? (
-              <div className='flex justify-center flex-grow'>
+              <div className='flex flex-grow justify-center'>
                 <Loading />
               </div>
             ) : (
@@ -33,7 +33,7 @@ const Players = () => {
                   .map(player => (
                     <li
                       key={player.id}
-                      className='p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt'
+                      className='rounded bg-skin-foreground p-2 odd:bg-skin-foreground-alt'
                     >
                       <div className='space-x-1'>
                         <Link href={`/nba/players/${player.id}`}>

@@ -41,7 +41,7 @@ const List = () => {
         <Layout>
           <Main className='px-2 md:px-0'>
             <div className='mx-auto space-y-2 md:max-w-screen-md'>
-              <h1 className='text-2xl text-center'>{list.error}</h1>
+              <h1 className='text-center text-2xl'>{list.error}</h1>
               <Link href='/fantasy/lists'>
                 <a className='text-center text-skin-link-accent hover:text-skin-link-accent-hover'>
                   back to lists
@@ -61,32 +61,32 @@ const List = () => {
               <EditList values={values} handleChange={handleChange} />
             ) : list ? (
               <>
-                <h1 className='text-2xl text-center'>{list.title}</h1>
+                <h1 className='text-center text-2xl'>{list.title}</h1>
                 <ul className='space-y-2'>
                   {list?.items.map(item => (
                     <li
                       key={item}
-                      className='p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt'
+                      className='rounded bg-skin-foreground p-2 odd:bg-skin-foreground-alt'
                     >
                       {item}
                     </li>
                   ))}
                 </ul>
                 <Confirm
-                  className='flex justify-center w-full p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none'
+                  className='flex w-full justify-center rounded-lg bg-red-700 p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   action={async () => {
                     await deleteList(id)
                     push('/fantasy/lists')
                   }}
                 >
-                  <TrashIcon className='w-6 h-6' />
+                  <TrashIcon className='h-6 w-6' />
                 </Confirm>
               </>
             ) : list?.items?.length === 0 ? (
               <p>list has no items</p>
             ) : (
-              <div className='flex justify-center flex-grow'>
+              <div className='flex flex-grow justify-center'>
                 <Loading />
               </div>
             )}
@@ -97,26 +97,26 @@ const List = () => {
         <ul className='inline-flex divide-x divide-gray-100 rounded-lg bg-skin-button-accent'>
           <li className='flex justify-center'>
             <button
-              className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+              className='p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
               type='button'
               onClick={() => setEdit(!edit)}
             >
               {edit ? (
-                <XIcon className='w-6 h-6' />
+                <XIcon className='h-6 w-6' />
               ) : (
-                <PencilAltIcon className='w-6 h-6' />
+                <PencilAltIcon className='h-6 w-6' />
               )}
             </button>
           </li>
           {edit && (
             <li className='flex justify-center'>
               <button
-                className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+                className='p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
                 type='submit'
                 onClick={handleSubmit}
                 disabled={!dirty || isSubmitting}
               >
-                <SaveIcon className='w-6 h-6' />
+                <SaveIcon className='h-6 w-6' />
               </button>
             </li>
           )}

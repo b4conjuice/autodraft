@@ -38,7 +38,7 @@ const GameLog = ({ stats, teams, team, season }) => {
                 home_team_id: homeTeamId,
               }) => (
                 <tr key={id} className='odd:bg-skin-foreground-alt'>
-                  <td className='py-1 overflow-hidden text-center whitespace-nowrap'>
+                  <td className='overflow-hidden whitespace-nowrap py-1 text-center'>
                     <Link href={`/nba/games/${id}`}>
                       <a className='space-x-1 text-skin-link-accent hover:text-skin-link-accent-hover'>
                         <span className='hidden md:inline'>
@@ -178,7 +178,7 @@ const Player = () => {
         <Main>
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
             <div className='flex items-center justify-center space-x-3'>
-              <h1 className='text-2xl text-center'>
+              <h1 className='text-center text-2xl'>
                 {player.first_name} {player.last_name} {player.position}
               </h1>
               <h2 className='text-center'>

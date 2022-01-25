@@ -69,16 +69,16 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
     <div>
       <label
         htmlFor={`checked${matchup ? '-matchup' : ''}`}
-        className='flex items-center space-x-3 cursor-pointer'
+        className='flex cursor-pointer items-center space-x-3'
       >
         <span className={display === 'scores' ? 'text-gray-500' : ''}>
           stats
         </span>
         <span className='relative'>
-          <span className='block w-10 h-6 bg-gray-400 rounded-full shadow-inner' />
+          <span className='block h-6 w-10 rounded-full bg-gray-400 shadow-inner' />
           <span
-            className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-skin-button-accent ${
-              display === 'scores' ? 'transform translate-x-full' : ''
+            className={`focus-within:shadow-outline absolute inset-y-0 left-0 mt-1 ml-1 block h-4 w-4 rounded-full bg-skin-button-accent shadow transition-transform duration-300 ease-in-out ${
+              display === 'scores' ? 'translate-x-full transform' : ''
             }`}
           >
             <input
@@ -88,7 +88,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
               onChange={() =>
                 setDisplay(display === 'stats' ? 'scores' : 'stats')
               }
-              className='absolute w-0 h-0 opacity-0'
+              className='absolute h-0 w-0 opacity-0'
             />
           </span>
         </span>
@@ -98,12 +98,12 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
       </label>
       <div className='flex w-full'>
         <div className='w-40'>
-          <table className='w-full border-r-4 border-gray-400 table-fixed'>
+          <table className='w-full table-fixed border-r-4 border-gray-400'>
             <thead>
               <tr className='border-b-4 border-gray-400'>
                 <th>
                   <button
-                    className='w-full py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('player')}
                     disabled={sort === 'player'}
@@ -126,7 +126,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                   >
                     {setCompare && compare ? (
                       <button
-                        className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                        className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                         type='button'
                         onClick={() => {
                           if (compare.includes(player.last_name)) {
@@ -154,7 +154,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 {stats.some(team => team.min) && (
                   <th>
                     <button
-                      className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                      className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                       type='button'
                       onClick={() => setSort('min')}
                       disabled={sort === 'min'}
@@ -165,7 +165,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 )}
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('pts')}
                     disabled={sort === 'pts'}
@@ -175,7 +175,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('fg_pct')}
                     disabled={sort === 'fg_pct'}
@@ -185,7 +185,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('ft_pct')}
                     disabled={sort === 'ft_pct'}
@@ -195,7 +195,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('fg3m')}
                     disabled={sort === 'fg3m'}
@@ -205,7 +205,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('reb')}
                     disabled={sort === 'reb'}
@@ -215,7 +215,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('ast')}
                     disabled={sort === 'ast'}
@@ -225,7 +225,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('turnover')}
                     disabled={sort === 'turnover'}
@@ -235,7 +235,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('stl')}
                     disabled={sort === 'stl'}
@@ -245,7 +245,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('blk')}
                     disabled={sort === 'blk'}
@@ -255,7 +255,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                 </th>
                 <th>
                   <button
-                    className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('totalScore')}
                     disabled={sort === 'totalScore'}
@@ -287,7 +287,7 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                     className='odd:bg-skin-foreground-alt'
                   >
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'pts' ? 'font-semibold' : ''
                       }`}
                     >
@@ -304,49 +304,49 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                         : scores.ft_pct}
                     </td>
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'fg3m' ? 'font-semibold' : ''
                       }`}
                     >
                       {display === 'stats' ? fg3m : scores.fg3m}
                     </td>
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'reb' ? 'font-semibold' : ''
                       }`}
                     >
                       {display === 'stats' ? reb : scores.reb}
                     </td>
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'ast' ? 'font-semibold' : ''
                       }`}
                     >
                       {display === 'stats' ? ast : scores.ast}
                     </td>
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'turnover' ? 'font-semibold' : ''
                       }`}
                     >
                       {display === 'stats' ? turnover : scores.turnover}
                     </td>
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'stl' ? 'font-semibold' : ''
                       }`}
                     >
                       {display === 'stats' ? stl : scores.stl}
                     </td>
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'blk' ? 'font-semibold' : ''
                       }`}
                     >
                       {display === 'stats' ? blk : scores.blk}
                     </td>
                     <td
-                      className={`text-center py-1 ${
+                      className={`py-1 text-center ${
                         sort === 'totalScore' ? 'font-semibold' : ''
                       }`}
                     >

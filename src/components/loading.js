@@ -1,7 +1,7 @@
 const Loading = () => (
-  <div className='flex items-center justify-center flex-grow'>
+  <div className='flex flex-grow items-center justify-center'>
     <svg
-      className='w-16 h-16 text-skin-accent animate-spin-slow'
+      className='h-16 w-16 animate-spin-slow text-skin-accent'
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='none'

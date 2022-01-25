@@ -19,7 +19,7 @@ const Settings = () => {
   return (
     <Page>
       <Layout>
-        <Main className='px-2 space-y-2 md:px-0'>
+        <Main className='space-y-2 px-2 md:px-0'>
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
             <label htmlFor='theme'>
               <span>theme</span>
@@ -39,10 +39,10 @@ const Settings = () => {
           <div>
             <button
               type='button'
-              className='p-0 bg-blue-900 border-none rounded cursor-pointer group focus:outline-none'
+              className='group focus:outline-none cursor-pointer rounded border-none bg-blue-900 p-0'
               onClick={() => console.log('click me')}
             >
-              <span className='block px-2 py-1 text-gray-100 transform translate-y-[-4px] bg-blue-600 rounded group-active:translate-y-[-2px] text-lg'>
+              <span className='block translate-y-[-4px] transform rounded bg-blue-600 px-2 py-1 text-lg text-gray-100 group-active:translate-y-[-2px]'>
                 save
               </span>
             </button>

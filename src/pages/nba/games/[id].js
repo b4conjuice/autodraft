@@ -56,7 +56,7 @@ const Game = () => {
               <>
                 <div>
                   <h3 className='text-center'>Leaders</h3>
-                  <div className='flex divide-x-4 divide-gray-400 divide'>
+                  <div className='divide flex divide-x-4 divide-gray-400'>
                     <Leaders
                       stats={game.stats.filter(
                         s => s.team.id === game.visitor_team.id

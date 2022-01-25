@@ -9,7 +9,7 @@ import { fetchNBATeams, fetchNBAStandings } from '@/lib/api'
 const TeamListItem = ({ team }) => (
   <li className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'>
     <Link href={`/nba/teams/${team.id}`}>
-      <a className='block p-2 space-x-1 text-xl text-center text-skin-base hover:text-skin-link-accent-hover'>
+      <a className='block space-x-1 p-2 text-center text-xl text-skin-base hover:text-skin-link-accent-hover'>
         <span className='hidden md:inline'>{team.full_name}</span>
         <span className='inline md:hidden'>
           <span className='text-sm'>{team.abbreviation}</span> {team.name}
@@ -37,7 +37,7 @@ const Teams = () => {
     <Page title='teams'>
       <Layout>
         <Main className='px-2 md:px-0 md:pt-4'>
-          <div className='flex mx-auto space-x-2 md:max-w-screen-md'>
+          <div className='mx-auto flex space-x-2 md:max-w-screen-md'>
             <ul className='w-1/2 space-y-2'>
               {teamsWithRecord
                 .filter(team => team.conference === 'West')

@@ -33,10 +33,10 @@ const useForm = props => {
     }
   }, [props.initialValues])
 
-  const dirty = useMemo(() => !isEqual(initialValuesRef.current, values), [
-    initialValuesRef.current,
-    values,
-  ])
+  const dirty = useMemo(
+    () => !isEqual(initialValuesRef.current, values),
+    [initialValuesRef.current, values]
+  )
 
   const handleChange = e => {
     const { name, value, type } = e.target

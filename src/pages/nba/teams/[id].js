@@ -33,7 +33,7 @@ const Depth = ({ team }) => {
   return (
     <div className='flex w-full'>
       <div className='w-12'>
-        <table className='w-full border-r-4 border-gray-400 table-fixed'>
+        <table className='w-full table-fixed border-r-4 border-gray-400'>
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
@@ -58,7 +58,7 @@ const Depth = ({ team }) => {
                     .map(player => (
                       <td
                         key={player.id}
-                        className='max-w-sm px-1 py-1 text-center truncate'
+                        className='max-w-sm truncate px-1 py-1 text-center'
                       >
                         <Link href={`/nba/players/${player.id}`}>
                           <a className='hover:text-skin-link-accent-hover'>
@@ -88,7 +88,7 @@ const SelectTeam = ({ teams, team }) => {
   }
   return (
     <select
-      className='w-full text-center form-select'
+      className='form-select w-full text-center'
       onChange={handleChange}
       value={team}
     >
@@ -129,7 +129,7 @@ const Team = () => {
         <Main>
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
             <div className='flex items-center justify-center space-x-3'>
-              <h1 className='text-2xl text-center'>
+              <h1 className='text-center text-2xl'>
                 <span className='hidden md:block'>{team.full_name}</span>
                 <span className='md:hidden'>{team.abbreviation}</span>
               </h1>
@@ -187,7 +187,7 @@ const Team = () => {
                 {postSeasonGames.length > 0 && (
                   <label
                     htmlFor='checked'
-                    className='inline-flex items-center justify-center w-full space-x-3 cursor-pointer'
+                    className='inline-flex w-full cursor-pointer items-center justify-center space-x-3'
                   >
                     <span
                       className={gameType === 'post' ? 'text-gray-500' : ''}
@@ -195,11 +195,11 @@ const Team = () => {
                       regular season
                     </span>
                     <span className='relative'>
-                      <span className='block w-10 h-6 bg-gray-400 rounded-full shadow-inner' />
+                      <span className='block h-6 w-10 rounded-full bg-gray-400 shadow-inner' />
                       <span
-                        className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-skin-button-accent ${
+                        className={`focus-within:shadow-outline absolute inset-y-0 left-0 mt-1 ml-1 block h-4 w-4 rounded-full bg-skin-button-accent shadow transition-transform duration-300 ease-in-out ${
                           gameType === 'post'
-                            ? 'transform translate-x-full'
+                            ? 'translate-x-full transform'
                             : ''
                         }`}
                       >
@@ -212,7 +212,7 @@ const Team = () => {
                               gameType === 'regular' ? 'post' : 'regular'
                             )
                           }
-                          className='absolute w-0 h-0 opacity-0'
+                          className='absolute h-0 w-0 opacity-0'
                         />
                       </span>
                     </span>
@@ -230,7 +230,7 @@ const Team = () => {
                       className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                     >
                       <Link href={`/nba/games/${game.id}`}>
-                        <a className='block p-2 space-x-1 text-xl text-skin-base hover:text-skin-link-accent-hover'>
+                        <a className='block space-x-1 p-2 text-xl text-skin-base hover:text-skin-link-accent-hover'>
                           {game.home_team.id === team.id
                             ? `vs ${game.visitor_team.abbreviation}`
                             : `@ ${game.home_team.abbreviation}`}{' '}

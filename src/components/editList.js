@@ -14,7 +14,7 @@ const EditList = ({ values, handleChange }) => {
     <>
       <input
         placeholder='title'
-        className='w-full text-center form-input'
+        className='form-input w-full text-center'
         type='text'
         name='title'
         value={title}
@@ -22,14 +22,14 @@ const EditList = ({ values, handleChange }) => {
       />
       <label
         htmlFor='checked'
-        className='inline-flex items-center justify-center cursor-pointer divide-skin-foregroundspace-x-3'
+        className='divide-skin-foregroundspace-x-3 inline-flex cursor-pointer items-center justify-center'
       >
         <span className={!bulkItems ? 'text-gray-500' : ''}>bulk items</span>
         <span className='relative'>
-          <span className='block w-10 h-6 bg-gray-400 rounded-full shadow-inner' />
+          <span className='block h-6 w-10 rounded-full bg-gray-400 shadow-inner' />
           <span
-            className={`absolute block w-4 h-4 mt-1 ml-1 rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out bg-skin-button-accent ${
-              !bulkItems ? 'transform translate-x-full' : ''
+            className={`focus-within:shadow-outline absolute inset-y-0 left-0 mt-1 ml-1 block h-4 w-4 rounded-full bg-skin-button-accent shadow transition-transform duration-300 ease-in-out ${
+              !bulkItems ? 'translate-x-full transform' : ''
             }`}
           >
             <input
@@ -37,7 +37,7 @@ const EditList = ({ values, handleChange }) => {
               type='checkbox'
               checked
               onChange={() => setBulkItems(!bulkItems)}
-              className='absolute w-0 h-0 opacity-0'
+              className='absolute h-0 w-0 opacity-0'
               placeholder='add multiple players'
             />
           </span>
@@ -46,7 +46,7 @@ const EditList = ({ values, handleChange }) => {
       {bulkItems ? (
         <div className=''>
           <textarea
-            className='w-full form-textarea'
+            className='form-textarea w-full'
             value={items.join('\n')}
             onChange={e => {
               const { value } = e.target
@@ -62,7 +62,7 @@ const EditList = ({ values, handleChange }) => {
           <div key={index} className='flex w-full'>
             <input
               placeholder='player'
-              className='flex-grow form-input'
+              className='form-input flex-grow'
               type='text'
               name={`items-${index}`}
               value={item}
@@ -70,7 +70,7 @@ const EditList = ({ values, handleChange }) => {
               list='datalist-players'
             />
             <button
-              className='flex items-center justify-center text-red-700 disabled:opacity-25 disabled:pointer-events-none'
+              className='flex items-center justify-center text-red-700 disabled:pointer-events-none disabled:opacity-25'
               type='button'
               onClick={() => {
                 const newItems = [...items]
@@ -81,30 +81,30 @@ const EditList = ({ values, handleChange }) => {
               }}
               disabled={item === '' || items.length === 1}
             >
-              <MinusIcon className='w-6 h-6' />
+              <MinusIcon className='h-6 w-6' />
             </button>
           </div>
         ))
       )}
       <button
-        className='flex justify-center w-full p-3 text-gray-100 rounded-lg bg-skin-button-accent hover:bg-skin-button-accent-hover'
+        className='flex w-full justify-center rounded-lg bg-skin-button-accent p-3 text-gray-100 hover:bg-skin-button-accent-hover'
         type='button'
         onClick={() => {
           const newItems = [...items, '']
           handleChange({ target: { name: 'items', value: newItems } })
         }}
       >
-        <PlusIcon className='w-6 h-6' />
+        <PlusIcon className='h-6 w-6' />
       </button>
       <input
         placeholder='search players'
-        className='w-full form-input'
+        className='form-input w-full'
         type='text'
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
       {!search ? null : !results ? (
-        <div className='flex justify-center flex-grow'>
+        <div className='flex flex-grow justify-center'>
           <Loading />
         </div>
       ) : (
@@ -114,7 +114,7 @@ const EditList = ({ values, handleChange }) => {
             .map(player => (
               <li
                 key={player.id}
-                className='flex p-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt'
+                className='flex rounded bg-skin-foreground p-2 odd:bg-skin-foreground-alt'
               >
                 <div className='flex-grow space-x-1'>
                   <Link href={`/nba/players/${player.id}`}>
@@ -128,7 +128,7 @@ const EditList = ({ values, handleChange }) => {
                   <span>{player.position}</span>
                 </div>
                 <button
-                  className='flex justify-center text-gray-100 rounded-lg disabled:opacity-25 disabled:pointer-events-none bg-skin-button-accent hover:bg-skin-button-accent-hover'
+                  className='flex justify-center rounded-lg bg-skin-button-accent text-gray-100 hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => {
                     const newItems = [
@@ -143,7 +143,7 @@ const EditList = ({ values, handleChange }) => {
                     item => item === `${player.first_name} ${player.last_name}`
                   )}
                 >
-                  <PlusIcon className='w-6 h-6' />
+                  <PlusIcon className='h-6 w-6' />
                 </button>
               </li>
             ))}

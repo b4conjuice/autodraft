@@ -35,7 +35,7 @@ const TodaysGames = () => {
   return (
     <Page>
       <Layout>
-        <Main className='px-2 space-y-2 md:space-y-0 md:flex md:space-x-4 md:justify-center md:px-0 md:pt-4'>
+        <Main className='space-y-2 px-2 md:flex md:justify-center md:space-y-0 md:space-x-4 md:px-0 md:pt-4'>
           <div>
             {todayStarted ? null : <h2 className='text-xl'>last night</h2>}
             <Games games={todayStarted ? gamesToday : gamesYesterday} />

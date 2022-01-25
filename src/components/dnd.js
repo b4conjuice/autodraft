@@ -45,7 +45,7 @@ const DND = ({ items, reorderItems, fixItem, deleteItem }) => (
                 delete dragHandleProps.tabIndex
                 return (
                   <div
-                    className='flex items-center p-2 space-x-4 odd:bg-skin-foreground-alt'
+                    className='flex items-center space-x-4 p-2 odd:bg-skin-foreground-alt'
                     ref={provided1.innerRef}
                     {...provided1.draggableProps}
                     {...dragHandleProps}
@@ -55,12 +55,12 @@ const DND = ({ items, reorderItems, fixItem, deleteItem }) => (
                     </span>
                     <Menu as='div' className='relative'>
                       <Menu.Button>
-                        <DotsVerticalIcon className='w-6 h-6' />
+                        <DotsVerticalIcon className='h-6 w-6' />
                       </Menu.Button>
-                      <Menu.Items className='absolute right-0 z-10 flex w-56 p-2 mt-2 space-x-4 origin-top-right bg-skin-background'>
+                      <Menu.Items className='absolute right-0 z-10 mt-2 flex w-56 origin-top-right space-x-4 bg-skin-background p-2'>
                         <Menu.Item>
                           <button type='button' onClick={() => fixItem(index)}>
-                            <ExclamationCircleIcon className='w-6 h-6' />
+                            <ExclamationCircleIcon className='h-6 w-6' />
                           </button>
                         </Menu.Item>
                         <Menu.Item>
@@ -68,7 +68,7 @@ const DND = ({ items, reorderItems, fixItem, deleteItem }) => (
                             type='button'
                             onClick={() => deleteItem(index)}
                           >
-                            <TrashIcon className='w-6 h-6' />
+                            <TrashIcon className='h-6 w-6' />
                           </button>
                         </Menu.Item>
                       </Menu.Items>

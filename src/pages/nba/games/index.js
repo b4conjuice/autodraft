@@ -24,7 +24,7 @@ const TodaysGames = () => {
             <div className='flex space-x-0 md:space-x-2'>
               <input
                 type='date'
-                className='w-full form-input'
+                className='form-input w-full'
                 value={date}
                 onChange={e => setDate(e.target.value)}
               />
@@ -35,7 +35,7 @@ const TodaysGames = () => {
             {games ? (
               <Games games={games} />
             ) : (
-              <div className='flex justify-center flex-grow'>
+              <div className='flex flex-grow justify-center'>
                 <Loading />
               </div>
             )}

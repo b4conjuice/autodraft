@@ -70,7 +70,7 @@ const Depth = ({ team }) => {
   return (
     <div className='flex w-full'>
       <div className='w-12'>
-        <table className='w-full border-r-4 border-gray-400 table-fixed'>
+        <table className='w-full table-fixed border-r-4 border-gray-400'>
           <tbody>
             {positions.map(position =>
               getPlayersByPosition(position) ? (
@@ -95,7 +95,7 @@ const Depth = ({ team }) => {
                     .map(player => (
                       <td
                         key={player.fullName}
-                        className='max-w-sm px-1 py-1 text-center truncate'
+                        className='max-w-sm truncate px-1 py-1 text-center'
                       >
                         <Link href={`/nba/players/${player.id}`}>
                           <a className='hover:text-skin-link-accent-hover'>
@@ -162,8 +162,8 @@ const Team = () => {
     return (
       <Page title='teams'>
         <Layout>
-          <Main className='flex flex-col px-2 space-y-2'>
-            <h1 className='text-2xl text-center'>{team.error}</h1>
+          <Main className='flex flex-col space-y-2 px-2'>
+            <h1 className='text-center text-2xl'>{team.error}</h1>
             <Link href='/fantasy/teams'>
               <a className='text-center text-skin-link-accent hover:text-skin-link-accent-hover'>
                 back to teams
@@ -223,7 +223,7 @@ const Team = () => {
               />
             ) : team ? (
               <>
-                <h1 className='text-2xl text-center'>{team.name}</h1>
+                <h1 className='text-center text-2xl'>{team.name}</h1>
                 {team.players && team.players.length > 0 && (
                   <Depth
                     team={team.players.map(p => {
@@ -239,22 +239,22 @@ const Team = () => {
                   />
                 )}
                 <div className='relative'>
-                  <div className='flex form-input focus-within:border-blue-700'>
+                  <div className='form-input flex focus-within:border-blue-700'>
                     <input
                       placeholder='add player'
-                      className='w-full focus:outline-none'
+                      className='focus:outline-none w-full'
                       type='text'
                       value={search}
                       onChange={e => setSearch(e.target.value)}
                     />
                     {search !== '' && (
                       <button type='button' onClick={() => setSearch('')}>
-                        <XCircleIcon className='w-6 h-6' />
+                        <XCircleIcon className='h-6 w-6' />
                       </button>
                     )}
                   </div>
                   {!search ? null : !results ? (
-                    <div className='flex justify-center flex-grow'>
+                    <div className='flex flex-grow justify-center'>
                       <Loading />
                     </div>
                   ) : (
@@ -292,10 +292,10 @@ const Team = () => {
                               <div>added</div>
                             ) : (
                               <button
-                                className={`text-xs px-2 border-2 border-skin-button-accent rounded ${
+                                className={`rounded border-2 border-skin-button-accent px-2 text-xs ${
                                   selected === ''
-                                    ? 'text-gray-100 bg-skin-button-accent'
-                                    : 'text-skin-accent bg-gray-100'
+                                    ? 'bg-skin-button-accent text-gray-100'
+                                    : 'bg-gray-100 text-skin-accent'
                                 }`}
                                 type='button'
                                 onClick={() => {
@@ -358,7 +358,7 @@ const Team = () => {
                 {team?.slots?.map((slot, index) => (
                   <li
                     key={index + slot}
-                    className='flex items-center p-2 space-x-2 rounded bg-skin-foreground odd:bg-skin-foreground-alt'
+                    className='flex items-center space-x-2 rounded bg-skin-foreground p-2 odd:bg-skin-foreground-alt'
                   >
                     <span className='font-semibold'>{slot}</span>
                     {team?.players && team?.players[index] ? (
@@ -371,10 +371,10 @@ const Team = () => {
                           team?.players[index] ===
                             `${selectedPlayer?.first_name} ${selectedPlayer?.last_name}`) && (
                           <button
-                            className={`text-xs px-2 border-2 border-skin-button-accent rounded ${
+                            className={`rounded border-2 border-skin-button-accent px-2 text-xs ${
                               selected === ''
-                                ? 'text-gray-100 bg-skin-button-accent'
-                                : 'text-skin-accent bg-gray-100'
+                                ? 'bg-skin-button-accent text-gray-100'
+                                : 'bg-gray-100 text-skin-accent'
                             }`}
                             type='button'
                             onClick={() => {
@@ -395,7 +395,7 @@ const Team = () => {
                             )
                           ).some(s => s === slot) && (
                             <button
-                              className='px-2 text-xs text-gray-100 border-2 rounded bg-skin-button-accent border-skin-button-accent'
+                              className='rounded border-2 border-skin-button-accent bg-skin-button-accent px-2 text-xs text-gray-100'
                               type='button'
                               onClick={() => {
                                 movePlayer(selectedPlayer, index)
@@ -419,7 +419,7 @@ const Team = () => {
                               dropPlayer(index)
                             }}
                           >
-                            <DownloadIcon className='w-6 h-6 text-red-700' />
+                            <DownloadIcon className='h-6 w-6 text-red-700' />
                           </Confirm>
                         )}
                       </>
@@ -433,7 +433,7 @@ const Team = () => {
                             s => s === slot
                           ) && (
                             <button
-                              className='px-2 text-xs text-gray-100 border-2 rounded bg-skin-button-accent border-skin-button-accent'
+                              className='rounded border-2 border-skin-button-accent bg-skin-button-accent px-2 text-xs text-gray-100'
                               type='button'
                               onClick={() => {
                                 movePlayer(selectedPlayer, index)
@@ -448,20 +448,20 @@ const Team = () => {
                   </li>
                 ))}
                 <Confirm
-                  className='flex justify-center w-full p-3 text-gray-100 bg-red-700 rounded-lg disabled:opacity-25 disabled:pointer-events-none'
+                  className='flex w-full justify-center rounded-lg bg-red-700 p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   action={async () => {
                     await deleteTeam(id)
                     push('/fantasy/teams')
                   }}
                 >
-                  <TrashIcon className='w-6 h-6' />
+                  <TrashIcon className='h-6 w-6' />
                 </Confirm>
               </>
             ) : team?.players?.length === 0 ? (
               <p>team has no players</p>
             ) : (
-              <div className='flex justify-center flex-grow'>
+              <div className='flex flex-grow justify-center'>
                 <Loading />
               </div>
             )}
@@ -472,30 +472,30 @@ const Team = () => {
         <ul className='inline-flex divide-x divide-gray-100 rounded-lg bg-skin-button-accent'>
           <li className='flex justify-center'>
             <button
-              className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+              className='p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
               type='button'
               onClick={() => setEdit(!edit)}
             >
               {edit ? (
-                <XIcon className='w-6 h-6' />
+                <XIcon className='h-6 w-6' />
               ) : (
-                <PencilAltIcon className='w-6 h-6' />
+                <PencilAltIcon className='h-6 w-6' />
               )}
             </button>
           </li>
           <li className='flex justify-center'>
             {edit ? (
               <button
-                className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+                className='p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
                 type='submit'
                 onClick={handleSubmit}
                 disabled={!dirty || isSubmitting}
               >
-                <SaveIcon className='w-6 h-6' />
+                <SaveIcon className='h-6 w-6' />
               </button>
             ) : (
               <button
-                className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+                className='p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
                 type='submit'
                 onClick={async () => {
                   await updateTeam(team)
@@ -505,7 +505,7 @@ const Team = () => {
                   (p, index) => p === team?.players[index]
                 )}
               >
-                <SaveIcon className='w-6 h-6' />
+                <SaveIcon className='h-6 w-6' />
               </button>
             )}
           </li>

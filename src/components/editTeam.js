@@ -4,7 +4,7 @@ const EditTeam = ({ values, handleChange, errors }) => {
     <form className='space-y-2'>
       <input
         placeholder='name'
-        className='w-full text-center form-input'
+        className='form-input w-full text-center'
         type='text'
         name='name'
         value={name}
@@ -17,7 +17,7 @@ const EditTeam = ({ values, handleChange, errors }) => {
           <label htmlFor='teams'>
             <span>teams</span>
             <input
-              className='w-full form-input'
+              className='form-input w-full'
               type='number'
               name='teams'
               value={teams}
@@ -27,7 +27,7 @@ const EditTeam = ({ values, handleChange, errors }) => {
           <label htmlFor='rounds'>
             <span>rounds</span>
             <input
-              className='w-full form-input'
+              className='form-input w-full'
               type='number'
               name='rounds'
               value={rounds}
@@ -37,7 +37,7 @@ const EditTeam = ({ values, handleChange, errors }) => {
           <label htmlFor='order'>
             <span>order</span>
             <input
-              className='w-full form-input'
+              className='form-input w-full'
               type='number'
               name='order'
               value={order}
@@ -49,7 +49,7 @@ const EditTeam = ({ values, handleChange, errors }) => {
           <label htmlFor='ir'>
             <span>ir</span>
             <input
-              className='w-full form-input'
+              className='form-input w-full'
               type='number'
               name='ir'
               value={ir}
@@ -68,7 +68,7 @@ const EditTeam = ({ values, handleChange, errors }) => {
                 <label htmlFor={`slots-${slot}`}>
                   {slot + 1}.
                   <select
-                    className='w-full form-select'
+                    className='form-select w-full'
                     name={`slots-${slot}`}
                     value={slots[slot] || 'B'}
                     onChange={handleChange}

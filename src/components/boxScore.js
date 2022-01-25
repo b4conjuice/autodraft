@@ -43,12 +43,12 @@ const BoxScore = ({ stats, includeTotals = false }) => {
   return (
     <div className='flex w-full'>
       <div className='w-40'>
-        <table className='w-full border-r-4 border-gray-400 table-fixed'>
+        <table className='w-full table-fixed border-r-4 border-gray-400'>
           <thead>
             <tr className='border-b-4 border-gray-400'>
               <th>
                 <button
-                  className='w-full py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('player')}
                   disabled={sort === 'player'}
@@ -91,7 +91,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
             <tr className='border-b-4 border-gray-400'>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('min')}
                   disabled={sort === 'min'}
@@ -101,7 +101,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('pts')}
                   disabled={sort === 'pts'}
@@ -112,7 +112,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               <th>
                 <span className='hidden md:block'>
                   <button
-                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('fgm')}
                     disabled={sort === 'fgm'}
@@ -121,7 +121,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
                   </button>
                   /
                   <button
-                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('fga')}
                     disabled={sort === 'fga'}
@@ -133,7 +133,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th className='hidden md:block'>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('fgp')}
                   disabled={sort === 'fgp'}
@@ -144,7 +144,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               <th>
                 <span className='hidden md:block'>
                   <button
-                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('ftm')}
                     disabled={sort === 'ftm'}
@@ -153,7 +153,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
                   </button>
                   /
                   <button
-                    className='px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                    className='rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                     type='button'
                     onClick={() => setSort('fta')}
                     disabled={sort === 'fta'}
@@ -165,7 +165,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th className='hidden md:block'>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('ftp')}
                   disabled={sort === 'ftp'}
@@ -175,7 +175,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('fg3m')}
                   disabled={sort === 'fg3m'}
@@ -185,7 +185,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('reb')}
                   disabled={sort === 'reb'}
@@ -195,7 +195,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('ast')}
                   disabled={sort === 'ast'}
@@ -205,7 +205,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('turnover')}
                   disabled={sort === 'turnover'}
@@ -215,7 +215,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('stl')}
                   disabled={sort === 'stl'}
@@ -225,7 +225,7 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               </th>
               <th>
                 <button
-                  className='w-full px-2 py-1 rounded text-skin-inverted hover:bg-skin-button-accent-hover bg-skin-button-accent disabled:opacity-25 disabled:pointer-events-none'
+                  className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
                   type='button'
                   onClick={() => setSort('blk')}
                   disabled={sort === 'blk'}
@@ -256,14 +256,14 @@ const BoxScore = ({ stats, includeTotals = false }) => {
               }) => (
                 <tr key={id} className='odd:bg-skin-foreground-alt'>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'min' ? 'font-semibold' : ''
                     }`}
                   >
                     {min}
                   </td>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'pts' ? 'font-semibold' : ''
                     }`}
                   >
@@ -282,42 +282,42 @@ const BoxScore = ({ stats, includeTotals = false }) => {
                     {(ftp / 100).toFixed(3)}
                   </td>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'fg3m' ? 'font-semibold' : ''
                     }`}
                   >
                     {fg3m}
                   </td>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'reb' ? 'font-semibold' : ''
                     }`}
                   >
                     {reb}
                   </td>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'ast' ? 'font-semibold' : ''
                     }`}
                   >
                     {ast}
                   </td>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'turnover' ? 'font-semibold' : ''
                     }`}
                   >
                     {turnover}
                   </td>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'stl' ? 'font-semibold' : ''
                     }`}
                   >
                     {stl}
                   </td>
                   <td
-                    className={`text-center py-1 ${
+                    className={`py-1 text-center ${
                       sort === 'blk' ? 'font-semibold' : ''
                     }`}
                   >

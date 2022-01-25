@@ -38,12 +38,12 @@ const NewList = () => {
         <ul className='inline-flex divide-x divide-gray-100 rounded-lg bg-skin-button-accent'>
           <li className='flex justify-center'>
             <button
-              className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'
+              className='p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'
               type='submit'
               onClick={handleSubmit}
               disabled={!dirty || isSubmitting}
             >
-              <SaveIcon className='w-6 h-6' />
+              <SaveIcon className='h-6 w-6' />
             </button>
           </li>
         </ul>

@@ -33,7 +33,7 @@ const Teams = () => {
             ) : teams?.length === 0 ? (
               <p>no teams</p>
             ) : (
-              <div className='flex justify-center flex-grow'>
+              <div className='flex flex-grow justify-center'>
                 <Loading />
               </div>
             )}
@@ -44,8 +44,8 @@ const Teams = () => {
         <ul className='inline-flex divide-x divide-gray-100 rounded-lg bg-skin-button-accent'>
           <li className='flex justify-center'>
             <Link href='/fantasy/teams/new'>
-              <a className='p-3 text-gray-100 disabled:opacity-25 disabled:pointer-events-none'>
-                <PlusIcon className='w-6 h-6' />
+              <a className='p-3 text-gray-100 disabled:pointer-events-none disabled:opacity-25'>
+                <PlusIcon className='h-6 w-6' />
               </a>
             </Link>
           </li>

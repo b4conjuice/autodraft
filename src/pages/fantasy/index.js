@@ -88,7 +88,7 @@ const Fantasy = () => {
             <div className='flex space-x-0 md:space-x-2'>
               <input
                 type='date'
-                className='w-full form-input'
+                className='form-input w-full'
                 value={date}
                 onChange={e => setDate(e.target.value)}
               />
@@ -130,17 +130,17 @@ const Fantasy = () => {
                 </ul>
                 <h2 className='font-semibold'>leaders</h2>
                 <Leaders stats={games} />
-                <div className='flex form-input focus-within:border-blue-700'>
+                <div className='form-input flex focus-within:border-blue-700'>
                   <input
                     placeholder='search players'
-                    className='w-full focus:outline-none'
+                    className='focus:outline-none w-full'
                     type='text'
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                   />
                   {search !== '' && (
                     <button type='button' onClick={() => setSearch('')}>
-                      <XCircleIcon className='w-6 h-6' />
+                      <XCircleIcon className='h-6 w-6' />
                     </button>
                   )}
                 </div>
@@ -153,7 +153,7 @@ const Fantasy = () => {
             ) : games?.length === 0 ? (
               <div>no games started</div>
             ) : (
-              <div className='flex justify-center flex-grow'>
+              <div className='flex flex-grow justify-center'>
                 <Loading />
               </div>
             )}

@@ -2,7 +2,7 @@ import CURRENT_SEASON from '@/config/season'
 
 const SelectSeason = ({ season, handleChange }) => (
   <select
-    className='w-full text-center form-select'
+    className='form-select w-full text-center'
     onChange={handleChange}
     value={season || CURRENT_SEASON}
   >
