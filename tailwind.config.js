@@ -8,8 +8,7 @@ const withOpacity =
       : `rgb(var(${variableName}))`
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/pages/**/*.js', './src/components/**/*.js'],
+  content: ['./src/pages/**/*.js', './src/components/**/*.js'],
   theme: {
     extend: {
       colors: {
