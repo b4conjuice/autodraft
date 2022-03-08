@@ -21,6 +21,23 @@ export const fetchNBATeams = team => {
   }
 }
 
+const fetchAllGames = async url => {
+  const res = await fetcher(url)
+  const { meta } = res
+  if (meta.total_pages > 1) {
+    const pages = Array(meta.total_pages - meta.next_page + 1)
+      .fill()
+      .map((_, idx) => meta.next_page + idx)
+    const moreGames = (
+      await Promise.all(pages.map(page => fetcher(`${url}&page=${page}`)))
+    )
+      .map(({ data: additionalData }) => additionalData)
+      .flat()
+    res.data = [...res.data, ...moreGames]
+  }
+  return res
+}
+
 export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${season}&team_ids[]=${id}&start_date=${startDate}&per_page=100`
   const { data: games } = useSwr(id ? url : null, fetcher)
@@ -150,7 +167,7 @@ export const fetchNBAGames = ids => {
           ''
         )}`
       : null,
-    fetcher
+    fetchAllGames
   )
   return data || { data: undefined }
 }
@@ -264,22 +281,7 @@ export const fetchNBARegularSeasonSchedule = (options = {}) => {
         ? `&start_date=${start}&end_date=${end || start}&per_page=100`
         : `&start_date=${startDate}&per_page=100`
     }&postseason=${postseason ? 1 : 0}`,
-    async url => {
-      const res = await fetcher(url)
-      const { meta } = res
-      if (meta.total_pages > 1) {
-        const pages = Array(meta.total_pages - meta.next_page + 1)
-          .fill()
-          .map((_, idx) => meta.next_page + idx)
-        const moreGames = (
-          await Promise.all(pages.map(page => fetcher(`${url}&page=${page}`)))
-        )
-          .map(({ data: additionalData }) => additionalData)
-          .flat()
-        res.data = [...res.data, ...moreGames]
-      }
-      return res
-    }
+    fetchAllGames
   )
   const re = new RegExp('^(0?[1-9]|1[0-2]):([0-5][0-9]) ?([AaPp][Mm])')
   const games = data?.data

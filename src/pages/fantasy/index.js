@@ -133,7 +133,7 @@ const Fantasy = () => {
                 <div className='form-input flex focus-within:border-blue-700'>
                   <input
                     placeholder='search players'
-                    className='focus:outline-none w-full'
+                    className='w-full focus:outline-none'
                     type='text'
                     value={search}
                     onChange={e => setSearch(e.target.value)}
