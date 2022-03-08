@@ -6,9 +6,9 @@ const Layout = ({ className, children }) => (
       className ?? ''
     }`}
   >
-    <div className='hidden p-4 md:block'>
+    <aside className='hidden p-4 md:block'>
       <Menu />
-    </div>
+    </aside>
     {children}
   </div>
 )
