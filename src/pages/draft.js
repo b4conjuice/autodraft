@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Dialog, Listbox } from '@headlessui/react'
 import { CloudDownloadIcon, SaveIcon, TrashIcon } from '@heroicons/react/solid'
 import Fuse from 'fuse.js'
@@ -13,6 +13,7 @@ import espnRank from '@/lib/espnRank'
 import hashtagRank from '@/lib/hashtagRank'
 import hashtagPuntFGRank from '@/lib/hashtagPuntFGRank'
 import hashtagPuntFTRank from '@/lib/hashtagPuntFTRank'
+import hashtagPuntBLKRank from '@/lib/hashtagPuntBLKRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
 
@@ -29,12 +30,38 @@ const ranks = [
     title: 'hashtag punt ft%',
     items: hashtagPuntFTRank,
   },
+  {
+    title: 'hashtag punt blk',
+    items: hashtagPuntBLKRank,
+  },
 ]
 
-const PlusMinus = ({ index, rank }) => {
-  const index2 = espnRank.findIndex(p => p.name === rank[index]?.name)
-  const difference = index2 - index
+const projections = {
+  title: 'espn',
+  items: espnRank,
+}
+
+const PlusMinus = ({ index, rank, compare, isProjections }) => {
+  const index2 = compare.findIndex(p => p.name === rank[index]?.name)
+  const difference = isProjections ? index - index2 : index2 - index
   const absoluteDifference = Math.abs(difference)
+  if (isProjections) {
+    return (
+      <td
+        className={`p-2 text-center ${
+          index > index2 ? 'bg-green-700' : index < index2 ? 'bg-red-700' : ''
+        } ${
+          absoluteDifference > 24
+            ? 'bg-opacity-100'
+            : absoluteDifference > 12
+            ? 'bg-opacity-75'
+            : absoluteDifference > 6
+            ? 'bg-opacity-50'
+            : 'bg-opacity-25'
+        }`}
+      >{`${index > index2 ? '+' : ''}${difference} (${index2 + 1})`}</td>
+    )
+  }
   return (
     <td
       className={`p-2 text-center ${
@@ -219,6 +246,32 @@ const Draft = () => {
   const [fixItemDialogIsOpen, setFixItemDialogIsOpen] = useState(false)
   const [itemToBeFixed, setItemToBeFixed] = useState(null)
   const [hideDrafted, setHideDrafted] = useState(true)
+  const [ranksList, setRanksList] = useState([...ranks])
+  const [filter, setFilter] = useState('')
+  const autocompleteRef = useRef(null)
+  const filterRef = useRef(null)
+  useEffect(() => {
+    function onKeydown(e) {
+      if (e.key === 'f' && e.ctrlKey) {
+        console.log('focus filter')
+        filterRef.current.focus()
+      }
+      if (e.key === 'd' && e.ctrlKey) {
+        console.log('focus draft')
+        console.log({ foo: autocompleteRef.current })
+        autocompleteRef.current.focus()
+      }
+    }
+    window.addEventListener('keydown', onKeydown)
+    return () => {
+      window.removeEventListener('keydown', onKeydown)
+    }
+  }, [])
+  useEffect(() => {
+    autocompleteRef.current = document.querySelector('input.aa-Input')
+    console.log({ autocompleteRef })
+  }, [])
+
   const draft = name => {
     const newDrafted = [...drafted]
     newDrafted.push(name)
@@ -304,6 +357,13 @@ const Draft = () => {
                 </span>
               </span>
             </label>
+            <input
+              type='text'
+              value={filter}
+              onChange={e => setFilter(e.target.value)}
+              placeholder='filter'
+              ref={filterRef}
+            />
           </div>
           <div className='flex divide-x divide-skin-foreground overflow-x-scroll'>
             <div className='w-[250px]'>
@@ -352,61 +412,53 @@ const Draft = () => {
                 }}
               />
             </div>
-            <div className='w-[250px]'>
-              <table className='w-full'>
-                <thead>
-                  <tr>
-                    <td className='p-2'>#</td>
-                    <td className='p-2'>espn</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {espnRank.map(({ name }, index) => (
-                    <tr
-                      key={name}
-                      className={`odd:bg-skin-foreground-alt ${
-                        drafted.some(p => p === name) && hideDrafted
-                          ? 'hidden'
-                          : ''
-                      }`}
-                    >
-                      <td className='p-2'>{index + 1}</td>
-                      <td
-                        className={`truncate p-2 ${
-                          drafted.some(p => p === name) ? 'opacity-25' : ''
-                        }`}
-                      >
-                        <button
-                          type='button'
-                          className='disabled:pointer-events-none'
-                          onClick={() => draft(name)}
-                          disabled={drafted.some(p => p === name)}
-                        >
-                          {name}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {ranks.map(rank => (
+            {[projections, ...ranksList].map((rank, rankIndex) => (
               <div key={rank.title} className='w-[350px]'>
                 <table className='w-full'>
                   <thead>
                     <tr>
                       <td className='p-2 text-center'>#</td>
-                      <td className='p-2'>{rank.title}</td>
+                      <td className='p-2'>
+                        {rankIndex > 1 ? (
+                          <button
+                            type='button'
+                            className='block w-full rounded bg-blue-800 px-2'
+                            onClick={() => {
+                              const newRanksList = [...ranksList]
+                              const selectedRanksListIndex =
+                                newRanksList.findIndex(
+                                  r => r.title === rank.title
+                                )
+                              newRanksList.unshift(
+                                newRanksList.splice(
+                                  selectedRanksListIndex,
+                                  1
+                                )[0]
+                              )
+                              setRanksList(newRanksList)
+                            }}
+                          >
+                            {rank.title}
+                          </button>
+                        ) : (
+                          rank.title
+                        )}
+                      </td>
+
                       <td className='p-2 text-center'>+/-</td>
                     </tr>
                   </thead>
                   <tbody>
-                    {espnRank.map(({ name }, index) => (
+                    {projections.items.map(({ name }, index) => (
                       <tr
                         key={name}
                         className={`odd:bg-skin-foreground-alt ${
-                          drafted.some(p => p === rank.items[index]?.name) &&
-                          hideDrafted
+                          (drafted.some(p => p === rank.items[index]?.name) &&
+                            hideDrafted) ||
+                          (filter &&
+                            !rank.items[index]?.name
+                              .toLowerCase()
+                              .includes(filter.toLowerCase()))
                             ? 'hidden'
                             : ''
                         }`}
@@ -422,7 +474,7 @@ const Draft = () => {
                           <button
                             type='button'
                             className={`disabled:pointer-events-none ${
-                              espnRank.findIndex(
+                              projections.items.findIndex(
                                 p => p.name === rank.items[index]?.name
                               ) === -1
                                 ? 'font-bold text-red-700'
@@ -436,7 +488,20 @@ const Draft = () => {
                             {rank.items[index]?.name}
                           </button>
                         </td>
-                        <PlusMinus index={index} rank={rank.items} />
+                        {rankIndex === 0 ? (
+                          <PlusMinus
+                            index={index}
+                            rank={projections.items}
+                            compare={ranksList[0].items}
+                            isProjections
+                          />
+                        ) : (
+                          <PlusMinus
+                            index={index}
+                            rank={rank.items}
+                            compare={projections.items}
+                          />
+                        )}
                       </tr>
                     ))}
                   </tbody>

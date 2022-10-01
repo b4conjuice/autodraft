@@ -9,7 +9,7 @@
 
 ## get espn player positions
 
-- go to [player rater](https://fantasy.espn.com/basketball/playerrater)
+- go to [projections](https://fantasy.espn.com/basketball/players/projections) ~~[player rater](https://fantasy.espn.com/basketball/playerrater)~~
 - open dev tools console and run this code:
 
 ```javascript
@@ -52,7 +52,7 @@ players = Array.from(
   document.querySelectorAll('#ContentPlaceHolder1_GridView1 tr')
 )
   .map(el => {
-    const nameEl = el.querySelector('td:nth-child(3) span')
+    const nameEl = el.querySelector('td:nth-child(3) a')
     if (!nameEl) return null
     const name = nameEl.innerText
     const teamEl = el.querySelector('td:nth-child(5)')
