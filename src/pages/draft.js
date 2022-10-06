@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { Dialog, Listbox } from '@headlessui/react'
-import { CloudDownloadIcon, SaveIcon, TrashIcon } from '@heroicons/react/solid'
+import {
+  CloudDownloadIcon,
+  SaveIcon,
+  TrashIcon,
+  UserGroupIcon,
+  CogIcon,
+} from '@heroicons/react/solid'
 import Fuse from 'fuse.js'
 
 import Page from '@/components/page'
 import Layout from '@/components/layout'
 import Main from '@/components/main'
 import Dnd from '@/components/dnd'
-import Autocomplete from '@/components/autocomplete'
+import CommandPalette from '@/components/commandPalette'
 import useLocalStorage from '@/lib/useLocalStorage'
 import espnRank from '@/lib/espnRank'
 import hashtagRank from '@/lib/hashtagRank'
@@ -17,28 +23,42 @@ import hashtagPuntBLKRank from '@/lib/hashtagPuntBLKRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
 
+const normalizePlayerName = player => {
+  const names = {
+    'Robert Williams': 'Robert Williams III',
+    'PJ Washington': 'P.J. Washington',
+    'Nicolas Claxton': 'Nic Claxton',
+    'Jabari Smith Jr': 'Jabari Smith Jr.',
+  }
+  const newName = names[player.name]
+  return {
+    ...player,
+    name: newName ?? player.name,
+  }
+}
+
 const ranks = [
   {
     title: 'hashtag',
-    items: hashtagRank,
+    items: hashtagRank.map(normalizePlayerName),
   },
   {
     title: 'hashtag punt fg%',
-    items: hashtagPuntFGRank,
+    items: hashtagPuntFGRank.map(normalizePlayerName),
   },
   {
     title: 'hashtag punt ft%',
-    items: hashtagPuntFTRank,
+    items: hashtagPuntFTRank.map(normalizePlayerName),
   },
   {
     title: 'hashtag punt blk',
-    items: hashtagPuntBLKRank,
+    items: hashtagPuntBLKRank.map(normalizePlayerName),
   },
 ]
 
 const projections = {
   title: 'espn',
-  items: espnRank,
+  items: espnRank.slice(0, 300),
 }
 
 const PlusMinus = ({ index, rank, compare, isProjections }) => {
@@ -190,7 +210,7 @@ const FixItemDialog = ({
   setDrafted,
 }) => {
   if (!itemToBeFixed) return null
-  const fuse = new Fuse(espnRank, {
+  const fuse = new Fuse(projections.items, {
     keys: ['name'],
   })
   const players = fuse.search(itemToBeFixed).map(({ item }) => item)
@@ -239,16 +259,103 @@ const FixItemDialog = ({
   )
 }
 
+const TeamsDialog = ({ isOpen, setIsOpen, drafted, teams }) => {
+  const draftedReversed = [...drafted].reverse()
+  const league = draftedReversed.reduce((finalTeams, player, index) => {
+    const round = Math.ceil((index + 1) / teams)
+    const teamIndex =
+      round % 2 === 1 ? index % teams : teams - 1 - (index % teams)
+    if (finalTeams[teamIndex]) {
+      finalTeams[teamIndex].push(
+        `${index + 1} ${player} (${round}-${(index % teams) + 1})`
+      )
+    } else {
+      finalTeams[teamIndex] = [
+        `${index + 1} ${player} (${round}-${(index % teams) + 1})`,
+      ]
+    }
+    return finalTeams
+  }, [])
+
+  return (
+    <Dialog
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      className='fixed inset-0 z-10 overflow-y-auto'
+    >
+      <div className='flex min-h-screen items-center justify-center'>
+        <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
+
+        <div className='relative mx-auto rounded bg-white p-4'>
+          <Dialog.Title>{teams} Teams</Dialog.Title>
+          <ul className='grid grid-cols-2 gap-4 md:grid-cols-3'>
+            {league.map((team, index) => (
+              <li key={index}>
+                <h2>Team {index + 1}</h2>
+                <ul>
+                  {team.map((player, pIndex) => (
+                    <li key={pIndex}>{player}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Dialog>
+  )
+}
+
+const SettingsDialog = ({ isOpen, setIsOpen, settings, setSettings }) => {
+  const { teams } = settings
+  return (
+    <Dialog
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      className='fixed inset-0 z-10 overflow-y-auto'
+    >
+      <div className='flex min-h-screen items-center justify-center'>
+        <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
+
+        <div className='relative mx-auto rounded bg-white p-4'>
+          <Dialog.Title>Settings</Dialog.Title>
+          <label htmlFor='teams'>
+            <span>teams</span>
+            <input
+              placeholder='teams'
+              className='form-input w-full text-center'
+              type='text'
+              name='teams'
+              value={teams}
+              onChange={e =>
+                setSettings({
+                  ...settings,
+                  teams: Number(e.target.value),
+                })
+              }
+            />
+          </label>
+        </div>
+      </div>
+    </Dialog>
+  )
+}
+
 const Draft = () => {
   const [drafted, setDrafted] = useLocalStorage('draft', [])
+  const [queue, setQueue] = useLocalStorage('queue', [])
   const [saveDraftDialogIsOpen, setSaveDraftDialogIsOpen] = useState(false)
   const [loadListDialogIsOpen, setLoadListDialogIsOpen] = useState(false)
   const [fixItemDialogIsOpen, setFixItemDialogIsOpen] = useState(false)
+  const [teamsDialogIsOpen, setTeamsDialogIsOpen] = useState(false)
+  const [settingsDialogIsOpen, setSettingsDialogIsOpen] = useState(false)
+  const [settings, setSettings] = useState({
+    teams: 12,
+  })
   const [itemToBeFixed, setItemToBeFixed] = useState(null)
   const [hideDrafted, setHideDrafted] = useState(true)
   const [ranksList, setRanksList] = useState([...ranks])
   const [filter, setFilter] = useState('')
-  const autocompleteRef = useRef(null)
   const filterRef = useRef(null)
   useEffect(() => {
     function onKeydown(e) {
@@ -256,10 +363,8 @@ const Draft = () => {
         console.log('focus filter')
         filterRef.current.focus()
       }
-      if (e.key === 'd' && e.ctrlKey) {
-        console.log('focus draft')
-        console.log({ foo: autocompleteRef.current })
-        autocompleteRef.current.focus()
+      if (e.key === 't' && e.ctrlKey) {
+        setTeamsDialogIsOpen(!teamsDialogIsOpen)
       }
     }
     window.addEventListener('keydown', onKeydown)
@@ -267,72 +372,105 @@ const Draft = () => {
       window.removeEventListener('keydown', onKeydown)
     }
   }, [])
-  useEffect(() => {
-    autocompleteRef.current = document.querySelector('input.aa-Input')
-    console.log({ autocompleteRef })
-  }, [])
 
+  const unqueue = name => {
+    const newQueue = queue.filter(p => p.name !== name)
+    setQueue(newQueue)
+  }
   const draft = name => {
-    const newDrafted = [...drafted]
-    newDrafted.push(name)
+    const newDrafted = [name, ...drafted]
     setDrafted(newDrafted)
+    unqueue(name)
+    setFilter('')
+  }
+  const undraft = index => {
+    const newDrafted = [...drafted]
+    newDrafted.splice(index, 1)
+    setDrafted(newDrafted)
+  }
+  const compareRank = rank => {
+    const newRanksList = [...ranksList]
+    const selectedRanksListIndex = newRanksList.findIndex(
+      r => r.title === rank.title
+    )
+    newRanksList.unshift(newRanksList.splice(selectedRanksListIndex, 1)[0])
+    setRanksList(newRanksList)
+  }
+  const [, ...compareRanksList] = ranksList
+  const available = projections.items.filter(
+    p => !drafted.some(d => d === p.name)
+  )
+  const commands = [
+    ...available.map(p => ({
+      ...p,
+      id: `Draft ${p.name}`,
+      title: `Draft ${p.name}`,
+      name: p.name,
+      subtitle: `${p.position.join(', ')} - ${p.team}`,
+      action: () => draft(p.name),
+    })),
+    ...drafted.map((name, index) => ({
+      id: `Undraft ${name}`,
+      title: `Undraft ${name}`,
+      name,
+      action: () => undraft(index),
+    })),
+    ...available
+      .filter(p => !queue.some(q => q.name === p.name))
+      .map(p => ({
+        ...p,
+        id: `Queue ${p.name}`,
+        title: `Queue ${p.name}`,
+        name: p.name,
+        action: () => setQueue([...queue, p]),
+      })),
+    ...queue.map(p => ({
+      ...p,
+      id: `Unqueue ${p.name}`,
+      title: `Unqueue ${p.name}`,
+      name: p.name,
+      action: () => unqueue(p.name),
+    })),
+    ...available.map(p => ({
+      ...p,
+      id: `Filter ${p.name}`,
+      title: `Filter ${p.name}`,
+      name: p.name,
+      action: () => setFilter(p.name),
+    })),
+    ...compareRanksList.map(rank => ({
+      id: `Compare Rank ${rank.title}`,
+      title: `Compare Rank ${rank.title}`,
+      action: () => compareRank(rank),
+    })),
+    {
+      id: `Toggle Hide Drafted`,
+      title: `${hideDrafted ? 'Show' : 'Hide'} Drafted`,
+      action: () => setHideDrafted(!hideDrafted),
+    },
+    {
+      id: 'Open Teams',
+      title: 'Open Teams',
+      action: () => setTeamsDialogIsOpen(true),
+    },
+    {
+      id: 'Open Settings',
+      title: 'Open Settings',
+      action: () => setSettingsDialogIsOpen(true),
+    },
+  ]
+  if (filter) {
+    commands.push({
+      id: `Clear Filter`,
+      title: `Clear Filter`,
+      action: () => setFilter(''),
+    })
   }
   return (
     <Page>
       <Layout todaysGames={false}>
         <Main className='space-y-2 px-2 md:mx-auto md:w-9/10'>
-          <SaveDraftDialog
-            isOpen={saveDraftDialogIsOpen}
-            setIsOpen={setSaveDraftDialogIsOpen}
-            drafted={drafted}
-          />
-          <LoadListDialog
-            isOpen={loadListDialogIsOpen}
-            setIsOpen={setLoadListDialogIsOpen}
-            setDrafted={setDrafted}
-          />
-          <FixItemDialog
-            isOpen={fixItemDialogIsOpen}
-            setIsOpen={setFixItemDialogIsOpen}
-            itemToBeFixed={itemToBeFixed}
-            setItemToBeFixed={setItemToBeFixed}
-            drafted={drafted}
-            setDrafted={setDrafted}
-          />
           <div className='flex space-x-4'>
-            <Autocomplete
-              openOnFocus
-              placeholder='Draft by search'
-              getSources={() => {
-                return [
-                  {
-                    sourceId: 'links',
-                    getItems({ query }) {
-                      const fuse = new Fuse(espnRank, {
-                        keys: ['name'],
-                      })
-                      return fuse
-                        .search(query)
-                        .map(({ item }) => item)
-                        .filter(player => !drafted.some(p => p === player.name))
-                    },
-                    getItemUrl({ item }) {
-                      return item.name
-                    },
-                    templates: {
-                      item({ item }) {
-                        return item.name
-                      },
-                    },
-                  },
-                ]
-              }}
-              navigator={{
-                navigate({ itemUrl }) {
-                  draft(itemUrl)
-                },
-              }}
-            />
             <label
               htmlFor='checked'
               className='divide-skin-foregroundspace-x-3 inline-flex cursor-pointer items-center justify-center'
@@ -364,53 +502,70 @@ const Draft = () => {
               placeholder='filter'
               ref={filterRef}
             />
+            <button type='button' onClick={() => setTeamsDialogIsOpen(true)}>
+              <UserGroupIcon className='h-6 w-6' />
+            </button>
+            <button type='button' onClick={() => setSettingsDialogIsOpen(true)}>
+              <CogIcon className='h-6 w-6' />
+            </button>
+            <button
+              type='button'
+              onClick={() => {
+                setSaveDraftDialogIsOpen(true)
+              }}
+              disabled={drafted.length === 0}
+              className='disabled:pointer-events-none disabled:opacity-25'
+            >
+              <SaveIcon className='h-6 w-6' />
+            </button>
+            <button
+              type='button'
+              onClick={() => {
+                setLoadListDialogIsOpen(true)
+              }}
+            >
+              <CloudDownloadIcon className='h-6 w-6' />
+            </button>
+            <button
+              type='button'
+              onClick={() => {
+                setDrafted([])
+              }}
+            >
+              <TrashIcon className='h-6 w-6' />
+            </button>
           </div>
           <div className='flex divide-x divide-skin-foreground overflow-x-scroll'>
-            <div className='w-[250px]'>
+            <div className='w-[350px]'>
               <h2 className='flex space-x-4 p-2'>
                 <span>draft</span>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setSaveDraftDialogIsOpen(true)
-                  }}
-                  disabled={drafted.length === 0}
-                  className='disabled:pointer-events-none disabled:opacity-25'
-                >
-                  <SaveIcon className='h-6 w-6' />
-                </button>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setLoadListDialogIsOpen(true)
-                  }}
-                >
-                  <CloudDownloadIcon className='h-6 w-6' />
-                </button>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setDrafted([])
-                  }}
-                >
-                  <TrashIcon className='h-6 w-6' />
-                </button>
               </h2>
               <Dnd
                 items={drafted}
                 reorderItems={newDrafted => {
                   setDrafted(newDrafted)
                 }}
-                deleteItem={index => {
-                  const newDrafted = [...drafted]
-                  newDrafted.splice(index, 1)
-                  setDrafted(newDrafted)
-                }}
+                deleteItem={undraft}
                 fixItem={index => {
                   setFixItemDialogIsOpen(true)
                   setItemToBeFixed(drafted[index])
                 }}
+                teams={settings.teams}
               />
+            </div>
+            <div className='w-[350px]'>
+              <h2 className='flex space-x-4 p-2'>
+                <span>queue</span>
+              </h2>
+              <ul>
+                {queue.map((p, index) => (
+                  <li key={index} className='odd:bg-skin-foreground-alt'>
+                    <button type='button' onClick={() => draft(p.name)}>
+                      {p.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
             {[projections, ...ranksList].map((rank, rankIndex) => (
               <div key={rank.title} className='w-[350px]'>
@@ -423,20 +578,7 @@ const Draft = () => {
                           <button
                             type='button'
                             className='block w-full rounded bg-blue-800 px-2'
-                            onClick={() => {
-                              const newRanksList = [...ranksList]
-                              const selectedRanksListIndex =
-                                newRanksList.findIndex(
-                                  r => r.title === rank.title
-                                )
-                              newRanksList.unshift(
-                                newRanksList.splice(
-                                  selectedRanksListIndex,
-                                  1
-                                )[0]
-                              )
-                              setRanksList(newRanksList)
-                            }}
+                            onClick={() => compareRank(rank)}
                           >
                             {rank.title}
                           </button>
@@ -511,6 +653,37 @@ const Draft = () => {
           </div>
         </Main>
       </Layout>
+      <SaveDraftDialog
+        isOpen={saveDraftDialogIsOpen}
+        setIsOpen={setSaveDraftDialogIsOpen}
+        drafted={drafted}
+      />
+      <LoadListDialog
+        isOpen={loadListDialogIsOpen}
+        setIsOpen={setLoadListDialogIsOpen}
+        setDrafted={setDrafted}
+      />
+      <FixItemDialog
+        isOpen={fixItemDialogIsOpen}
+        setIsOpen={setFixItemDialogIsOpen}
+        itemToBeFixed={itemToBeFixed}
+        setItemToBeFixed={setItemToBeFixed}
+        drafted={drafted}
+        setDrafted={setDrafted}
+      />
+      <TeamsDialog
+        isOpen={teamsDialogIsOpen}
+        setIsOpen={setTeamsDialogIsOpen}
+        drafted={drafted}
+        teams={settings.teams}
+      />
+      <SettingsDialog
+        isOpen={settingsDialogIsOpen}
+        setIsOpen={setSettingsDialogIsOpen}
+        settings={settings}
+        setSettings={setSettings}
+      />
+      <CommandPalette commands={commands} />
     </Page>
   )
 }
