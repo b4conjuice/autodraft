@@ -1,4 +1,4 @@
-import useSwr from 'swr'
+import useSwr, { useSWRConfig } from 'swr'
 import format from 'date-fns/format'
 
 import CURRENT_SEASON from '@/config/season'
@@ -561,8 +561,17 @@ export const deleteList = async id =>
     method: 'DELETE',
   })
 
-export const fetchTeams = id =>
-  useSwr(`/api/teams${id ? `/${id}` : ''}`, fetcher)
+export const fetchTeams = id => {
+  const url = `/api/teams${id ? `/${id}` : ''}`
+  const { mutate } = useSWRConfig()
+  const { data } = useSwr(url, fetcher)
+  return {
+    data,
+    revalidate: () => {
+      mutate(url)
+    },
+  }
+}
 export const saveTeam = async team =>
   fetcher('/api/teams', {
     method: 'POST',
