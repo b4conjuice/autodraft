@@ -34,6 +34,32 @@ players = Array.from(
 })
 ```
 
+```javascript
+// alternate method in draft strategy page: https://fantasy.espn.com/basketball/editdraftstrategy?leagueId=201693
+
+players = Array.from(
+  document.querySelectorAll(
+    '.players-table .Table__Scroller > .Table > .Table__TBODY > tr'
+  )
+).map(el => {
+  const nameEl = el.querySelector('.player-column__athlete')
+  const name = nameEl.textContent
+  const teamEl = el.querySelector(
+    '.player-column__position .playerinfo__playerteam'
+  )
+  const team = teamEl.innerText
+  const positionEl = el.querySelector(
+    '.player-column__position .playerinfo__playerpos'
+  )
+  const position = positionEl.innerText
+  return {
+    name,
+    team,
+    position: position.split(', '),
+  }
+})
+```
+
 output:
 
 ```
@@ -42,6 +68,31 @@ Array(50) [ {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}
 
 - right click Array and select "Copy Object" (on firefox)
 - paste into src/lib/espnRank.js
+
+## espn (within draft)
+
+```javascript
+players = Array.from(
+  document.querySelectorAll('.fixedDataTableRowLayout_rowWrapper a.player-news')
+).map(el => {
+  // const nameEl = el.querySelector('.player-column__athlete')
+  // const name = nameEl.title
+  // const teamEl = el.querySelector(
+  //   '.player-column__position .playerinfo__playerteam'
+  // )
+  // const team = teamEl.innerText
+  // const positionEl = el.querySelector(
+  //   '.player-column__position .playerinfo__playerpos'
+  // )
+  // const position = positionEl.innerText
+  // return {
+  //   name,
+  //   team,
+  //   position: position.split(', '),
+  // }
+  return el
+})
+```
 
 ## hashtag
 
@@ -112,6 +163,63 @@ scoreboard = {
     }
   ),
 }
+```
+
+## espn team
+
+- go to a team's page `https://fantasy.espn.com/basketball/team?leagueId=xxx&teamId=y`
+
+```javascript
+team = Array.from(
+  document.querySelectorAll(
+    '.Table__ScrollerWrapper .Table.Table--align-right > tbody > tr'
+  )
+).map(el => {
+  const fg_fr = el.querySelector(
+    'div[title="Field Goals Made & Field Goals Attempted"]'
+  ).innerText
+  const fg_pct = Number(
+    el.querySelector('div[title="Field Goal Percentage"]').innerText
+  )
+  const ft_fr = el.querySelector(
+    'div[title="Free Throws Made & Free Throws Attempted"]'
+  ).innerText
+  const ft_pct = Number(
+    el.querySelector('div[title="Free Throw Percentage"]').innerText
+  )
+  const fg3m = Number(
+    el.querySelector('div[title="Three Pointers Made"]').innerText
+  )
+  const reb = Number(el.querySelector('div[title="Rebounds"]').innerText)
+  const ast = Number(el.querySelector('div[title="Assists"]').innerText)
+  const stl = Number(el.querySelector('div[title="Steals"]').innerText)
+  const blk = Number(el.querySelector('div[title="Blocks"]').innerText)
+  const turnover = Number(el.querySelector('div[title="Turnovers"]').innerText)
+  const pts = Number(el.querySelector('div[title="Points"]').innerText)
+
+  const dataIndex = el.getAttribute('data-idx')
+
+  const nameEl = document.querySelector(
+    `.Table.Table--align-right.Table--fixed-left > tbody > tr[data-idx="${dataIndex}"] .player-column__athlete`
+  )
+  const name = nameEl.getAttribute('title')
+  return {
+    dataIndex,
+    nameEl,
+    name,
+    ast,
+    blk,
+    fg3m,
+    fg_pct,
+    fg_fr,
+    ft_pct,
+    ft_fr,
+    pts,
+    reb,
+    stl,
+    turnover,
+  }
+})
 ```
 
 ## nba standings tiebreaker
