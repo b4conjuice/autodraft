@@ -538,6 +538,22 @@ const Draft = () => {
           <div className='flex divide-x divide-skin-foreground overflow-x-scroll'>
             <div className='w-[350px]'>
               <h2 className='flex space-x-4 p-2'>
+                <span>queue</span>
+              </h2>
+              {queue.length > 0 ? (
+                <ul>
+                  {queue.map((p, index) => (
+                    <li key={index} className='p-2 odd:bg-skin-foreground-alt'>
+                      <button type='button' onClick={() => draft(p.name)}>
+                        {p.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className='p-2'>empty</div>
+              )}
+              <h2 className='flex space-x-4 border-t p-2'>
                 <span>draft</span>
               </h2>
               <Dnd
@@ -552,20 +568,6 @@ const Draft = () => {
                 }}
                 teams={settings.teams}
               />
-            </div>
-            <div className='w-[350px]'>
-              <h2 className='flex space-x-4 p-2'>
-                <span>queue</span>
-              </h2>
-              <ul>
-                {queue.map((p, index) => (
-                  <li key={index} className='odd:bg-skin-foreground-alt'>
-                    <button type='button' onClick={() => draft(p.name)}>
-                      {p.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
             </div>
             {[projections, ...ranksList].map((rank, rankIndex) => (
               <div key={rank.title} className='w-[350px]'>
