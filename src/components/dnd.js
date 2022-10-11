@@ -57,9 +57,13 @@ const DND = ({ items, reorderItems, fixItem, deleteItem, teams }) => (
                       {...provided1.draggableProps}
                       {...dragHandleProps}
                     >
-                      <span className='flex-grow'>
-                        {pickNumber} {item} ({`${round}-${pick}`})
-                      </span>
+                      <div>
+                        <div className='text-center'>{pickNumber}</div>
+                        <div className='text-center'>
+                          ({`${round}-${pick}`})
+                        </div>
+                      </div>
+                      <div className='flex-grow truncate'>{item}</div>
                       <Menu as='div' className='relative'>
                         <Menu.Button>
                           <DotsVerticalIcon className='h-6 w-6' />

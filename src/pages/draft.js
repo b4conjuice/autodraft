@@ -79,7 +79,10 @@ const PlusMinus = ({ index, rank, compare, isProjections }) => {
             ? 'bg-opacity-50'
             : 'bg-opacity-25'
         }`}
-      >{`${index > index2 ? '+' : ''}${difference} (${index2 + 1})`}</td>
+      >
+        <div>{`${index > index2 ? '+' : ''}${difference}`}</div>
+        <div>({index2 + 1})</div>
+      </td>
     )
   }
   return (
@@ -95,7 +98,10 @@ const PlusMinus = ({ index, rank, compare, isProjections }) => {
           ? 'bg-opacity-50'
           : 'bg-opacity-25'
       }`}
-    >{`${index2 > index ? '+' : ''}${difference} (${index2 + 1})`}</td>
+    >
+      <div>{`${index2 > index ? '+' : ''}${difference}`}</div>
+      <div>({index2 + 1})</div>
+    </td>
   )
 }
 
@@ -473,7 +479,7 @@ const Draft = () => {
           <div className='flex space-x-4'>
             <label
               htmlFor='checked'
-              className='divide-skin-foregroundspace-x-3 inline-flex cursor-pointer items-center justify-center'
+              className='inline-flex cursor-pointer items-center justify-center space-x-3 divide-skin-foreground'
             >
               <span className={!hideDrafted ? 'text-gray-500' : ''}>
                 hide drafted players
@@ -553,7 +559,7 @@ const Draft = () => {
               ) : (
                 <div className='p-2'>empty</div>
               )}
-              <h2 className='flex space-x-4 border-t p-2'>
+              <h2 className='flex space-x-4 border-t-4 border-skin-foreground p-2'>
                 <span>draft</span>
               </h2>
               <Dnd
@@ -596,7 +602,7 @@ const Draft = () => {
                     {projections.items.map(({ name }, index) => (
                       <tr
                         key={name}
-                        className={`odd:bg-skin-foreground-alt ${
+                        className={`border-b border-skin-foreground ${
                           (drafted.some(p => p === rank.items[index]?.name) &&
                             hideDrafted) ||
                           (filter &&
@@ -617,7 +623,7 @@ const Draft = () => {
                         >
                           <button
                             type='button'
-                            className={`disabled:pointer-events-none ${
+                            className={`truncate disabled:pointer-events-none ${
                               projections.items.findIndex(
                                 p => p.name === rank.items[index]?.name
                               ) === -1
