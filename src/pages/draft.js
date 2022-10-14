@@ -21,6 +21,7 @@ import hashtagRank from '@/lib/hashtagRank'
 import hashtagPuntFGRank from '@/lib/hashtagPuntFGRank'
 import hashtagPuntFTRank from '@/lib/hashtagPuntFTRank'
 import hashtagPuntBLKRank from '@/lib/hashtagPuntBLKRank'
+import fearRank from '@/lib/fearRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
 
@@ -39,6 +40,10 @@ const normalizePlayerName = player => {
 }
 
 const ranks = [
+  {
+    title: 'fear',
+    items: fearRank.map(normalizePlayerName),
+  },
   {
     title: 'hashtag',
     items: hashtagRank.map(normalizePlayerName),
@@ -294,6 +299,13 @@ const TeamsDialog = ({ isOpen, setIsOpen, drafted, teams }) => {
         <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
 
         <div className='relative mx-auto rounded bg-white p-4'>
+          <button
+            type='button'
+            onClick={() => setIsOpen(false)}
+            className='absolute right-4 h-6 w-6'
+          >
+            &times;
+          </button>
           <Dialog.Title>{teams} Teams</Dialog.Title>
           <ul className='grid grid-cols-2 gap-4 md:grid-cols-3'>
             {league.map((team, index) => (
@@ -325,6 +337,13 @@ const SettingsDialog = ({ isOpen, setIsOpen, settings, setSettings }) => {
         <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
 
         <div className='relative mx-auto rounded bg-white p-4'>
+          <button
+            type='button'
+            onClick={() => setIsOpen(false)}
+            className='absolute right-4 h-6 w-6'
+          >
+            &times;
+          </button>
           <Dialog.Title>Settings</Dialog.Title>
           <label htmlFor='teams'>
             <span>teams</span>
@@ -490,7 +509,7 @@ const Draft = () => {
               className='inline-flex cursor-pointer items-center justify-center space-x-3 divide-skin-foreground'
             >
               <span className={!hideDrafted ? 'text-gray-500' : ''}>
-                hide drafted players
+                hide drafted <span className='hidden md:inline'>players</span>
               </span>
               <span className='relative'>
                 <span className='block h-6 w-10 rounded-full bg-gray-400 shadow-inner' />
@@ -515,6 +534,7 @@ const Draft = () => {
               onChange={e => setFilter(e.target.value)}
               placeholder='filter'
               ref={filterRef}
+              className='hidden md:block'
             />
             <button type='button' onClick={() => setTeamsDialogIsOpen(true)}>
               <UserGroupIcon className='h-6 w-6' />
