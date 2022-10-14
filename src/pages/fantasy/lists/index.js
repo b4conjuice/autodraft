@@ -1,15 +1,22 @@
+import { useState } from 'react'
 import Link from 'next/link'
-import { PlusIcon } from '@heroicons/react/solid'
+import { PlusIcon, UserGroupIcon } from '@heroicons/react/solid'
 
 import Page from '@/components/page'
 import Layout from '@/components/layout'
 import Main from '@/components/main'
 import Loading from '@/components/loading'
 import Footer from '@/components/footer'
+import TeamsDialog from '@/components/teamsDialog'
 import { fetchLists } from '@/lib/api'
 
 const Lists = () => {
   const { data: lists } = fetchLists()
+  const [teamsDialogIsOpen, setTeamsDialogIsOpen] = useState(false)
+  const [selectedTeamId, setSelectedTeamId] = useState(null)
+  const selectedTeam = selectedTeamId
+    ? lists.find(list => list.id === selectedTeamId).items
+    : []
   return (
     <Page title='lists'>
       <Layout>
@@ -22,10 +29,19 @@ const Lists = () => {
                     key={list.id}
                     className='rounded bg-skin-foreground odd:bg-skin-foreground-alt'
                   >
-                    <div className='space-x-1'>
+                    <div className='flex p-2'>
                       <Link href={`/fantasy/lists/${list.id}`}>
-                        <a className='block p-2'>{list.title}</a>
+                        <a className='block flex-grow'>{list.title}</a>
                       </Link>
+                      <button
+                        type='button'
+                        onClick={() => {
+                          setTeamsDialogIsOpen(true)
+                          setSelectedTeamId(list.id)
+                        }}
+                      >
+                        <UserGroupIcon className='h-6 w-6' />
+                      </button>
                     </div>
                   </li>
                 ))}
@@ -40,6 +56,12 @@ const Lists = () => {
           </div>
         </Main>
       </Layout>
+      <TeamsDialog
+        isOpen={teamsDialogIsOpen}
+        setIsOpen={setTeamsDialogIsOpen}
+        drafted={[...selectedTeam]}
+        teams={12}
+      />
       <Footer className='flex justify-center'>
         <ul className='inline-flex divide-x divide-gray-100 rounded-lg bg-skin-button-accent'>
           <li className='flex justify-center'>
