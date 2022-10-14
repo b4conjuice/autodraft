@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 const DEFAULT_TITLE = 'autodraft'
 
-const Page = ({ title = DEFAULT_TITLE, children }) => {
+const Page = ({ title = DEFAULT_TITLE, children, fullScreen = false }) => {
   const { pathname } = useRouter()
   return (
     <div className='flex min-h-screen flex-col bg-skin-background text-skin-base'>
@@ -29,17 +29,19 @@ const Page = ({ title = DEFAULT_TITLE, children }) => {
           {title === DEFAULT_TITLE ? title : `${title} - ${DEFAULT_TITLE}`}
         </title>
       </Head>
-      <header className='items-center border-skin-foreground md:flex md:border-b md:px-4 md:py-2'>
-        <h1 className='text-center text-3xl font-extrabold leading-9 tracking-tight text-skin-base sm:text-4xl sm:leading-10 md:text-left'>
-          {pathname === '/' ? (
-            <span>{DEFAULT_TITLE}</span>
-          ) : (
-            <Link href='/'>
-              <a>{DEFAULT_TITLE}</a>
-            </Link>
-          )}
-        </h1>
-      </header>
+      {!fullScreen && (
+        <header className='items-center border-skin-foreground md:flex md:border-b md:px-4 md:py-2'>
+          <h1 className='text-center text-3xl font-extrabold leading-9 tracking-tight text-skin-base sm:text-4xl sm:leading-10 md:text-left'>
+            {pathname === '/' ? (
+              <span>{DEFAULT_TITLE}</span>
+            ) : (
+              <Link href='/'>
+                <a>{DEFAULT_TITLE}</a>
+              </Link>
+            )}
+          </h1>
+        </header>
+      )}
       {children}
     </div>
   )
