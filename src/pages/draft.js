@@ -12,8 +12,9 @@ import Fuse from 'fuse.js'
 import Page from '@/components/page'
 import Layout from '@/components/layout'
 import Main from '@/components/main'
-import Dnd from '@/components/dnd'
+import DraftListItem from '@/components/dnd'
 import CommandPalette from '@/components/commandPalette'
+import DragDropList from '@/components/dragDropList'
 import useLocalStorage from '@/lib/useLocalStorage'
 import espnRank from '@/lib/espnRank'
 import hashtagRank from '@/lib/hashtagRank'
@@ -415,12 +416,12 @@ const Draft = () => {
       subtitle: `${p.position.join(', ')} - ${p.team}`,
       action: () => draft(p.name),
     })),
-    ...drafted.map((name, index) => ({
-      id: `Undraft ${name}`,
-      title: `Undraft ${name}`,
-      name,
-      action: () => undraft(index),
-    })),
+    // ...drafted.map((name, index) => ({
+    //   id: `Undraft ${name}`,
+    //   title: `Undraft ${name}`,
+    //   name,
+    //   action: () => undraft(index),
+    // })),
     ...available
       .filter(p => !queue.some(q => q.name === p.name))
       .map(p => ({
@@ -430,13 +431,13 @@ const Draft = () => {
         name: p.name,
         action: () => setQueue([...queue, p]),
       })),
-    ...queue.map(p => ({
-      ...p,
-      id: `Unqueue ${p.name}`,
-      title: `Unqueue ${p.name}`,
-      name: p.name,
-      action: () => unqueue(p.name),
-    })),
+    // ...queue.map(p => ({
+    //   ...p,
+    //   id: `Unqueue ${p.name}`,
+    //   title: `Unqueue ${p.name}`,
+    //   name: p.name,
+    //   action: () => unqueue(p.name),
+    // })),
     ...available.map(p => ({
       ...p,
       id: `Filter ${p.name}`,
@@ -472,9 +473,16 @@ const Draft = () => {
       action: () => setFilter(''),
     })
   }
+  if (queue.length > 0) {
+    commands.push({
+      id: `Clear Queue`,
+      title: `Clear Queue`,
+      action: () => setQueue([]),
+    })
+  }
   return (
-    <Page>
-      <Layout todaysGames={false}>
+    <Page fullScreen>
+      <Layout todaysGames={false} fullScreen>
         <Main className='space-y-2 px-2 md:mx-auto md:w-9/10'>
           <div className='flex space-x-4'>
             <label
@@ -547,32 +555,45 @@ const Draft = () => {
                 <span>queue</span>
               </h2>
               {queue.length > 0 ? (
-                <ul>
-                  {queue.map((p, index) => (
-                    <li key={index} className='p-2 odd:bg-skin-foreground-alt'>
-                      <button type='button' onClick={() => draft(p.name)}>
-                        {p.name}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <DragDropList
+                  items={queue}
+                  renderItem={item => (
+                    <button
+                      type='button'
+                      onClick={() => draft(item.name)}
+                      className='flex-grow truncate'
+                    >
+                      {item.name}
+                    </button>
+                  )}
+                  reorderItems={newQueue => setQueue(newQueue)}
+                  itemContainerClassName='flex items-center space-x-4 p-2 odd:bg-skin-foreground-alt'
+                />
               ) : (
                 <div className='p-2'>empty</div>
               )}
               <h2 className='flex space-x-4 border-t-4 border-skin-foreground p-2'>
                 <span>draft</span>
               </h2>
-              <Dnd
+              <DragDropList
                 items={drafted}
+                renderItem={(item, index) => (
+                  <DraftListItem
+                    item={item}
+                    index={index}
+                    itemsLength={drafted.length}
+                    fixItem={idx => {
+                      setFixItemDialogIsOpen(true)
+                      setItemToBeFixed(drafted[idx])
+                    }}
+                    deleteItem={undraft}
+                    teams={settings.teams}
+                  />
+                )}
                 reorderItems={newDrafted => {
                   setDrafted(newDrafted)
                 }}
-                deleteItem={undraft}
-                fixItem={index => {
-                  setFixItemDialogIsOpen(true)
-                  setItemToBeFixed(drafted[index])
-                }}
-                teams={settings.teams}
+                itemContainerClassName='flex items-center space-x-4 p-2 odd:bg-skin-foreground-alt'
               />
             </div>
             {[projections, ...ranksList].map((rank, rankIndex) => (
