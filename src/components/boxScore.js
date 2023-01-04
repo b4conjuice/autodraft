@@ -10,9 +10,11 @@ const getTotal = (stats, stat) =>
   )
 
 const getMinString = min => {
-  const m = Math.floor(min / 60)
-  const s = min % 60
-  return `${m}:${s < 10 ? '0' : ''}${s}`
+  // * looks like min stat on balldontlie's api was changed to be without `:seconds`
+  // const m = Math.floor(min / 60)
+  // const s = min % 60
+  // return `${m}:${s < 10 ? '0' : ''}${s}`
+  return `${min}:00`
 }
 
 const BoxScore = ({ stats, includeTotals = false }) => {
