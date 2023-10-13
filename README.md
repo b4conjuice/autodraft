@@ -72,8 +72,10 @@ Array(50) [ {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}
 ## espn (within draft)
 
 ```javascript
+// selector = '.fixedDataTableRowLayout_rowWrapper a.player-news'
+selector = '.playerinfo__playername .player-news'
 players = Array.from(
-  document.querySelectorAll('.fixedDataTableRowLayout_rowWrapper a.player-news')
+  document.querySelectorAll(selector)
 ).map(el => {
   // const nameEl = el.querySelector('.player-column__athlete')
   // const name = nameEl.title
@@ -90,6 +92,7 @@ players = Array.from(
   //   team,
   //   position: position.split(', '),
   // }
+  console.log(el.title)
   return el
 })
 ```
