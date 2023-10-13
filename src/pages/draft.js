@@ -18,10 +18,6 @@ import DragDropList from '@/components/dragDropList'
 import useLocalStorage from '@/lib/useLocalStorage'
 import espnRank from '@/lib/espnRank'
 import hashtagRank from '@/lib/hashtagRank'
-import hashtagPuntFGRank from '@/lib/hashtagPuntFGRank'
-import hashtagPuntFTRank from '@/lib/hashtagPuntFTRank'
-import hashtagPuntBLKRank from '@/lib/hashtagPuntBLKRank'
-import fearRank from '@/lib/fearRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
 
@@ -41,30 +37,19 @@ const normalizePlayerName = player => {
 
 const ranks = [
   {
-    title: 'fear',
-    items: fearRank.map(normalizePlayerName),
-  },
-  {
     title: 'hashtag',
     items: hashtagRank.map(normalizePlayerName),
-  },
-  {
-    title: 'hashtag punt fg%',
-    items: hashtagPuntFGRank.map(normalizePlayerName),
-  },
-  {
-    title: 'hashtag punt ft%',
-    items: hashtagPuntFTRank.map(normalizePlayerName),
-  },
-  {
-    title: 'hashtag punt blk',
-    items: hashtagPuntBLKRank.map(normalizePlayerName),
   },
 ]
 
 const projections = {
   title: 'espn',
+  // items: espnRank,
   items: espnRank.slice(0, 300),
+  // items: espnSort.map(name => {
+  //   const player = espnRank.find(p => p.name === name)
+  //   return player
+  // }),
 }
 
 const PlusMinus = ({ index, rank, compare, isProjections }) => {
@@ -457,18 +442,18 @@ const Draft = () => {
     //   name: p.name,
     //   action: () => unqueue(p.name),
     // })),
-    ...available.map(p => ({
-      ...p,
-      id: `Filter ${p.name}`,
-      title: `Filter ${p.name}`,
-      name: p.name,
-      action: () => setFilter(p.name),
-    })),
-    ...compareRanksList.map(rank => ({
-      id: `Compare Rank ${rank.title}`,
-      title: `Compare Rank ${rank.title}`,
-      action: () => compareRank(rank),
-    })),
+    // ...available.map(p => ({
+    //   ...p,
+    //   id: `Filter ${p.name}`,
+    //   title: `Filter ${p.name}`,
+    //   name: p.name,
+    //   action: () => setFilter(p.name),
+    // })),
+    // ...compareRanksList.map(rank => ({
+    //   id: `Compare Rank ${rank.title}`,
+    //   title: `Compare Rank ${rank.title}`,
+    //   action: () => compareRank(rank),
+    // })),
     {
       id: `Toggle Hide Drafted`,
       title: `${hideDrafted ? 'Show' : 'Hide'} Drafted`,
