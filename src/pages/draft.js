@@ -27,6 +27,8 @@ const normalizePlayerName = player => {
     'PJ Washington': 'P.J. Washington',
     'Nicolas Claxton': 'Nic Claxton',
     'Jabari Smith Jr': 'Jabari Smith Jr.',
+    'OG Anunoby': 'O.G. Anunoby',
+    'Alperen Sengün': 'Alperen Sengun',
   }
   const newName = names[player.name]
   return {
@@ -360,6 +362,8 @@ const Draft = () => {
   const [fixItemDialogIsOpen, setFixItemDialogIsOpen] = useState(false)
   const [teamsDialogIsOpen, setTeamsDialogIsOpen] = useState(false)
   const [settingsDialogIsOpen, setSettingsDialogIsOpen] = useState(false)
+  const [isEmptyDraftDialogOpen, setIsEmptyDraftDialogOpen] = useState(false)
+  const [isEmptyQueueDialogOpen, setIsEmptyQueueDialogOpen] = useState(false)
   const [settings, setSettings] = useState({
     teams: 12,
   })
@@ -545,19 +549,20 @@ const Draft = () => {
             >
               <CloudDownloadIcon className='h-6 w-6' />
             </button>
-            <button
-              type='button'
-              onClick={() => {
-                setDrafted([])
-              }}
-            >
-              <TrashIcon className='h-6 w-6' />
-            </button>
           </div>
           <div className='flex divide-x divide-skin-foreground overflow-x-scroll'>
             <div className='w-[350px]'>
-              <h2 className='flex space-x-4 p-2'>
+              <h2 className='flex justify-between space-x-4 p-2'>
                 <span>queue</span>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setIsEmptyQueueDialogOpen(true)
+                  }}
+                  disabled={queue.length === 0}
+                >
+                  <TrashIcon className='h-6 w-6' />
+                </button>
               </h2>
               {queue.length > 0 ? (
                 <DragDropList
@@ -577,8 +582,17 @@ const Draft = () => {
               ) : (
                 <div className='p-2'>empty</div>
               )}
-              <h2 className='flex space-x-4 border-t-4 border-skin-foreground p-2'>
+              <h2 className='flex justify-between space-x-4 border-t-4 border-skin-foreground p-2'>
                 <span>draft</span>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setIsEmptyDraftDialogOpen(true)
+                  }}
+                  disabled={drafted.length === 0}
+                >
+                  <TrashIcon className='h-6 w-6' />
+                </button>
               </h2>
               <DragDropList
                 items={drafted}
@@ -717,6 +731,64 @@ const Draft = () => {
         settings={settings}
         setSettings={setSettings}
       />
+      <Dialog
+        open={isEmptyQueueDialogOpen}
+        onClose={() => setIsEmptyQueueDialogOpen(false)}
+        className='fixed inset-0 z-10 overflow-y-auto'
+      >
+        <div className='flex min-h-screen items-center justify-center'>
+          <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
+
+          <div className='relative mx-auto rounded bg-white p-4'>
+            <button
+              type='button'
+              onClick={() => setIsEmptyQueueDialogOpen(false)}
+              className='absolute right-4 h-6 w-6'
+            >
+              &times;
+            </button>
+            <Dialog.Title>Empty Queue?</Dialog.Title>
+            <button
+              type='button'
+              onClick={() => {
+                setQueue([])
+                setIsEmptyQueueDialogOpen(false)
+              }}
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </Dialog>
+      <Dialog
+        open={isEmptyDraftDialogOpen}
+        onClose={() => setIsEmptyDraftDialogOpen(false)}
+        className='fixed inset-0 z-10 overflow-y-auto'
+      >
+        <div className='flex min-h-screen items-center justify-center'>
+          <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
+
+          <div className='relative mx-auto rounded bg-white p-4'>
+            <button
+              type='button'
+              onClick={() => setIsEmptyDraftDialogOpen(false)}
+              className='absolute right-4 h-6 w-6'
+            >
+              &times;
+            </button>
+            <Dialog.Title>Delete Draft?</Dialog.Title>
+            <button
+              type='button'
+              onClick={() => {
+                setDrafted([])
+                setIsEmptyDraftDialogOpen(false)
+              }}
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </Dialog>
       <CommandPalette commands={commands} />
     </Page>
   )
