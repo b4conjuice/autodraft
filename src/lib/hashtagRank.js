@@ -185,6 +185,11 @@ const hashtagRank = [
     position: 'PG',
   },
   {
+    name: 'Victor Wembanyama',
+    team: 'SA',
+    position: 'PF,C',
+  },
+  {
     name: 'Zach LaVine',
     team: 'CHI',
     position: 'SG,SF',
@@ -213,11 +218,6 @@ const hashtagRank = [
     name: 'Jamal Murray',
     team: 'DEN',
     position: 'PG,SG',
-  },
-  {
-    name: 'Victor Wembanyama',
-    team: 'SA',
-    position: 'PF,C',
   },
   {
     name: 'Walker Kessler',

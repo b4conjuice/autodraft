@@ -18,6 +18,8 @@ import DragDropList from '@/components/dragDropList'
 import useLocalStorage from '@/lib/useLocalStorage'
 import espnRank from '@/lib/espnRank'
 import hashtagRank from '@/lib/hashtagRank'
+import hashtagASTRank from '@/lib/hashtagPuntASTRank'
+import hashtagBLKRank from '@/lib/hashtagPuntBLKRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
 
@@ -41,6 +43,14 @@ const ranks = [
   {
     title: 'hashtag',
     items: hashtagRank.map(normalizePlayerName),
+  },
+  {
+    title: 'ht punt AST',
+    items: hashtagASTRank.map(normalizePlayerName),
+  },
+  {
+    title: 'ht punt BLK',
+    items: hashtagBLKRank.map(normalizePlayerName),
   },
 ]
 
