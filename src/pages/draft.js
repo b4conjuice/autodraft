@@ -264,18 +264,35 @@ const TeamsDialog = ({ isOpen, setIsOpen, drafted, teams }) => {
     const round = Math.ceil((index + 1) / teams)
     const teamIndex =
       round % 2 === 1 ? index % teams : teams - 1 - (index % teams)
+    const espnPlayer = espnRank.find(p => p.name === player) || {}
     if (finalTeams[teamIndex]) {
-      finalTeams[teamIndex].push(
-        `${index + 1} ${player} (${round}-${(index % teams) + 1})`
-      )
+      finalTeams[teamIndex].push({
+        ...espnPlayer,
+        draftString: `${index + 1} ${player} (${round}-${(index % teams) + 1})`,
+      })
     } else {
       finalTeams[teamIndex] = [
-        `${index + 1} ${player} (${round}-${(index % teams) + 1})`,
+        {
+          ...espnPlayer,
+          draftString: `${index + 1} ${player} (${round}-${
+            (index % teams) + 1
+          })`,
+        },
       ]
     }
     return finalTeams
   }, [])
+  const [selectedTeam, setSelectedTeam] = useState(null)
 
+  const positions = ['PG', 'SG', 'SF', 'PF', 'C']
+  const getPlayersByPosition = position => {
+    const playersByPosition = league[selectedTeam]
+      .filter(player => player.position?.some(pos => pos === position))
+      .map(player => player.name)
+    return playersByPosition.length > 0
+      ? `${playersByPosition.join(' ')} (${playersByPosition.length})`
+      : ''
+  }
   return (
     <Dialog
       open={isOpen}
@@ -297,15 +314,62 @@ const TeamsDialog = ({ isOpen, setIsOpen, drafted, teams }) => {
           <ul className='grid grid-cols-2 gap-4 md:grid-cols-3'>
             {league.map((team, index) => (
               <li key={index}>
-                <h2>Team {index + 1}</h2>
+                <h2>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setSelectedTeam(index)
+                    }}
+                  >
+                    Team {index + 1}
+                  </button>
+                </h2>
                 <ul>
                   {team.map((player, pIndex) => (
-                    <li key={pIndex}>{player}</li>
+                    <li key={pIndex}>{player.draftString}</li>
                   ))}
                 </ul>
               </li>
             ))}
           </ul>
+          {selectedTeam !== null && (
+            <>
+              <h2>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setSelectedTeam(selectedTeam)
+                  }}
+                >
+                  Selcted: Team {selectedTeam + 1}
+                </button>
+              </h2>
+              <div className='flex space-x-2'>
+                <ul>
+                  {league[selectedTeam]?.map((player, pIndex) => (
+                    <li key={pIndex}>{player.name}</li>
+                  ))}
+                </ul>
+                <ul>
+                  {positions.map(position =>
+                    getPlayersByPosition(position) ? (
+                      <li key={position}>
+                        {position} -{' '}
+                        {league[selectedTeam]
+                          .filter(player =>
+                            player.position.some(pos => pos === position)
+                          )
+                          .reduce(
+                            (str, player) => `${str}${player.name} - `,
+                            ''
+                          )}
+                      </li>
+                    ) : null
+                  )}
+                </ul>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </Dialog>
