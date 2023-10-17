@@ -566,7 +566,7 @@ const Draft = () => {
     <Page fullScreen>
       <Layout todaysGames={false} fullScreen>
         <Main className='space-y-2 px-2 md:mx-auto md:w-9/10'>
-          <div className='flex space-x-4'>
+          <div className='sticky top-0 flex space-x-4 bg-skin-background'>
             <label
               htmlFor='checked'
               className='inline-flex cursor-pointer items-center justify-center space-x-3 divide-skin-foreground'
