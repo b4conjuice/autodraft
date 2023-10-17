@@ -6,6 +6,7 @@ import {
   TrashIcon,
   UserGroupIcon,
   CogIcon,
+  PlusCircleIcon,
 } from '@heroicons/react/solid'
 import Fuse from 'fuse.js'
 
@@ -218,12 +219,14 @@ const FixItemDialog = ({
   drafted,
   setDrafted,
 }) => {
-  if (!itemToBeFixed) return null
+  if (itemToBeFixed === null) return null
+  const item = drafted[itemToBeFixed]
   const fuse = new Fuse(projections.items, {
     keys: ['name'],
   })
-  const players = fuse.search(itemToBeFixed).map(({ item }) => item)
+  const players = fuse.search(item).map(({ item }) => item)
   const [selectedPlayer, setSelectedPlayer] = useState(players[0])
+  const [text, setText] = useState('')
   return (
     <Dialog
       open={isOpen}
@@ -234,34 +237,58 @@ const FixItemDialog = ({
         <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
 
         <div className='relative mx-auto max-w-sm space-y-4 rounded bg-white p-4'>
-          <Dialog.Title>Fix Item: {itemToBeFixed}</Dialog.Title>
-          <Listbox value={selectedPlayer} onChange={setSelectedPlayer}>
-            <div>
-              <Listbox.Button className='w-full p-3'>
-                <span>{selectedPlayer.name}</span>
-              </Listbox.Button>
-              <Listbox.Options>
-                {players.map(player => (
-                  <Listbox.Option key={player.name} value={player}>
-                    {player.name}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </div>
-          </Listbox>
-
-          <button
-            type='button'
-            onClick={() => {
-              const idx = drafted.findIndex(p => p === itemToBeFixed)
-              drafted[idx] = selectedPlayer.name
-              setDrafted(drafted)
-              setItemToBeFixed(null)
-              setIsOpen(false)
-            }}
-          >
-            <CloudDownloadIcon className='h-6 w-6' />
-          </button>
+          <Dialog.Title>Fix Item: {item}</Dialog.Title>
+          <div>
+            <Listbox value={selectedPlayer} onChange={setSelectedPlayer}>
+              <div>
+                <Listbox.Button className='w-full p-3'>
+                  <span>{selectedPlayer.name}</span>
+                </Listbox.Button>
+                <Listbox.Options>
+                  {players.map(player => (
+                    <Listbox.Option key={player.name} value={player}>
+                      {player.name}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </div>
+            </Listbox>
+            <button
+              type='button'
+              onClick={() => {
+                drafted[itemToBeFixed] = selectedPlayer.name
+                setDrafted(drafted)
+                setItemToBeFixed(null)
+                setIsOpen(false)
+              }}
+            >
+              {' '}
+              Set to Searched
+              <CloudDownloadIcon className='h-6 w-6' />
+            </button>
+          </div>
+          <div>
+            <input
+              type='text'
+              value={text}
+              onChange={e => {
+                setText(e.target.value)
+              }}
+            />
+            <button
+              type='button'
+              onClick={() => {
+                drafted[itemToBeFixed] = text
+                setDrafted(drafted)
+                setItemToBeFixed(null)
+                setIsOpen(false)
+              }}
+            >
+              {' '}
+              Set to Text
+              <CloudDownloadIcon className='h-6 w-6' />
+            </button>
+          </div>
         </div>
       </div>
     </Dialog>
@@ -658,15 +685,25 @@ const Draft = () => {
               )}
               <h2 className='flex justify-between space-x-4 border-t-4 border-skin-foreground p-2'>
                 <span>draft</span>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setIsEmptyDraftDialogOpen(true)
-                  }}
-                  disabled={drafted.length === 0}
-                >
-                  <TrashIcon className='h-6 w-6' />
-                </button>
+                <div className='flex space-x-2'>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      draft('placeholder')
+                    }}
+                  >
+                    <PlusCircleIcon className='h-6 w-6' />
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setIsEmptyDraftDialogOpen(true)
+                    }}
+                    disabled={drafted.length === 0}
+                  >
+                    <TrashIcon className='h-6 w-6' />
+                  </button>
+                </div>
               </h2>
               <DragDropList
                 items={drafted}
@@ -677,7 +714,7 @@ const Draft = () => {
                     itemsLength={drafted.length}
                     fixItem={idx => {
                       setFixItemDialogIsOpen(true)
-                      setItemToBeFixed(drafted[idx])
+                      setItemToBeFixed(idx)
                     }}
                     deleteItem={undraft}
                     teams={settings.teams}
