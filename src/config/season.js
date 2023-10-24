@@ -1,3 +1,3 @@
-const CURRENT_SEASON = 2022
+const CURRENT_SEASON = 2023
 
 export default CURRENT_SEASON

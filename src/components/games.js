@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import format from 'date-fns/format'
 
 const Games = ({ games, team }) => (
   <ul className='space-y-2'>
@@ -12,7 +13,9 @@ const Games = ({ games, team }) => (
             <span>{game.visitor_team.abbreviation}</span>
             <span>@</span>
             <span>{game.home_team.abbreviation}</span>
-            {game.status.includes(':') && <span>{game.status}</span>}
+            {game.status.includes(':') && (
+              <span>{format(new Date(game.status), 'h:mm a')}</span>
+            )}
             {!game.status.includes(':') && (
               <span className={game.status === 'Final' ? 'font-semibold' : ''}>
                 {game.visitor_team_score}-{game.home_team_score}
