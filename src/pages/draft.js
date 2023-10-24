@@ -18,6 +18,7 @@ import CommandPalette from '@/components/commandPalette'
 import DragDropList from '@/components/dragDropList'
 import useLocalStorage from '@/lib/useLocalStorage'
 import espnRank from '@/lib/espnRank'
+import espnRankWithinDraft from '@/lib/espnRankWithinDraft'
 import hashtagRank from '@/lib/hashtagRank'
 import hashtagASTRank from '@/lib/hashtagPuntASTRank'
 import hashtagBLKRank from '@/lib/hashtagPuntBLKRank'
@@ -41,6 +42,10 @@ const normalizePlayerName = player => {
 }
 
 const ranks = [
+  // {
+  //   title: 'espn (draft)',
+  //   items: espnRankWithinDraft.map(normalizePlayerName),
+  // },
   {
     title: 'hashtag',
     items: hashtagRank.map(normalizePlayerName),
@@ -58,11 +63,12 @@ const ranks = [
 const projections = {
   title: 'espn',
   // items: espnRank,
-  items: espnRank.slice(0, 300),
-  // items: espnSort.map(name => {
-  //   const player = espnRank.find(p => p.name === name)
-  //   return player
-  // }),
+  // items: espnRank.slice(0, 300),
+  items: espnRankWithinDraft.map(playerr => {
+    const player = espnRank.find(p => p.name === playerr.name)
+    if (player) return player
+    else return { name: playerr.name, position: [] }
+  }),
 }
 
 const PlusMinus = ({ index, rank, compare, isProjections }) => {
@@ -394,7 +400,7 @@ const TeamsDialog = ({ isOpen, setIsOpen, drafted, teams }) => {
                         {position} -{' '}
                         {league[selectedTeam]
                           .filter(player =>
-                            player.position.some(pos => pos === position)
+                            player.position?.some(pos => pos === position)
                           )
                           .reduce(
                             (str, player) => `${str}${player.name} - `,
@@ -781,7 +787,13 @@ const Draft = () => {
                                 ? 'font-bold text-red-700'
                                 : ''
                             }`}
-                            onClick={() => draft(rank.items[index].name)}
+                            onClick={() => {
+                              if (rank.title === projections.title) {
+                                draft(rank.items[index].name)
+                              } else {
+                                setQueue([...queue, rank.items[index]])
+                              }
+                            }}
                             disabled={drafted.some(
                               p => p === rank.items[index]?.name
                             )}

@@ -74,9 +74,7 @@ Array(50) [ {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}
 ```javascript
 // selector = '.fixedDataTableRowLayout_rowWrapper a.player-news'
 selector = '.playerinfo__playername .player-news'
-players = Array.from(
-  document.querySelectorAll(selector)
-).map(el => {
+players = Array.from(document.querySelectorAll(selector)).map(el => {
   // const nameEl = el.querySelector('.player-column__athlete')
   // const name = nameEl.title
   // const teamEl = el.querySelector(
@@ -93,7 +91,9 @@ players = Array.from(
   //   position: position.split(', '),
   // }
   console.log(el.title)
-  return el
+  return {
+    name: el.title,
+  }
 })
 ```
 
