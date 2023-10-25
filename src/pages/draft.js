@@ -17,29 +17,13 @@ import DraftListItem from '@/components/dnd'
 import CommandPalette from '@/components/commandPalette'
 import DragDropList from '@/components/dragDropList'
 import useLocalStorage from '@/lib/useLocalStorage'
-import espnRank from '@/lib/espnRank'
+import espnRank, { normalizePlayerName } from '@/lib/espnRank'
 import espnRankWithinDraft from '@/lib/espnRankWithinDraft'
 import hashtagRank from '@/lib/hashtagRank'
 import hashtagASTRank from '@/lib/hashtagPuntASTRank'
 import hashtagBLKRank from '@/lib/hashtagPuntBLKRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
-
-const normalizePlayerName = player => {
-  const names = {
-    'Robert Williams': 'Robert Williams III',
-    'PJ Washington': 'P.J. Washington',
-    'Nicolas Claxton': 'Nic Claxton',
-    'Jabari Smith Jr': 'Jabari Smith Jr.',
-    'OG Anunoby': 'O.G. Anunoby',
-    'Alperen Sengün': 'Alperen Sengun',
-  }
-  const newName = names[player.name]
-  return {
-    ...player,
-    name: newName ?? player.name,
-  }
-}
 
 const ranks = [
   // {

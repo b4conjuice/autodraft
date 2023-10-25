@@ -2269,7 +2269,30 @@ const espnRank = [
   ],
 ].flat()
 
-const getPosition = name => espnRank.find(p => p.name === name)?.position
+const normalizePlayerName = player => {
+  const names = {
+    'Robert Williams': 'Robert Williams III',
+    'PJ Washington': 'P.J. Washington',
+    'Nicolas Claxton': 'Nic Claxton',
+    'Jabari Smith Jr': 'Jabari Smith Jr.',
+    'OG Anunoby': 'O.G. Anunoby',
+    'Alperen Sengün': 'Alperen Sengun',
+    'Xavier Tillman': 'Xavier Tillman Sr.',
+  }
+  const newName = names[player.name]
+  const name = newName ?? player.name
+  return {
+    ...player,
+    name,
+  }
+}
+
+const getPosition = name => {
+  const position = espnRank.find(
+    p => p.name === name || p.name === normalizePlayerName({ name })?.name
+  )?.position
+  return position
+}
 
 export default espnRank
-export { getPosition }
+export { getPosition, normalizePlayerName }
