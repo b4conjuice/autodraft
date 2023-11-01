@@ -275,7 +275,7 @@ const espnRank = [
     {
       name: 'Jalen Williams',
       team: 'OKC',
-      position: ['SG', 'SF'],
+      position: ['SG', 'SF', 'PF'],
     },
     {
       name: 'Kawhi Leonard',
@@ -1029,7 +1029,7 @@ const espnRank = [
       position: ['SF', 'SG'],
     },
     {
-      name: 'Xavier Tillman Sr.',
+      name: 'Xavier Tillman',
       team: 'Mem',
       position: ['PF', 'C'],
     },
@@ -1069,259 +1069,7 @@ const espnRank = [
       position: ['C'],
     },
     {
-      name: 'Reggie Bullock',
-      team: 'Hou',
-      position: ['SF', 'SG'],
-    },
-    {
-      name: 'Trey Murphy III',
-      team: 'NO',
-      position: ['SG', 'SF'],
-    },
-    {
-      name: 'Monte Morris',
-      team: 'Det',
-      position: ['PG'],
-    },
-    {
-      name: 'Torrey Craig',
-      team: 'Chi',
-      position: ['SF', 'PF'],
-    },
-    {
-      name: 'Luke Kennard',
-      team: 'Mem',
-      position: ['SG'],
-    },
-    {
-      name: 'Malaki Branham',
-      team: 'SA',
-      position: ['SG'],
-    },
-    {
-      name: "Jae'Sean Tate",
-      team: 'Hou',
-      position: ['SF', 'PF'],
-    },
-    {
-      name: 'Dorian Finney-Smith',
-      team: 'Bkn',
-      position: ['SF', 'PF'],
-    },
-    {
-      name: 'Kevin Love',
-      team: 'Mia',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'DeMarcus Cousins',
-      team: 'Den',
-      position: ['C'],
-    },
-    {
-      name: 'Kenrich Williams',
-      team: 'OKC',
-      position: ['SF'],
-    },
-    {
-      name: 'Isaiah Jackson',
-      team: 'Ind',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'Larry Nance Jr.',
-      team: 'NO',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'Victor Oladipo',
-      team: 'Hou',
-      position: ['SG'],
-    },
-    {
-      name: 'Thomas Bryant',
-      team: 'Mia',
-      position: ['C'],
-    },
-    {
-      name: 'Mo Bamba',
-      team: 'Phi',
-      position: ['C'],
-    },
-    {
-      name: 'Joe Ingles',
-      team: 'Orl',
-      position: ['SF'],
-    },
-    {
-      name: 'Grayson Allen',
-      team: 'Phx',
-      position: ['SG'],
-    },
-    {
-      name: 'Eric Gordon',
-      team: 'Phx',
-      position: ['SG', 'SF'],
-    },
-    {
-      name: 'Richaun Holmes',
-      team: 'Dal',
-      position: ['C', 'PF'],
-    },
-    {
-      name: 'Jose Alvarado',
-      team: 'NO',
-      position: ['PG'],
-    },
-    {
-      name: 'Jalen Smith',
-      team: 'Ind',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'Hamidou Diallo',
-      team: 'Det',
-      position: ['SG', 'SF'],
-    },
-    {
-      name: 'Marcus Morris Sr.',
-      team: 'LAC',
-      position: ['PF', 'SF'],
-    },
-    {
-      name: 'Will Barton',
-      team: 'Tor',
-      position: ['SF', 'SG'],
-    },
-    {
-      name: 'Brandon Clarke',
-      team: 'Mem',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'Nassir Little',
-      team: 'Phx',
-      position: ['SF', 'PF'],
-    },
-    {
-      name: 'Jaylen Nowell',
-      team: 'Sac',
-      position: ['SG'],
-    },
-    {
-      name: 'Gradey Dick',
-      team: 'Tor',
-      position: ['SG'],
-    },
-    {
-      name: 'Max Strus',
-      team: 'Cle',
-      position: ['SG', 'SF'],
-    },
-    {
-      name: 'Dennis Smith Jr.',
-      team: 'Bkn',
-      position: ['PG'],
-    },
-    {
-      name: 'Precious Achiuwa',
-      team: 'Tor',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'Pat Connaughton',
-      team: 'Mil',
-      position: ['SG', 'SF'],
-    },
-    {
-      name: 'Isaac Okoro',
-      team: 'Cle',
-      position: ['SF', 'SG'],
-    },
-    {
-      name: 'Cody Martin',
-      team: 'Cha',
-      position: ['SF'],
-    },
-    {
-      name: 'Jeremiah Robinson-Earl',
-      team: 'Hou',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'Cam Whitmore',
-      team: 'Hou',
-      position: ['SF'],
-    },
-    {
-      name: 'Lonnie Walker IV',
-      team: 'Bkn',
-      position: ['SF', 'SG'],
-    },
-  ],
-  [
-    {
-      name: 'Cam Thomas',
-      team: 'Bkn',
-      position: ['SG'],
-    },
-    {
-      name: 'Tim Hardaway Jr.',
-      team: 'Dal',
-      position: ['SG', 'SF'],
-    },
-    {
-      name: 'Quentin Grimes',
-      team: 'NY',
-      position: ['SG'],
-    },
-    {
-      name: 'Matisse Thybulle',
-      team: 'Por',
-      position: ['SF', 'SG'],
-    },
-    {
-      name: 'Xavier Tillman Sr.',
-      team: 'Mem',
-      position: ['PF', 'C'],
-    },
-    {
-      name: 'Seth Curry',
-      team: 'Dal',
-      position: ['SG', 'PG'],
-    },
-    {
-      name: 'Bones Hyland',
-      team: 'LAC',
-      position: ['PG', 'SG'],
-    },
-    {
-      name: 'Gordon Hayward',
-      team: 'Cha',
-      position: ['SF'],
-    },
-    {
-      name: 'Jalen McDaniels',
-      team: 'Tor',
-      position: ['PF'],
-    },
-    {
-      name: 'James Wiseman',
-      team: 'Det',
-      position: ['C'],
-    },
-    {
-      name: 'Talen Horton-Tucker',
-      team: 'Utah',
-      position: ['SG', 'SF'],
-    },
-    {
-      name: 'Andre Drummond',
-      team: 'Chi',
-      position: ['C'],
-    },
-    {
-      name: 'Reggie Bullock',
+      name: 'Reggie Bullock Jr.',
       team: 'Hou',
       position: ['SF', 'SG'],
     },
@@ -2011,7 +1759,7 @@ const espnRank = [
     },
     {
       name: 'Ish Smith',
-      team: 'Den',
+      team: 'Cha',
       position: ['PG'],
     },
   ],
@@ -2092,7 +1840,7 @@ const espnRank = [
       position: ['PF'],
     },
     {
-      name: 'GG Jackson II',
+      name: 'GG Jackson',
       team: 'Mem',
       position: ['PF'],
     },
@@ -2265,6 +2013,258 @@ const espnRank = [
       name: 'Andre Jackson Jr.',
       team: 'Mil',
       position: ['SG'],
+    },
+  ],
+  [
+    {
+      name: 'Ricky Rubio',
+      team: 'Cle',
+      position: ['PG'],
+    },
+    {
+      name: 'Montrezl Harrell',
+      team: 'Phi',
+      position: ['C', 'PF'],
+    },
+    {
+      name: 'Hassan Whiteside',
+      team: 'Utah',
+      position: ['C'],
+    },
+    {
+      name: 'Steven Adams',
+      team: 'Mem',
+      position: ['C'],
+    },
+    {
+      name: 'Lonzo Ball',
+      team: 'Chi',
+      position: ['PG'],
+    },
+    {
+      name: 'Nemanja Bjelica',
+      team: 'GS',
+      position: ['C', 'PF'],
+    },
+    {
+      name: 'Lou Williams',
+      team: 'Atl',
+      position: ['SG'],
+    },
+    {
+      name: 'Rajon Rondo',
+      team: 'Cle',
+      position: ['PG'],
+    },
+    {
+      name: 'Enes Freedom',
+      team: 'Bos',
+      position: ['C'],
+    },
+    {
+      name: 'D.J. Augustin',
+      team: 'Hou',
+      position: ['PG'],
+    },
+    {
+      name: 'Eric Paschall',
+      team: 'Min',
+      position: ['PF'],
+    },
+    {
+      name: 'Carmelo Anthony',
+      team: 'LAL',
+      position: ['PF', 'SF'],
+    },
+    {
+      name: 'LaMarcus Aldridge',
+      team: 'Bkn',
+      position: ['PF', 'C'],
+    },
+    {
+      name: 'Josh Okogie',
+      team: 'Phx',
+      position: ['SG', 'SF'],
+    },
+    {
+      name: 'Grant Williams',
+      team: 'Dal',
+      position: ['PF'],
+    },
+    {
+      name: 'Andrew Nembhard',
+      team: 'Ind',
+      position: ['PG', 'SG'],
+    },
+    {
+      name: 'Paul Reed',
+      team: 'Phi',
+      position: ['PF'],
+    },
+    {
+      name: 'Drew Eubanks',
+      team: 'Phx',
+      position: ['PF'],
+    },
+    {
+      name: 'Payton Pritchard',
+      team: 'Bos',
+      position: ['PG'],
+    },
+    {
+      name: 'Christian Braun',
+      team: 'Den',
+      position: ['SG'],
+    },
+    {
+      name: 'Josh Green',
+      team: 'Dal',
+      position: ['SG', 'SF'],
+    },
+    {
+      name: 'Yuta Watanabe',
+      team: 'Phx',
+      position: ['SF'],
+    },
+    {
+      name: 'Jevon Carter',
+      team: 'Chi',
+      position: ['PG'],
+    },
+    {
+      name: "Day'Ron Sharpe",
+      team: 'Bkn',
+      position: ['C'],
+    },
+    {
+      name: 'Gary Payton II',
+      team: 'GS',
+      position: ['PG'],
+    },
+    {
+      name: 'MarJon Beauchamp',
+      team: 'Mil',
+      position: ['SG'],
+    },
+    {
+      name: 'Jordan Goodwin',
+      team: 'Phx',
+      position: ['SG', 'PG'],
+    },
+    {
+      name: 'Kris Dunn',
+      team: 'Utah',
+      position: ['PG'],
+    },
+    {
+      name: 'Thanasis Antetokounmpo',
+      team: 'Mil',
+      position: ['SF'],
+    },
+    {
+      name: 'Corey Kispert',
+      team: 'Wsh',
+      position: ['SF', 'SG'],
+    },
+    {
+      name: 'Isaiah Joe',
+      team: 'OKC',
+      position: ['SG'],
+    },
+    {
+      name: 'AJ Griffin',
+      team: 'Atl',
+      position: ['SF'],
+    },
+    {
+      name: 'Jaden Hardy',
+      team: 'Dal',
+      position: ['SG'],
+    },
+    {
+      name: 'Nick Richards',
+      team: 'Cha',
+      position: ['C'],
+    },
+    {
+      name: 'Danilo Gallinari',
+      team: 'Wsh',
+      position: ['PF', 'SF'],
+    },
+    {
+      name: 'Tacko Fall',
+      team: 'Cle',
+      position: ['C'],
+    },
+    {
+      name: 'Ochai Agbaji',
+      team: 'Utah',
+      position: ['SF', 'SG'],
+    },
+    {
+      name: 'Jaylin Williams',
+      team: 'OKC',
+      position: ['C'],
+    },
+    {
+      name: 'Blake Griffin',
+      team: 'Bos',
+      position: ['PF', 'C'],
+    },
+    {
+      name: 'David Roddy',
+      team: 'Mem',
+      position: ['PF'],
+    },
+    {
+      name: 'Kenneth Lofton Jr.',
+      team: 'Mem',
+      position: ['PF'],
+    },
+    {
+      name: 'Boban Marjanovic',
+      team: 'Hou',
+      position: ['C'],
+    },
+    {
+      name: 'Ousmane Dieng',
+      team: 'OKC',
+      position: ['SF'],
+    },
+    {
+      name: 'Kai Jones',
+      team: 'Cha',
+      position: ['PF'],
+    },
+    {
+      name: 'Andre Iguodala',
+      team: 'GS',
+      position: ['SF', 'SG'],
+    },
+    {
+      name: 'Sam Hauser',
+      team: 'Bos',
+      position: ['SF'],
+    },
+    {
+      name: 'Max Christie',
+      team: 'LAL',
+      position: ['SG'],
+    },
+    {
+      name: 'Paul Zipser',
+      team: 'Chi',
+      position: ['SF'],
+    },
+    {
+      name: 'Tre Mann',
+      team: 'OKC',
+      position: ['PG'],
+    },
+    {
+      name: 'Peyton Watson',
+      team: 'Den',
+      position: ['SF'],
     },
   ],
 ].flat()

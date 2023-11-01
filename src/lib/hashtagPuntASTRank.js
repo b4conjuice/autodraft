@@ -1,4 +1,4 @@
-const hashtagPunt3PMRank = [
+const hashtagPuntASTRank = [
   {
     name: 'Joel Embiid',
     team: 'PHI',
@@ -1501,4 +1501,4 @@ const hashtagPunt3PMRank = [
   },
 ]
 
-export default hashtagPunt3PMRank
+export default hashtagPuntASTRank

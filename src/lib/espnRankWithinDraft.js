@@ -1,4 +1,4 @@
-const espnRank = [
+const espnRankWithinDraft = [
   [
     {
       name: 'Nikola Jokic',
@@ -591,7 +591,4 @@ const espnRank = [
   ],
 ].flat()
 
-const getPosition = name => espnRank.find(p => p.name === name)?.position
-
-export default espnRank
-export { getPosition }
+export default espnRankWithinDraft
