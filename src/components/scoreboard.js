@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import classNames from 'classnames'
 
 import getMin from '@/lib/getMin'
 
@@ -126,7 +127,11 @@ const Scoreboard = ({ stats: initialStats, compare, setCompare, matchup }) => {
                   >
                     {setCompare && compare ? (
                       <button
-                        className='w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25'
+                        className={classNames(
+                          'w-full rounded bg-skin-button-accent px-2 py-1 text-skin-inverted hover:bg-skin-button-accent-hover disabled:pointer-events-none disabled:opacity-25',
+                          compare.includes(player.last_name) &&
+                            'bg-skin-button-muted'
+                        )}
                         type='button'
                         onClick={() => {
                           if (compare.includes(player.last_name)) {

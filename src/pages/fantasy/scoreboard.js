@@ -17,11 +17,16 @@ const catStatMap = {
   TO: 'turnover',
 }
 
+const defaultScoreboard = {
+  categories: [],
+  matchups: [],
+}
+
 const ScoreboardPage = () => {
-  const [scoreboard] = useLocalStorage('scoreboard', {
-    categories: [],
-    matchups: [],
-  })
+  const [scoreboard, setScoreboard] = useLocalStorage(
+    'scoreboard',
+    defaultScoreboard
+  )
   const { categories, matchups } = scoreboard
   const [compare, setCompare] = useState([])
   const stats = matchups?.flat().map(team => ({
@@ -38,7 +43,15 @@ const ScoreboardPage = () => {
         <Main>
           <div className='mx-auto space-y-2 md:max-w-screen-md'>
             <div className='text-center'>
-              <h1 className='space-x-2 text-2xl'>scoreboard</h1>
+              <details>
+                <summary className='text-2xl'>scoreboard</summary>
+                <textarea
+                  value={JSON.stringify(scoreboard)}
+                  onChange={e => {
+                    setScoreboard(JSON.parse(e.target.value))
+                  }}
+                />
+              </details>
             </div>
             {!categories && (
               <div className='text-red-700'>
