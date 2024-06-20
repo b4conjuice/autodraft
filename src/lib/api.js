@@ -6,6 +6,8 @@ import getRecord from '@/lib/getRecord'
 import getWinPercentage from '@/lib/getWinPercentage'
 import filterGames from '@/lib/filterGames'
 
+const API_URL = '/api/nba'
+
 const startDate = '2021-10-19' // TODO: Workaround to fix api returning games before start of 2022 season
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -13,7 +15,7 @@ const refreshInterval = 30000
 
 export const fetchNBATeams = team => {
   const { data } = useSwr(
-    `https://www.balldontlie.io/api/v1/teams${team ? `/${team}` : ''}`,
+    `${API_URL}/v1/teams${team ? `/${team}` : ''}`,
     fetcher
   )
   return {
@@ -39,12 +41,12 @@ const fetchAllGames = async url => {
 }
 
 export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
-  const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${season}&team_ids[]=${id}&start_date=${startDate}&per_page=100`
+  const url = `${API_URL}/v1/games?seasons[]=${season}&team_ids[]=${id}&start_date=${startDate}&per_page=100`
   const { data: games } = useSwr(id ? url : null, fetcher)
   const gameIds = games?.data.map(game => game.id)
   const { data: gameList } = useSwr(
     gameIds
-      ? `https://www.balldontlie.io/api/v1/stats?start_date=${startDate}&per_page=100${gameIds.reduce(
+      ? `${API_URL}/v1/stats?start_date=${startDate}&per_page=100${gameIds.reduce(
           (query, game) => `${query}&game_ids[]=${game}`,
           ''
         )}`
@@ -63,7 +65,7 @@ export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   //   .filter(g => g.status === 'Final')[0].id
   // const { data: gameStats } = useSwr(
   //   gameId
-  //     ? `https://www.balldontlie.io/api/v1/stats?game_ids[]=${gameId}&per_page=100`
+  //     ? `${API_URL}/v1/stats?game_ids[]=${gameId}&per_page=100`
   //     : null,
   //   fetcher
   // )
@@ -73,7 +75,7 @@ export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   const playerIds = players?.map(p => p.id)
   const { data: seasonStats } = useSwr(
     playerIds
-      ? `https://www.balldontlie.io/api/v1/season_averages?&seasons[]=${season}${playerIds.reduce(
+      ? `${API_URL}/v1/season_averages?&seasons[]=${season}${playerIds.reduce(
           (query, player) => `${query}&player_ids[]=${player}`,
           ''
         )}`
@@ -114,9 +116,9 @@ const getHour = timeMatch => {
 export const fetchNBASchedule = (options = {}) => {
   // const { team, desc, start, end } = options
   const { team, start, end, season, postseason } = options
-  const url = `https://www.balldontlie.io/api/v1/games?seasons[]=${
-    season || CURRENT_SEASON
-  }${team ? `&team_ids[]=${team}&per_page=${postseason ? '100' : '82'}` : ''}${
+  const url = `${API_URL}/v1/games?seasons[]=${season || CURRENT_SEASON}${
+    team ? `&team_ids[]=${team}&per_page=${postseason ? '100' : '82'}` : ''
+  }${
     start
       ? `&start_date=${start}&end_date=${end || start}&per_page=100`
       : `&start_date=${startDate}&per_page=100`
@@ -162,7 +164,7 @@ export const fetchNBASchedule = (options = {}) => {
 export const fetchNBAGames = ids => {
   const { data } = useSwr(
     ids && ids.length > 0
-      ? `https://www.balldontlie.io/api/v1/stats?per_page=100${ids.reduce(
+      ? `${API_URL}/v1/stats?per_page=100${ids.reduce(
           (query, game) => `${query}&game_ids[]=${game}`,
           ''
         )}`
@@ -175,12 +177,12 @@ export const fetchNBAGames = ids => {
 export const fetchNBAGame = (id, playerId) => {
   try {
     const { data: game, revalidate: refreshGame } = useSwr(
-      id ? `https://www.balldontlie.io/api/v1/games/${id}` : null,
+      id ? `${API_URL}/v1/games/${id}` : null,
       fetcher,
       { refreshInterval }
     )
     const { data: playerStats, revalidate: refreshStats } = useSwr(
-      `https://www.balldontlie.io/api/v1/stats?game_ids[]=${id}&per_page=100${
+      `${API_URL}/v1/stats?game_ids[]=${id}&per_page=100${
         playerId ? `&player_ids[]=${playerId}` : ''
       }`,
       fetcher,
@@ -216,18 +218,18 @@ export const fetchNBAGame = (id, playerId) => {
 
 export const fetchNBAPlayer = (id, season = CURRENT_SEASON) => {
   const { data: player } = useSwr(
-    id ? `https://www.balldontlie.io/api/v1/players/${id}` : null,
+    id ? `${API_URL}/v1/players/${id}` : null,
     fetcher
   )
   const { data: seasonStats } = useSwr(
     id
-      ? `https://www.balldontlie.io/api/v1/season_averages?&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
+      ? `${API_URL}/v1/season_averages?&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
       : null,
     fetcher
   )
   const { data: stats } = useSwr(
     id
-      ? `https://www.balldontlie.io/api/v1/stats?&per_page=100&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
+      ? `${API_URL}/v1/stats?&per_page=100&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
       : null,
     fetcher
   )
@@ -244,7 +246,7 @@ export const fetchNBAPlayer = (id, season = CURRENT_SEASON) => {
 
 export const searchNBAPlayers = name => {
   const { data } = useSwr(
-    name ? `https://www.balldontlie.io/api/v1/players?search=${name}` : null,
+    name ? `${API_URL}/v1/players?search=${name}` : null,
     fetcher
   )
   return data?.data || []
@@ -274,9 +276,7 @@ export const fetchNBARecord = ({ team, season = CURRENT_SEASON }) => {
 export const fetchNBARegularSeasonSchedule = (options = {}) => {
   const { start, end, season, postseason } = options
   const { data, revalidate } = useSwr(
-    `https://www.balldontlie.io/api/v1/games?seasons[]=${
-      season || CURRENT_SEASON
-    }${
+    `${API_URL}/v1/games?seasons[]=${season || CURRENT_SEASON}${
       start
         ? `&start_date=${start}&end_date=${end || start}&per_page=100`
         : `&start_date=${startDate}&per_page=100`
