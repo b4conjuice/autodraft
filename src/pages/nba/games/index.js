@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import format from 'date-fns/format'
 
 import Page from '@/components/page'
@@ -11,11 +12,31 @@ import Footer from '@/components/footer'
 import { fetchNBASchedule } from '@/lib/api'
 
 const TodaysGames = () => {
-  const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
+  const { query, push, pathname } = useRouter()
+  const today = format(new Date(), 'yyyy-MM-dd')
+  const [date, setDate] = useState(query.date ? String(query.date) : today)
   const { data: games } = fetchNBASchedule({
     start: date,
     end: date,
   })
+  useEffect(() => {
+    if (query.date) {
+      setDate(String(query.date))
+    }
+  }, [query, setDate])
+  const updateDate = date => {
+    setDate(date)
+    const url = {
+      pathname: pathname,
+      query:
+        date && date !== today
+          ? {
+              date,
+            }
+          : undefined,
+    }
+    push(url).catch(err => console.log(err))
+  }
   return (
     <Page>
       <Layout>
@@ -26,10 +47,13 @@ const TodaysGames = () => {
                 type='date'
                 className='form-input w-full'
                 value={date}
-                onChange={e => setDate(e.target.value)}
+                onChange={e => {
+                  const { value } = e.target
+                  updateDate(value)
+                }}
               />
               <div className='hidden md:block'>
-                <DatePicker date={date} setDate={setDate} />
+                <DatePicker date={date} setDate={updateDate} />
               </div>
             </div>
             {games ? (
@@ -43,7 +67,7 @@ const TodaysGames = () => {
         </Main>
       </Layout>
       <Footer className='flex justify-center md:hidden'>
-        <DatePicker date={date} setDate={setDate} />
+        <DatePicker date={date} setDate={updateDate} />
       </Footer>
     </Page>
   )
