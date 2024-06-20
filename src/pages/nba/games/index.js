@@ -56,12 +56,14 @@ const TodaysGames = () => {
                 <DatePicker date={date} setDate={updateDate} />
               </div>
             </div>
-            {games ? (
-              <Games games={games} />
-            ) : (
+            {!games ? (
               <div className='flex flex-grow justify-center'>
                 <Loading />
               </div>
+            ) : games.length > 0 ? (
+              <Games games={games} />
+            ) : (
+              <p>no games</p>
             )}
           </div>
         </Main>

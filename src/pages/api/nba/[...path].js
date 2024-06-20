@@ -16,7 +16,7 @@ export default async (req, res) => {
   const response = await fetch(url, {
     headers,
   })
-  const { data } = await response.json()
+  const { data, meta } = await response.json()
   res.json({
     path,
     otherQueryParams,
@@ -24,5 +24,6 @@ export default async (req, res) => {
     pathAsString,
     url,
     data,
+    meta,
   })
 }

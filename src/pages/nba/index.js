@@ -50,8 +50,10 @@ const TodaysGames = () => {
     start: date,
     end: date,
   })
+  // TODO: fix standings
   const standings = fetchNBAStandings()
-  if (!games || !standings)
+  // if (!games || !standings)
+  if (!games)
     return (
       <Page>
         <Layout>
@@ -82,11 +84,11 @@ const TodaysGames = () => {
               </div>
             </div>
 
-            <Games games={games} />
-            <h2>eastern conference</h2>
+            {games.length > 0 ? <Games games={games} /> : <p>no games</p>}
+            {/* <h2>eastern conference</h2>
             <Standings teams={standings.conferences.East} />
             <h2>western conference</h2>
-            <Standings teams={standings.conferences.West} />
+            <Standings teams={standings.conferences.West} /> */}
           </div>
         </Main>
       </Layout>

@@ -8,7 +8,7 @@ import filterGames from '@/lib/filterGames'
 
 const API_URL = '/api/nba'
 
-const startDate = '2021-10-19' // TODO: Workaround to fix api returning games before start of 2022 season
+const startDate = '2023-10-19' // TODO: Workaround to fix api returning games before start of current season
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 const refreshInterval = 30000
@@ -26,6 +26,7 @@ export const fetchNBATeams = team => {
 const fetchAllGames = async url => {
   const res = await fetcher(url)
   const { meta } = res
+  // TODO: API changed, has `prev_cursor`/`next_cursor` instea of `total_pages`
   if (meta.total_pages > 1) {
     const pages = Array(meta.total_pages - meta.next_page + 1)
       .fill()
@@ -278,14 +279,12 @@ export const fetchNBARecord = ({ team, season = CURRENT_SEASON }) => {
 // TODO refactor this back into fetchNBASchedule
 export const fetchNBARegularSeasonSchedule = (options = {}) => {
   const { start, end, season, postseason } = options
-  const { data, revalidate } = useSwr(
-    `${API_URL}/v1/games?seasons[]=${season || CURRENT_SEASON}${
-      start
-        ? `&start_date=${start}&end_date=${end || start}&per_page=100`
-        : `&start_date=${startDate}&per_page=100`
-    }&postseason=${postseason ? 1 : 0}`,
-    fetchAllGames
-  )
+  const url = `${API_URL}/v1/games?seasons[]=${season || CURRENT_SEASON}${
+    start
+      ? `&start_date=${start}&end_date=${end || start}&per_page=100`
+      : `&start_date=${startDate}&per_page=100`
+  }&postseason=${postseason ? 1 : 0}`
+  const { data, revalidate } = useSwr(url, fetchAllGames)
   const re = new RegExp('^(0?[1-9]|1[0-2]):([0-5][0-9]) ?([AaPp][Mm])')
   const games = data?.data
     .map(game => ({
