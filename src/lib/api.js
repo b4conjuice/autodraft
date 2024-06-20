@@ -176,12 +176,12 @@ export const fetchNBAGames = ids => {
 
 export const fetchNBAGame = (id, playerId) => {
   try {
-    const { data: game, revalidate: refreshGame } = useSwr(
+    const { data: gamesData, revalidate: refreshGame } = useSwr(
       id ? `${API_URL}/v1/games/${id}` : null,
       fetcher,
       { refreshInterval }
     )
-    const { data: playerStats, revalidate: refreshStats } = useSwr(
+    const { data: playerStatsData, revalidate: refreshStats } = useSwr(
       `${API_URL}/v1/stats?game_ids[]=${id}&per_page=100${
         playerId ? `&player_ids[]=${playerId}` : ''
       }`,
@@ -192,6 +192,9 @@ export const fetchNBAGame = (id, playerId) => {
       await refreshGame()
       await refreshStats()
     }
+    const game = gamesData?.data
+    const playerStats = playerStatsData?.data
+
     return !game || !playerStats
       ? {
           data: undefined,
@@ -207,7 +210,7 @@ export const fetchNBAGame = (id, playerId) => {
       : {
           data: {
             ...game,
-            stats: playerStats?.data,
+            stats: playerStats,
           },
           revalidate,
         }
