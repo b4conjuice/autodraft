@@ -51,7 +51,7 @@ const TodaysGames = () => {
     end: date,
   })
   // TODO: fix standings
-  const standings = fetchNBAStandings()
+  // const standings = fetchNBAStandings()
   // if (!games || !standings)
   if (!games)
     return (

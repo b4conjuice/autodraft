@@ -22,17 +22,20 @@ const TeamListItem = ({ team }) => (
 
 const Teams = () => {
   const { data: teams } = fetchNBATeams()
-  const standings = fetchNBAStandings()
-  if (!teams || !standings)
+  // TODO: fix standings
+  // const standings = fetchNBAStandings()
+  // if (!teams || !standings)
+  if (!teams)
     return (
       <Page>
         <Loading />
       </Page>
     )
-  const teamsWithRecord = teams.map(team => ({
-    ...team,
-    record: standings.all.find(t => t.id === team.id).record,
-  }))
+  // const teamsWithRecord = teams.map(team => ({
+  //   ...team,
+  //   record: standings.all.find(t => t.id === team.id).record,
+  // }))
+  const teamsWithRecord = teams
   return (
     <Page title='teams'>
       <Layout>
