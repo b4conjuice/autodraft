@@ -221,19 +221,20 @@ export const fetchNBAGame = (id, playerId) => {
 }
 
 export const fetchNBAPlayer = (id, season = CURRENT_SEASON) => {
-  const { data: player } = useSwr(
+  const { data: playerData } = useSwr(
     id ? `${API_URL}/v1/players/${id}` : null,
     fetcher
   )
+  const player = playerData?.data
   const { data: seasonStats } = useSwr(
     id
-      ? `${API_URL}/v1/season_averages?&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
+      ? `${API_URL}/v1/season_averages?&season=${season}&player_ids[]=${id}&start_date=${startDate}`
       : null,
     fetcher
   )
   const { data: stats } = useSwr(
     id
-      ? `${API_URL}/v1/stats?&per_page=100&seasons[]=${season}&player_ids[]=${id}&start_date=${startDate}`
+      ? `${API_URL}/v1/stats?&per_page=100&season=${season}&player_ids[]=${id}&start_date=${startDate}`
       : null,
     fetcher
   )

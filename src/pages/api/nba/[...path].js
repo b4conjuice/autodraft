@@ -24,10 +24,14 @@ export default async (req, res) => {
       ? `?${otherQueryParamsAsString}${gameIds.reduce(
           (query, game) => `${query}&game_ids[]=${game}`,
           ''
-        )}${playerIds.reduce(
-          (query, player) => `${query}&player_ids[]=${player}`,
-          ''
-        )}`
+        )}${
+          typeof playerIds === 'string'
+            ? `&player_ids[]=${playerIds}`
+            : playerIds.reduce(
+                (query, player) => `${query}&player_ids[]=${player}`,
+                ''
+              )
+        }`
       : ''
   }`
   const headers = {
