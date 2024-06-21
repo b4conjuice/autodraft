@@ -44,7 +44,7 @@ const fetchAllGames = async url => {
 export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   const url = `${API_URL}/v1/games?seasons[]=${season}&team_ids[]=${id}&start_date=${startDate}&per_page=100`
   const { data: games } = useSwr(id ? url : null, fetcher)
-  const gameIds = games?.data.map(game => game.id)
+  const gameIds = games?.data.map(game => game.id) || []
   const { data: gameList } = useSwr(
     gameIds
       ? `${API_URL}/v1/stats?start_date=${startDate}&per_page=100${gameIds.reduce(
@@ -73,10 +73,10 @@ export const fetchNBATeam = (id, season = CURRENT_SEASON) => {
   // const players = gameStats?.data
   //   .filter(p => p.team.id === parseInt(id, 10))
   //   .map(p => p.player)
-  const playerIds = players?.map(p => p.id)
+  const playerIds = players?.map(p => p.id) || []
   const { data: seasonStats } = useSwr(
     playerIds
-      ? `${API_URL}/v1/season_averages?&seasons[]=${season}${playerIds.reduce(
+      ? `${API_URL}/v1/season_averages?season=${season}${playerIds.reduce(
           (query, player) => `${query}&player_ids[]=${player}`,
           ''
         )}`
@@ -118,12 +118,12 @@ export const fetchNBASchedule = (options = {}) => {
   // const { team, desc, start, end } = options
   const { team, start, end, season, postseason } = options
   const url = `${API_URL}/v1/games?seasons[]=${season || CURRENT_SEASON}${
-    team ? `&team_ids[]=${team}&per_page=${postseason ? '100' : '82'}` : ''
+    team ? `&team_ids[]=${team}` : ''
   }${
     start
-      ? `&start_date=${start}&end_date=${end || start}&per_page=100`
-      : `&start_date=${startDate}&per_page=100`
-  }${postseason ? `&postseason=1` : ''}`
+      ? `&start_date=${start}&end_date=${end || start}`
+      : `&start_date=${startDate}`
+  }${postseason ? `&postseason=1` : ''}&per_page=${postseason ? '100' : '82'}`
   const { data, revalidate } = useSwr(url, fetcher)
   // const games = data?.data.sort((b, a) =>
   //   desc
