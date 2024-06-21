@@ -32,34 +32,45 @@ const TodaysGames = () => {
       </Page>
     )
   const todayStarted = gamesToday.some(game => !game.status.includes(':'))
+
+  const noGames =
+    gamesToday.length === 0 &&
+    gamesYesterday.length === 0 &&
+    gamesTomorrow.length === 0
   return (
     <Page>
       <Layout>
         <Main className='space-y-2 px-2 md:flex md:justify-center md:space-y-0 md:space-x-4 md:px-0 md:pt-4'>
-          <div>
-            {todayStarted ? null : <h2 className='text-xl'>last night</h2>}
-            <Games games={todayStarted ? gamesToday : gamesYesterday} />
-          </div>
-          <div>
-            <h2>
-              {todayStarted ? (
-                <>
-                  <span className='text-xl'>last night</span>{' '}
-                  {format(subDays(new Date(), 1), 'MMM d, yyyy')}
-                </>
-              ) : (
-                <span className='text-xl'>later today</span>
-              )}
-            </h2>
-            <Games games={todayStarted ? gamesYesterday : gamesToday} />
-          </div>
-          <div>
-            <h2>
-              <span className='text-xl'>tomorrow</span>{' '}
-              {format(addDays(new Date(), 1), 'MMM d, yyyy')}
-            </h2>
-            <Games games={gamesTomorrow} />
-          </div>
+          {noGames ? (
+            <p>no games today {format(new Date(), 'MMM d, yyyy')}</p>
+          ) : (
+            <>
+              <div>
+                {todayStarted ? null : <h2 className='text-xl'>last night</h2>}
+                <Games games={todayStarted ? gamesToday : gamesYesterday} />
+              </div>
+              <div>
+                <h2>
+                  {todayStarted ? (
+                    <>
+                      <span className='text-xl'>last night</span>{' '}
+                      {format(subDays(new Date(), 1), 'MMM d, yyyy')}
+                    </>
+                  ) : (
+                    <span className='text-xl'>later today</span>
+                  )}
+                </h2>
+                <Games games={todayStarted ? gamesYesterday : gamesToday} />
+              </div>
+              <div>
+                <h2>
+                  <span className='text-xl'>tomorrow</span>{' '}
+                  {format(addDays(new Date(), 1), 'MMM d, yyyy')}
+                </h2>
+                <Games games={gamesTomorrow} />
+              </div>
+            </>
+          )}
         </Main>
       </Layout>
     </Page>
