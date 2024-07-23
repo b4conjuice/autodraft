@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import format from 'date-fns/format'
 import subDays from 'date-fns/subDays'
 import addDays from 'date-fns/addDays'
@@ -37,12 +38,26 @@ const TodaysGames = () => {
     gamesToday.length === 0 &&
     gamesYesterday.length === 0 &&
     gamesTomorrow.length === 0
+
+  const offseason = true
   return (
     <Page>
       <Layout>
         <Main className='space-y-2 px-2 md:flex md:justify-center md:space-y-0 md:space-x-4 md:px-0 md:pt-4'>
           {noGames ? (
-            <p>no games today {format(new Date(), 'MMM d, yyyy')}</p>
+            <div>
+              <p>no games today {format(new Date(), 'MMM d, yyyy')}</p>
+              {offseason && (
+                <p>
+                  it's the offseason! to see the last day there were games,{' '}
+                  <Link href='/nba/games?date=2024-06-17'>
+                    <span className='text-skin-link-accent hover:cursor-pointer hover:text-skin-link-accent-hover'>
+                      click here
+                    </span>
+                  </Link>
+                </p>
+              )}
+            </div>
           ) : (
             <>
               <div>
