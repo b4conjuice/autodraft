@@ -21,6 +21,7 @@ import espnRank, { normalizePlayerName } from '@/lib/espnRank'
 import espnRankWithinDraft from '@/lib/espnRankWithinDraft'
 import hashtagRank from '@/lib/hashtagRank'
 import hashtagASTRank from '@/lib/hashtagPuntASTRank'
+import hashtag3PMRank from '@/lib/hashtagPunt3PMRank'
 import hashtagBLKRank from '@/lib/hashtagPuntBLKRank'
 import { fetchLists, saveList } from '@/lib/api'
 import useForm from '@/lib/useForm'
@@ -31,12 +32,16 @@ const ranks = [
   //   items: espnRankWithinDraft.map(normalizePlayerName),
   // },
   {
-    title: 'hashtag',
-    items: hashtagRank.map(normalizePlayerName),
-  },
-  {
     title: 'ht punt AST',
     items: hashtagASTRank.map(normalizePlayerName),
+  },
+  {
+    title: 'ht punt 3PM',
+    items: hashtag3PMRank.map(normalizePlayerName),
+  },
+  {
+    title: 'hashtag',
+    items: hashtagRank.map(normalizePlayerName),
   },
   {
     title: 'ht punt BLK',
@@ -46,13 +51,13 @@ const ranks = [
 
 const projections = {
   title: 'espn',
-  // items: espnRank,
+  items: espnRank,
   // items: espnRank.slice(0, 300),
-  items: espnRankWithinDraft.map(playerr => {
-    const player = espnRank.find(p => p.name === playerr.name)
-    if (player) return player
-    else return { name: playerr.name, position: [] }
-  }),
+  // items: espnRankWithinDraft.map(playerr => {
+  //   const player = espnRank.find(p => p.name === playerr.name)
+  //   if (player) return player
+  //   else return { name: playerr.name, position: [] }
+  // }),
 }
 
 const PlusMinus = ({ index, rank, compare, isProjections }) => {
@@ -63,7 +68,11 @@ const PlusMinus = ({ index, rank, compare, isProjections }) => {
     return (
       <td
         className={`p-2 text-center ${
-          index > index2 ? 'bg-green-700' : index < index2 ? 'bg-red-700' : ''
+          index > index2
+            ? 'bg-green-700'
+            : index < index2 || index === -1
+            ? 'bg-red-700'
+            : ''
         } ${
           absoluteDifference > 24
             ? 'bg-opacity-100'
